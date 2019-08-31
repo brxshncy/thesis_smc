@@ -13,7 +13,7 @@ include 'rescuer_regdb.php';
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>Register</title>
+    <title>Log-in</title>
     <!-- Fontfaces CSS-->
     <link href="css/font-face.css" rel="stylesheet" media="all">
     <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
@@ -40,49 +40,17 @@ include 'rescuer_regdb.php';
         <div class="col-md-5">
             <div class="card text-center" style="margin:auto;" >
                 <div class="card-header p-4 bg-white">
-                        <span style = "font-weight:bold;" class="text-danger">ICDRRMO Rescuer</span> Registration Form
+                        <span style = "font-weight:bold;" class="text-danger">ICDRRMO Rescuer</span> Log-in
                 </div>
                       <div class="card-body">
-                            <form action="rescuer_registration.php" method="post">
-                                <?php if(isset($_SESSION['success'])): ?>
-                                    <div class="alert alert-success">
-
-                                        <p><?php echo $_SESSION['success']; 
-                                                unset($_SESSION['success']);
-                                        ?>
-                                          <a href="rescuer_login.php">Log in now!</a>      
-                                        </p>
+                            <form action="rescuer_login.php" method="post">
+                                <?php if(isset($_SESSION['msg'])): ?>
+                                    <div class="alert alert-danger">
+                                        <?php echo $_SESSION['msg'];
+                                                unset($_SESSION['msg']);
+                                         ?>
                                     </div>
                                 <?php endif ?>
-                                <div class="form-row">
-                                <div class="col-sm-6">
-                                    <input type="text" style ="border-radius:10px;"name="firstname" id="firstname" class="au-input au-input--full border border-secondary" placeholder="First Name" value="<?php echo $firstname; ?>">
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="text" style ="border-radius:10px;"name="lastname" id="lastname" class="au-input au-input--full border border-secondary" placeholder="Last Name" value="<?php echo $lastname; ?>">
-                                </div>
-                            </div>
-                            <div class="form-row mt-4">
-                                <div class="col">
-                                    <input type="text" style ="border-radius:10px;"name="address" id="address" class="au-input au-input--full border border-secondary" placeholder="Address" value="<?php echo $address; ?>">
-                                </div>
-                            </div>
-                             <div class="form-row mt-4">
-                                <div class="col">
-                                    <select name="gender" style ="border-radius:10px;" id="gender" class="form-control">
-                                        <option value="">Choose Gender</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-row mt-4">
-                                <div class="col">
-                                    <input type="text" style ="border-radius:10px;" name="contact" id="contact" class="au-input au-input--full border border-secondary" placeholder="Contact" value="<?php echo $contact; ?>">
-                                </div>
-                            </div>
-                            <hr>
                             <div class="form-row mt-4">
                                 <div class="col">
                                     <input type="text" style ="border-radius:10px;" name="username" id="username" class="au-input au-input--full border border-secondary" placeholder="User Name" value="<?php echo $username; ?>">
@@ -90,14 +58,12 @@ include 'rescuer_regdb.php';
                                 </div>
                             </div>
                             <div class="form-row mt-4">
-                                <div class="col col-md-6">
+                                <div class="col">
                                     <input type="password" style ="border-radius:10px;"name="password" id="password" class="au-input au-input--full border border-secondary" placeholder="Password">
                                 </div>
-                                <div class="col col-md-6">
-                                    <input type="password" style ="border-radius:10px;"name="confirm_password" id="confirm_password" class="au-input au-input--full border border-secondary" placeholder="Retype Password">
-                                </div>
                             </div>
-                             <button class="au-btn au-btn--block au-btn--green m-b-20 mt-4" type="submit" name="register">Register</button>
+                             <button class="au-btn au-btn--block au-btn--green m-b-20 mt-4" type="submit" name="log-in">Log In</button>
+                             <span class="text-dark">Not yet a member?</span> <a href="rescuer_registration.php">Sign up here</a>
                              <?php include('error_rescureg.php'); ?>
                             </form>
                 </div>

@@ -129,25 +129,17 @@ include 'include/db.php';
                   <div class="modal-body">
                         <form action ="include/addteamdb.php" method= "POST" enctype="multipart/form-data">
                                <div class="form-group">
-                                    <label>Enter Full Name</label>
-                                 <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Full Name">
-                              </div>
-                              <div class="form-group">
-                                    <label>Contact Number</label>
-                                 <input type="text" class="form-control" id="contact" name="contact" placeholder="Contact">
-                              </div>
-                              <div class="form-group">
-                                    <label>Gender</label>
-                                    <br>
-                                 <div class="form-check form-check-inline">
-                                      <input class="form-check-input" type="radio" name="gender" id="gender" value="Male">
-                                      <label class="form-check-label" for="inlineRadio1">Male</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                      <input class="form-check-input" type="radio" name="gender" id="gender" value="Female">
-                                      <label class="form-check-label" for="inlineRadio2">Female</label>
-                                    </div>
-                              </div>
+                                    <label>Members Registered</label>
+                                    <select class="form-control" id="members" name="members">
+                                      <?php
+                                        $members = $conn->query("SELECT * FROM rescuers");
+                                        while($row = $members->fetch_assoc()){
+                                      ?>
+                                          <option><?php echo $row['firstname']; ?> <?php echo $row['lastname'];?></option>
+                                        <?php } ?>
+                                      </select>
+                                </div>
+
                               <div class="form-group">
                                     <label>Team Name</label>
                                     <select class="form-control" id="team_name" name="team_name">
@@ -158,11 +150,7 @@ include 'include/db.php';
                                               <option><?php echo $select['unit_name'];?></option>
                                             
                                          <?php }?>
-                             </select>
-                              </div>
-                               <div class="form-group">
-                                    <label>Address</label>
-                                    <input type="text" class="form-control" id="address" name="address" placeholder="Address">
+                                 </select>
                               </div>
                               <div class="form-group">
                                     <label for="exampleFormControlFile1">Profile Picture</label>
