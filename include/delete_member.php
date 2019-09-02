@@ -8,7 +8,7 @@ require "db.php";
 //IF DELETE IS CLIKED
 if(isset($_GET['delete'])){
 			$id = $_GET['delete']; 
-			$delete = "DELETE FROM unit_respondent WHERE id = $id";
+			$delete = "DELETE FROM assign_rescuer WHERE id = $id";
 			
 			//SESSION MESSAGE
 			if(mysqli_query($conn,$delete)){

@@ -1,4 +1,4 @@
-<?php 
+ <?php 
 session_start();
 include 'include/db.php';
 ?>
@@ -131,16 +131,52 @@ include 'include/db.php';
                                <div class="form-group">
                                     <label>Members Registered</label>
                                     <select class="form-control" id="members" name="members">
-                                      <?php
+                                      <option value="">Select</option>
+                                    <?php
                                         $members = $conn->query("SELECT * FROM rescuers");
                                         while($row = $members->fetch_assoc()){
-                                      ?>
-                                          <option><?php echo $row['firstname']; ?> <?php echo $row['lastname'];?></option>
-                                        <?php } ?>
+                                          $name = $row['firstname']." ".$row['lastname'];
+                                          echo '<option value="'.$row['id'].'">' .$name. '</option>';
+                                        }
+                                     ?>
                                       </select>
                                 </div>
+                              <div id="other_info">
+                                <div class="form-row">
+                                          <div class="col-md-6">
+                                              <label>First Name</label>
+                                              <input type="text" class="form-control" name="firstname" id="firstname" readonly="">
+                                         </div>
+                                         <div class="col-md-6">
+                                              <label>Last Name</label>
+                                              <input type="text" class="form-control" name="lastname" id="lastname" readonly>
+                                         </div>
+                                  </div>
+                                    <div class="form-row">
+                                          <div class="col-md-6">
+                                              <label>Address</label>
+                                              <input type="text" class="form-control" name="address" id="address" readonly="">
+                                         </div>
+                                         <div class="col-md-6">
+                                              <label>Contact</label>
+                                              <input type="text" class="form-control" name="contact" id="contact" readonly>
+                                         </div>
+                                  </div>
+                                   <div class="form-row mt-2">
+                                          <div class="col-md-6">
+                                              <label>Gender</label>
+                                              <input type="text" class="form-control" name="gender" id="gender" readonly>
+                                         </div>
+                                  </div>
+                                   <div class="form-row mt-2">
+                                          <div class="col">
+                                              <label>Username</label>
+                                              <input type="text" class="form-control" name="username" id="username" readonly>
+                                         </div>
+                                  </div>
+                          </div>
 
-                              <div class="form-group">
+                              <div class="form-group mt-4">
                                     <label>Team Name</label>
                                     <select class="form-control" id="team_name" name="team_name">
                                     <?php
@@ -152,10 +188,7 @@ include 'include/db.php';
                                          <?php }?>
                                  </select>
                               </div>
-                              <div class="form-group">
-                                    <label for="exampleFormControlFile1">Profile Picture</label>
-                                    <input type="file" class="form-control-file" id="profile_pic" name="profile_pic">
-                                 </div>                                   
+                                                                
                   </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -194,7 +227,8 @@ include 'include/db.php';
                     <table class="table table-bordered">
                         <thead class="thead">
                           <tr class="table-primary" style="border-color:black;">
-                                   <th>Team ID</th>
+
+                                   <th>No.</th>
                                    <th>Team Unit Name</th>
                                    <th >Transport Officer</th>
                                    <th>Treatment Officer</th>
@@ -205,11 +239,13 @@ include 'include/db.php';
                              <tbody>
                                 <?php                                    
                                      $result = $conn->query("SELECT * FROM unit_name");
+                                     $counter = 0;
                                        while($row = $result->fetch_assoc()){
+                                        $counter++;
                                  ?>
                                     
                                      <tr class="table-default">
-                                        <td><?php echo $row['id'];?></td>
+                                        <td><?php echo $counter;?></td>
                                         <td><?php echo $row['unit_name'];?></td>
                                         <td><?php echo $row['transport_officer'];?></td>
                                         <td><?php echo $row['treatment_officer'];?></td>
@@ -227,6 +263,7 @@ include 'include/db.php';
                                             </button></a>                                  
                                         </td>
                                      </tr>  
+
                                     <?php } ?>            
                              </tbody>
                     </table>
@@ -242,6 +279,7 @@ include 'include/db.php';
 
   <!-- Jquery JS-->
   <script src="vendor/jquery-3.2.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <!-- Bootstrap JS-->
   <script src="vendor/bootstrap-4.1/popper.min.js"></script>
   <script src="vendor/bootstrap-4.1/bootstrap.min.js"></script>
@@ -265,23 +303,51 @@ include 'include/db.php';
   <script src="js/main.js"></script>
 
   <script>
-      $(document).ready(function(){
-          $(document).on('click','.edit_modal',function(){
-              var edit_team = $(this).attr('id');
-                $('#edit').modal('show');
-                $.ajax({
-                    url: 'include/edit_team.php',
-                    type: 'post',
-                    data:{edit_team:edit_team},
-                    success:function(data){
-                        $("#update_details").html(data);
-                                 $('#edit').modal('show');
-                    }
-                })
-          });
+  $('#other_info').hide();
+  $(document).ready(function(){
+    $(document).on('click','.edit_modal',function(){
+        var edit_team = $(this).attr('id');
+        $('#edit').modal('show');
+            $.ajax({
+             url: 'include/edit_team.php',
+             type: 'post',
+             data:{edit_team:edit_team},
+             success:function(data){
+                    $("#update_details").html(data);
+                    $('#edit').modal('show');
+              }
+        })
+    });
+});
 
-      });
+$(document).ready(function(){
+    $('#members').change(function(){
+      var id = $(this).val();
+     
 
+      if(id != ""){
+        $.ajax({
+            url:"member_info.php",
+            method:"post",
+            data:{id:id},
+            dataType:"JSON",
+            success:function(data){
+                $('#other_info').show();
+                $('#firstname').val(data.firstname);
+                $('#lastname').val(data.lastname);
+                $('#address').val(data.address);
+                $('#contact').val(data.contact);
+                $('#gender').val(data.gender);
+                $('#username').val(data.username);
+            }
+        });
+      }
+      else{
+        alert("Please select from select box");
+        $('#other_info').css("display","none");
+      }
+    })
+});
   </script>
 
 </body>

@@ -95,10 +95,12 @@ session_start();
 
                     if(isset($_GET['view'])){
                                 $id = $_GET['view'];
-                        $query = "SELECT unit_name.unit_name as unit_name, unit_respondent.id as id, unit_respondent.fullname as name, unit_respondent.gender as gender, unit_respondent.address as address, unit_respondent.contact as contact FROM unit_name, unit_respondent WHERE unit_name.unit_name = unit_respondent.unit_name AND unit_name.id = '$id' ";               
+                        $query = "SELECT unit_name.unit_name as unit_name, assign_rescuer.id as id, assign_rescuer.firstname as firstname,assign_rescuer.lastname as lastname, assign_rescuer.gender as gender, assign_rescuer.address as address, assign_rescuer.contact as contact FROM unit_name, assign_rescuer WHERE unit_name.unit_name = assign_rescuer.unit_name AND unit_name.id = '$id' ";               
                         $result = $conn->query($query);
                         if (mysqli_num_rows($result)>0){      
-                        while($row = $result->fetch_object()){                      
+                        while($row = $result->fetch_object()){   
+                        $name = $row->firstname." ".$row->lastname;  
+                                        
                      ?>                 
                         <div class="col-md-4 ">
                              <div class="card">
@@ -108,7 +110,7 @@ session_start();
                                           <div class="card-body">
                                               <div class="mx-auto d-block">
                                                  <img class="rounded-circle mx-auto d-block" src="images/icon/avatar-01.jpg" alt="Card image cap">
-                                                  <h5 class="text-sm-center mt-2 mb-1"><?php echo $row->name; ?></h5>
+                                                  <h5 class="text-sm-center mt-2 mb-1"><?php echo $name; ?></h5>
                                                 <div class="location text-sm-center">
                                                 <i class="fa fa-map-marker"></i> <?php echo $row->address;?></div>
                                            </div>

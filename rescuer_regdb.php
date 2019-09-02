@@ -67,8 +67,8 @@ $errors = array();
 		if(count($errors) == 0){
 				$password = md5($password);
 				$login = "SELECT * FROM rescuers WHERE username = '$username' AND password = '$password' ";
-				$data = mysqli_fetch_assoc($login);
 				$login_query = $conn->query($login);
+				$data = mysqli_fetch_assoc($login_query);
 		if(mysqli_num_rows($login_query) == 1 ){
 					$_SESSION['confirm_username'] = $username;
 					$_SESSION['firstname'] = $data['firstname'];

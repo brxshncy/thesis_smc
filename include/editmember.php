@@ -5,29 +5,39 @@ global $conn;
 	if(isset($_POST['edit_id'])){
 		$id = $_POST['edit_id'];
 
-		$fetch = "SELECT * FROM unit_respondent WHERE id = '$id' ";
+		$fetch = "SELECT * FROM assign_rescuer WHERE id = '$id' ";
 			$result = mysqli_query($conn,$fetch);
 			while($data = mysqli_fetch_assoc($result)){
-				$unit_respondent_id = $data['id'];
-				$fullname = $data['fullname'];
+				$assign_rescuer = $data['id'];
+				$firstname = $data['firstname'];
+                $lastname = $data['lastname'];
 				$contact = $data['contact'];
 				$gender = $data['gender'];
 				$address = $data['address'];
 				$unit_name = $data['unit_name'];
+                $username = $data['username'];
 			}
 	}
 ?>
 <form action ="include/update_member.php" method= "POST" enctype="multipart/form-data">
-	<input type="hidden" name="update_id" id="update_id" value="<?php echo $unit_respondent_id;?>">
+	<input type="hidden" name="update_id" id="update_id" value="<?php echo $assign_rescuer;?>">
         <div class="col">
             <div class="form-group">
                 <label for="email-input" class=" form-control-label">Member ID</label>
-                <input type="text" name="firstname" id="firstname" class="form-control" value="<?php echo $unit_respondent_id; ?>" readonly="">
+                <input type="text" name="firstname" id="firstname" class="form-control" value="<?php echo $assign_rescuer; ?>" readonly="">
             </div><!--end of form-group-->
 
              <div class="form-group">
-                    <label>Enter Full Name</label>
-                    <input type="text" class="form-control" id="fullname" name="fullname" value="<?php echo $fullname; ?>">
+                    <label>First Name</label>
+                    <input type="text" class="form-control" id="firstname" name="firstname" value="<?php echo $firstname; ?>">
+             </div>
+             <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" class="form-control" id="lastname" name="lastname" value="<?php echo $lastname; ?>">
+             </div>
+             <div class="form-group">
+                    <label>User Name</label>
+                    <input type="text" class="form-control" id="username" name="username" value="<?php echo $username; ?>" readonly>
              </div>
              <div class="form-group">
                     <label>Contact Number</label>

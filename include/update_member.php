@@ -5,12 +5,15 @@
 
 	if(isset($_POST['update'])){
 		$edit_id = $_POST['update_id'];
-		$fullname = $_POST['fullname'];
+		$firstname = $_POST['firstname'];
+		$lastname = $_POST['lastname'];
 		$contact= $_POST['contact'];
 		$gender= $_POST['gender'];
 		$address  = $_POST['address'];
 
-		$update = "UPDATE unit_respondent SET fullname = '$fullname',
+		$update = "UPDATE assign_rescuer SET 
+					firstname = '$firstname',
+					lastname = '$lastname',
 					contact = '$contact',
 					gender = '$gender',
 					address = '$address' 
@@ -34,4 +37,3 @@
 	
 ?>
 
-DSADASDSADSA
