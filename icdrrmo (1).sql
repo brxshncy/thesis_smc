@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 31, 2019 at 08:47 AM
--- Server version: 10.3.16-MariaDB
--- PHP Version: 7.3.6
+-- Generation Time: Sep 06, 2019 at 03:26 PM
+-- Server version: 10.4.6-MariaDB
+-- PHP Version: 7.3.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -48,6 +48,68 @@ INSERT INTO `admin_login` (`id`, `username`, `password`, `admin_type`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `assign_rescuer`
+--
+
+CREATE TABLE `assign_rescuer` (
+  `id` int(11) NOT NULL,
+  `firstname` varchar(100) NOT NULL,
+  `lastname` varchar(100) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  `contact` int(11) NOT NULL,
+  `gender` varchar(100) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `unit_name` varchar(100) NOT NULL,
+  `profile_pic` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `assign_rescuer`
+--
+
+INSERT INTO `assign_rescuer` (`id`, `firstname`, `lastname`, `address`, `contact`, `gender`, `username`, `unit_name`, `profile_pic`) VALUES
+(4, 'Levi', 'Ackerman', 'Purok 14-A 542 Pala-o', 2147483647, 'Male', 'levi', 'Alpha 1', 0),
+(8, 'Karl ', 'Jimenez', 'Purok 14-A 542 Pala-o', 2147483647, 'Male', 'karl_jimenez', 'Alpha Beta', 0),
+(9, 'Bruce', 'Real', 'Purok 14-A 542 Pala-o Iligan City', 2147483647, 'Male', 'loginn', 'team 1', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `locatorslip_record`
+--
+
+CREATE TABLE `locatorslip_record` (
+  `id` int(11) NOT NULL,
+  `firstname` varchar(100) NOT NULL,
+  `lastname` varchar(100) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `contact` int(11) NOT NULL,
+  `destination` varchar(100) NOT NULL,
+  `purpose` varchar(100) NOT NULL,
+  `date` date NOT NULL,
+  `time` varchar(100) NOT NULL,
+  `time_return` varchar(100) NOT NULL,
+  `status` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `locatorslip_record`
+--
+
+INSERT INTO `locatorslip_record` (`id`, `firstname`, `lastname`, `username`, `contact`, `destination`, `purpose`, `date`, `time`, `time_return`, `status`) VALUES
+(1, 'Giyu', 'Tomioka', 'giyu', 2147483647, '', '', '0000-00-00', '', '', ''),
+(2, 'Giyu', 'Tomioka', 'giyu', 2147483647, 'Bukidnon City', 'Malibang', '2019-02-09', '5:40 AM ', '6:40AM', ''),
+(3, 'Giyu', 'Tomioka', 'giyu', 2147483647, '', '', '0000-00-00', '', '', ''),
+(4, 'Giyu', 'Tomioka', 'giyu', 2147483647, '', '', '0000-00-00', '', '', ''),
+(5, 'Tanjirou', 'Kamado', 'kamado', 90723121, 'Buruun', 'malibang', '2019-02-02', '5:40 PM', '12:00 AM', ''),
+(6, 'Tanjirou', 'Kamado', 'kamado', 90723121, 'Buruun', 'malibang', '2019-01-02', '5:40 PM', '12:00 AM', 'unread'),
+(7, 'lee', 'lee', 'lee', 123, 'Buruun', 'ahhh', '2017-01-02', '5:40 PM', '12:00 AM', 'unread'),
+(8, 'Leonie', 'Abilay', 'login', 123, 'Buruun', 'Atiman ko sakong anak', '2019-09-02', '5:40 PM', '12:00 AM', 'unread'),
+(9, 'Bruce', 'Real', 'loginn', 2147483647, 'Buruun', 'Atiman sakong anak', '2019-02-02', '5:40 PM', '12:00 AM', 'unread');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `locatorslip_request`
 --
 
@@ -61,25 +123,9 @@ CREATE TABLE `locatorslip_request` (
   `purpose` varchar(255) NOT NULL,
   `date` date NOT NULL,
   `time` varchar(100) NOT NULL,
-  `time_return` varchar(100) NOT NULL
+  `time_return` varchar(100) NOT NULL,
+  `status` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `locatorslip_request`
---
-
-INSERT INTO `locatorslip_request` (`id`, `firstname`, `lastname`, `username`, `contact`, `destination`, `purpose`, `date`, `time`, `time_return`) VALUES
-(1, 'Giyu', 'Tomioka', 'giyu', 2147483647, 'Bukidnon City', 'Malibang sako kadali sir', '2019-02-01', '10:30AM', '10:50AM'),
-(2, 'Giyu', 'Tomioka', 'giyu', 2147483647, '', '', '0000-00-00', '', ''),
-(3, 'Giyu', 'Tomioka', 'giyu', 2147483647, '', '', '0000-00-00', '', ''),
-(4, 'Giyu', 'Tomioka', 'giyu', 2147483647, '', '', '0000-00-00', '', ''),
-(5, 'Giyu', 'Tomioka', 'giyu', 2147483647, '', '', '0000-00-00', '', ''),
-(6, 'Giyu', 'Tomioka', 'giyu', 2147483647, '', '', '0000-00-00', '', ''),
-(7, 'Giyu', 'Tomioka', 'giyu', 2147483647, 'Buruun', 'Hatud sa nako ako anak kadali', '2019-02-02', '6:40pm', '7:40PM'),
-(8, 'Giyu', 'Tomioka', 'giyu', 2147483647, 'Bukidnon City', 'Malibang', '2019-02-09', '5:40 AM ', '6:40AM'),
-(9, 'Giyu', 'Tomioka', 'giyu', 2147483647, 'Bukidnon City', 'malibang', '2019-02-03', '6:40pm', '7:40PM'),
-(10, 'Giyu', 'Tomioka', 'giyu', 2147483647, 'Bukidnon City', '12121', '2019-02-01', '5:40 AM ', '7:40PM'),
-(11, 'Giyu', 'Tomioka', 'giyu', 2147483647, 'Bukidnon City', '121', '2019-02-01', '5:40 AM ', '7:40PM');
 
 -- --------------------------------------------------------
 
@@ -162,8 +208,8 @@ CREATE TABLE `pcr` (
 --
 
 INSERT INTO `pcr` (`id`, `firstname`, `lastname`, `middlename`, `religion`, `nationality`, `age`, `gender`, `address`, `date_i`, `time_i`, `impression`, `r_p1`, `contact1`, `r_p2`, `contact2`, `reason`, `nature`, `neuro`, `call_recieve`, `unit_enroute`, `arrive_scene`, `left_scene`, `arrive_destination`, `back_service`, `airway`, `breathing`, `pupils`, `pulse`, `skin`, `skin_texture`, `crt`, `time_vs`, `bp`, `pr`, `rr`, `temp`, `02stat`, `eye`, `verbal`, `motor`, `total`, `symtomps`, `allergies`, `meds`, `past_ill`, `oral_intake`, `time_oral`, `onset`, `provocation`, `quality`, `radiation`, `severity`, `timing_i`, `events_prior`, `trauma`, `burn`, `treatment`, `narrative`, `transport_officer`, `treatment_officer`, `dispatched_unit`, `desti_deter`, `response_mode`, `transport_mode`, `receiving_facility`, `receiving_md`) VALUES
-(73, 'wew', 'Real', 'B.', 'Catholic', 'Filipino', 20, '', 'Purok 14-A 542 Pala-o Iligan City', '2019-02-02', '5:40 AM ', 'Conscious', 'Father', 123, 'Mother', 145, 'Naligsan', 'Fire Response', '', '5:40 AM ', '5:50 AM', '6:00 AM', '6:30 AM', '6:40 AM', '7:00 AM', '', 'Unlabored', 'Normal/Pearl', 'Normal', 'Normal ', 'Normal ', 'Prolonged(>2 seconds)', '5:40 AM', '120/80', '30', '20', '79 Degree Celcius', '70%', 4, 5, 6, 15, 'Gikabuhi', 'Lumpia', 'Biogesic', 'Cancer Stage 4', '0000-00-00', 'mga 5:40 AM', 'oh', 'tae', 'ok ra', 'nako', 'servere kaayo ', 'way ayo', 'Concert sa One Direction', 'Alcohol Intoxication ', 'Alcohol Intoxication ', 'Adjunct ', '', 'John WIck', 'Paul Wick', 'Alpha Beta ', 'Closes Facility   ', 'No Lights and Siren ', 'No Lights and Siren ', 'City ', 'Pinoy MD'),
-(74, 'Leonie', 'Cajes', 'A.', 'Catholic', 'Filipino', 20, 'Male', 'Purok 14-A 542 Pala-o Iligan City', '1998-02-02', '5:40 AM ', 'Conscious', 'Father', 123, 'Mother', 145, 'Naligsan', 'V A', 'Oriented', '5:40 AM ', '5:50 AM', '6:00 AM', '6:30 AM', '6:40 AM', '7:00 AM', 'null', 'Unlabored', 'Normal/Pearl', 'Normal', 'Cold', 'Disphoretic', '1', '', '', '', '', '', '', 0, 0, 0, 0, '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', 'null', 'null', 'null', '', '', '', 'null', 'Closest Facility', 'No Lights and Siren', 'No Lights and Siren', '', '');
+(76, 'joel', 'de eloy', 'q', 'Catholic', 'Filipino', 44, 'Male', 'poblacion, iligan city', '2019-09-06', '5:40 AM ', 'consicous, weak, oriented to date and time', 'Father', 63, '', 0, 'vehicular accident', 'V A', 'Alert', '5:40 AM ', '5:50 AM', '6:00 AM', '6:30 AM', '6:40 AM', '7:00 AM', 'Patent', 'Unlabored', 'Normal/Pearl', 'Normal', 'Pale', 'Moist', '2', '5:40 AM', '120/80', '90', '20', '79 Degree Celcius', '98', 4, 5, 6, 15, 'sakit ang ulo', 'red horse', 'no medication taken', 'Cancer Stage 4', '0000-00-00', 'mga 5:40 AM', '', '', '', '', '', '', 'Concert sa One Direction', '', '', '', 'seen patient, lying on bed. \r\nvital signs taken and recoded\r\nplaced patient in comfortable position\r', '', '', '', '', '', '', '', ''),
+(77, 'Bruce ', 'Real', 'B.', 'Catholic', 'Filipino', 20, 'Male', 'Purok 14-A 542 Pala-o Iligan City', '0000-00-00', '', '', '', 0, '', 0, '', '', '', ' ', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, 0, 0, 0, '', '', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -187,7 +233,7 @@ CREATE TABLE `rescuers` (
 --
 
 INSERT INTO `rescuers` (`id`, `firstname`, `lastname`, `address`, `gender`, `contact`, `username`, `password`) VALUES
-(32, 'Levi', 'Ackerman', 'Purok 14-A 542 Pala-o', 'Male', 2147483647, 'levi', 'c20ad4d76fe97759aa27a0c99bff6710');
+(44, 'Bruce', 'Real', 'Purok 14-A 542 Pala-o Iligan City', 'Male', 2147483647, 'loginn', 'c20ad4d76fe97759aa27a0c99bff6710');
 
 -- --------------------------------------------------------
 
@@ -237,7 +283,18 @@ INSERT INTO `unit_attendance` (`id`, `name`, `date`, `contact`, `status`) VALUES
 (144, 'Tony Ferguson', '2019-08-24', 2147483647, 'Present'),
 (145, 'Bruce Shancy B. Real', '2019-08-24', 12345, 'Late'),
 (146, 'Karl Bryan Velarde', '2019-08-24', 2147483647, 'Present'),
-(147, 'sadsa', '2019-08-24', 0, 'Absent');
+(147, 'sadsa', '2019-08-24', 0, 'Absent'),
+(148, 'Karl  Jimenez', '2019-09-02', 2147483647, 'Present'),
+(149, 'Bruce Real', '2019-09-02', 2147483647, 'Present'),
+(150, 'Karl  Jimenez', '2019-09-02', 2147483647, 'Present'),
+(151, 'Bruce Real', '2019-09-02', 2147483647, 'Present'),
+(152, 'Karl  Jimenez', '2019-09-04', 2147483647, 'Present'),
+(153, 'Bruce Real', '2019-09-04', 2147483647, 'Present'),
+(154, 'Bruce  Real', '2019-09-04', 123, 'Absent'),
+(155, 'Tanjirou Kamado', '2019-09-04', 90723121, 'Late'),
+(156, 'Leonie Abilay', '2019-09-04', 123, 'Present'),
+(157, 'Bruce Real', '2019-09-06', 2147483647, 'Present'),
+(158, 'Bruce Real', '2019-09-06', 2147483647, 'Present');
 
 -- --------------------------------------------------------
 
@@ -259,9 +316,7 @@ CREATE TABLE `unit_name` (
 --
 
 INSERT INTO `unit_name` (`id`, `unit_name`, `vehicle_name`, `transport_officer`, `treatment_officer`, `unit_respondent`) VALUES
-(2, 'Alpha Beta ', 'Bulldozer', 'Bruce Real', 'Real Bruce', ''),
-(13, 'Beadasd ', 'asdsa', 'dasdas', 'dasdasdas', ''),
-(14, 'AKDfksds ', 'Ambulance', 'Leonie Abilay', '', '');
+(16, 'team 1 ', 'alpha 1', 'John WIck', 'kath cortes', '');
 
 -- --------------------------------------------------------
 
@@ -288,7 +343,8 @@ INSERT INTO `unit_respondent` (`id`, `fullname`, `gender`, `contact`, `unit_name
 (18, 'Bruce Shancy B. Real', 'Male', 12345, 'Alpha Beta', 'Purok 14-A 542 Pala-o', ''),
 (19, 'Karl Bryan Velarde', 'Male', 2147483647, 'Alpha Beta', 'Purok 14-A 542 Pala-o', ''),
 (20, 'sadsa', '', 0, 'Alpha Beta', '', ''),
-(21, 'sadsa', 'Male', 123, 'AKDfksds', 'Purok 14-A 542 Pala-o Iligan City', '');
+(21, 'sadsa', 'Male', 123, 'AKDfksds', 'Purok 14-A 542 Pala-o Iligan City', ''),
+(22, '', 'Male', 2147483647, 'Alpha Beta', 'Purok 14-A 542 Pala-o', '');
 
 --
 -- Indexes for dumped tables
@@ -298,6 +354,18 @@ INSERT INTO `unit_respondent` (`id`, `fullname`, `gender`, `contact`, `unit_name
 -- Indexes for table `admin_login`
 --
 ALTER TABLE `admin_login`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `assign_rescuer`
+--
+ALTER TABLE `assign_rescuer`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `locatorslip_record`
+--
+ALTER TABLE `locatorslip_record`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -353,22 +421,34 @@ ALTER TABLE `admin_login`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `assign_rescuer`
+--
+ALTER TABLE `assign_rescuer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `locatorslip_record`
+--
+ALTER TABLE `locatorslip_record`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT for table `locatorslip_request`
 --
 ALTER TABLE `locatorslip_request`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `pcr`
 --
 ALTER TABLE `pcr`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT for table `rescuers`
 --
 ALTER TABLE `rescuers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `rescuer_log`
@@ -380,19 +460,19 @@ ALTER TABLE `rescuer_log`
 -- AUTO_INCREMENT for table `unit_attendance`
 --
 ALTER TABLE `unit_attendance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=159;
 
 --
 -- AUTO_INCREMENT for table `unit_name`
 --
 ALTER TABLE `unit_name`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `unit_respondent`
 --
 ALTER TABLE `unit_respondent`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
