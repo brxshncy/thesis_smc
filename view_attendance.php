@@ -73,13 +73,14 @@
                          <?php endif ?>
                   <div class="row">
                       <div class="col mb-3">
-                          <a href="operation_attendance.php" class="btn btn-success btn-md pull-right">Back</a>
+                         <input class="au-input au-input--xl mt-2" type="text" name="search" id="search" placeholder="Search date" />
+                          <a href="operation_attendance.php"><button class="btn btn-primary ml-2 btn-block" data-placement="top" title="Back"> Back </button></a>
                         </div>
                   </div>  
                 
                       <div class="table-responsive-md">
                           <form action="viewattendance_crew.php" method="POST">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" id="table_search">
                                 <thead class="thead">
                                       <tr class="table-primary">
                                         <td>No.</td>
@@ -89,7 +90,7 @@
                                 </thead>
                                       <tbody>
                                               <?php
-                                                  $result = $conn->query("SELECT DISTINCT date FROM unit_attendance"); 
+                                                  $result = $conn->query("SELECT DISTINCT date FROM unit_attendance ORDER BY date DESC"); 
                                                   $serialnumber=0; 
                                                   while($row = mysqli_fetch_assoc($result)){
                                                   $serialnumber++;
@@ -97,20 +98,15 @@
                                                     <tr class="table-default">
                                                       <td><?php echo $serialnumber;?></td>
                                                       <td width="60%"><?php echo date("M d 20y",strtotime($row['date']));?></td>
-                                                      <td>
-                                                          <form action="viewattendance_crew.php" method="POST">
+                                                      <td>                                 
                                                           <input type="hidden" value="<?php echo $row['date'];?>" name="date" id="date">
                                                           <input type="submit"  name ="submit" class="btn btn-primary" value="Show Attendance">
-                                                        </form>
                                                       </td>
-
                                                     </tr>
-                                                
                                              <?php } ?>
                                       </tbody>
                             </table>
-                          <br>
-                          <input type="submit" class="btn btn-primary" name="submit" id="submit" value="Submit">
+
                         </form>
                     </div>
                 </div>
@@ -145,6 +141,22 @@
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
+    <script>
+      $(document).ready(function(){
+          $('#search').keyup(function(){
+              var search = $(this).val();
+              $.ajax({
+                  url: "include/search_date.php",
+                  method:"post",
+                  data:{search:search},
+                  success:function(data){
+                    $('#table_search').html(data);
+                  }
+
+              })
+          })
+      });
+    </script>
 </body>
 
 </html>

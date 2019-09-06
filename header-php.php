@@ -1,16 +1,15 @@
  <header class="header-desktop">
-                <div class="section__content section__content--p30">
-                    <div class="container-fluid">
-                        <div class="header-wrap">
-                            <form class="form-header" action="" method="POST">
-                                
-                            </form>
-                            <div class="header-button">
-                                <div class="noti-wrap">
-                                    <div class="noti__item js-item-menu">
-                                        <i class="zmdi zmdi-comment-more"></i>
+    <div class="section__content section__content--p30">
+    <div class="container-fluid">
+        <div class="header-wrap">
+            <form class="form-header" action="" method="POST">   
+            </form>
+            <div class="header-button">
+                <div class="noti-wrap">
+                    <div class="noti__item js-item-menu">
+                            <i class="zmdi zmdi-comment-more"></i>
                                         <span class="quantity">1</span>
-                                        <div class="mess-dropdown js-dropdown">
+                                        <div class="mess-dropdown js-dropdown mr-2">
                                             <div class="mess__title">
                                                 <p>You have 2 news message</p>
                                             </div>

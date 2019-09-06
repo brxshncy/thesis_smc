@@ -30,11 +30,22 @@
                             <a href="operation_logbook.php">
                                 <i class="fas fa-user-md"></i>Rescuer Activity Log </a>
                         </li>
-
-                        <li>
-                           <a href="locator.php">
-                            <i class="fas  fa-archive"></i>Locator Slip Requests
-                        </a>
+                       <li>
+                            <a href="locator_request.php">
+                                <i class="fa fa-archive"></i>
+                                    Locator Slip Requests 
+                                    <?php
+                                        include 'include/db.php';
+                                        $qry = "SELECT * FROM locatorslip_request WHERE status = 'unread' ";
+                                        $result = $conn->query($qry);
+                                        $count_status = mysqli_num_rows($result);
+                                        if($count_status>0){
+                                    ?>
+                                    <span class="badge badge-danger"><?php echo $count_status; ?> </span>
+                                    <?php
+                                         }
+                                    ?>
+                            </a>
                         </li>
 
                         <li>

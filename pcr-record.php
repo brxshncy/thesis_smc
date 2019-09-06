@@ -129,6 +129,7 @@
                                     unset($_SESSION['message']);
                                 ?>
                          </div>
+
                          <?php endif ?>
                     <p>Patient Care Report Records</p>
                     <hr> 
@@ -140,10 +141,10 @@
                     </div>
                               
                  <div class="table-responsive-md text-nowrap">      
-                    <table class="table table-hover table-light" id="table_search">
+                    <table class="table table-striped w-auto table-light" id="table_search">
                         <thead>
                             <tr class="table-info">
-                             <th>ID</th>
+                             <th>No.</th>
                              <th>Full Name</th>
                              <th>General Impression</th>
                              <th>Date Incident</th>
@@ -154,14 +155,16 @@
                         </thead>
                         <tbody>
                             <?php
-                              $select = "SELECT * FROM pcr";
+                              $select = "SELECT * FROM pcr ORDER BY id DESC";
+                              $counter = 0;
                               $result = mysqli_query($conn,$select);
                             ?>
                             <?php
                                 while($row = mysqli_fetch_assoc($result)){
+                                  $counter++;
                             ?>
                             <tr>
-                                <td><?php echo $row['id'];?></td>
+                                <td><?php echo $counter;?></td>
                                 <td><?php echo $row['firstname'];?><?php echo " "?><?php echo $row['middlename'];?> <?php echo " ";?><?php echo $row['lastname'];?></td>
                                 <td><?php echo $row['impression'];?></td>
                                 <td><?php echo $row['date_i'];?></td>
@@ -266,6 +269,7 @@
        $(document).ready(function(){
         $("#search").keyup(function(){
           var search = $(this).val();
+
            $.ajax({
               url: 'include/search_action.php',
               type: 'post',

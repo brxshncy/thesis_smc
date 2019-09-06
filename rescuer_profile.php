@@ -26,7 +26,7 @@ include 'include/db.php';
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>Your</title>
+    <title>Your Profile</title>
 
     <!-- Fontfaces CSS-->
     <link href="css/font-face.css" rel="stylesheet" media="all">

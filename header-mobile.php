@@ -17,37 +17,40 @@
             <nav class="navbar-mobile">
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
-                        <li class="has-sub">
-                            <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                        <li>
+                            <a href="pcr-record.php">
+                                <i class="fas fa-files-o"></i>Patient Care Report
+                            </a>
                         </li>
+
+                        <li>
+                            <a href="pcr-addteam.php">
+                            <i class="fas fa-ambulance"></i>Assign Team
+                        </a>
                         </li>
-                         <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-desktop"></i>Operation Section</a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                               <li>
-                                   <a href="pcr-record.php">Manage Patient Care Records</a>
-                                </li>
-                                <li>
-                                    <a href="pcr-addteam.php">Manage Team Rescuers</a>
-                                </li>
-                                <li>
-                                    <a href="operation_attendance.php">Manage Crew Attendance</a>
-                                </li>
-                                <li>
-                                    <a href="locator.php">Locator Slip</a>
-                                </li>
-                                <li>
-                                    <a href="respondent-graph.php">Respondent Graph</a>
-                                </li>
-                            </ul>
+
+                        <li>
+                            <a href="operation_attendance.php">
+                            <i class="far fa-clipboard"></i>Rescuer Attendance
+                        </a>
                         </li>
-                         <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-table"></i>Communication Section</a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+
+                         <li>
+                            <a href="operation_logbook.php">
+                                <i class="fas fa-user-md"></i>Rescuer Activity Log </a>
+                        </li>
+
+                        <li>
+                           <a href="locator.php">
+                            <i class="fas  fa-archive"></i>Locator Slip Requests
+                        </a>
+                        </li>
+
+                        <li>
+                            <a href="respondent-graph.php">
+                            <i class="fas  fa-bar-chart-o"></i>Chart
+                        </a>
+                        </li>
                               
                             </ul>
                         </li>     

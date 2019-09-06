@@ -73,6 +73,7 @@
                          <?php endif ?>
                   <div class="row">
                       <div class="col mb-3">
+                        <input class="au-input au-input--xl mt-2" type="text" name="search" id="search" placeholder="Search Name..." />
                           <a href="view_attendance.php" class="btn btn-success btn-md pull-right">View Attendance</a>
                         </div>
                   </div>  
@@ -83,7 +84,7 @@
                 </div>
                       <div class="table-responsive-md">
                           <form action="include/attendance_crew.php" method="POST">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" id="search_table">
                                 <thead class="thead">
                                       <tr class="table-primary">
                                         <td>No.</td>
@@ -94,16 +95,17 @@
                                 </thead>
                                       <tbody>
                                               <?php
-                                                  $result = $conn->query("SELECT * FROM unit_respondent");
+                                                  $result = $conn->query("SELECT * FROM rescuers");
                                                   $serialnumber = 0;
                                                   $counter=0;
                                                   while($row = mysqli_fetch_assoc($result)){
                                                      $serialnumber++;
+                                                     $fullname  = $row['firstname']." ".$row['lastname'];
                                                     ?> 
                                                     <tr class="table-default">
                                                       <td><?php echo $serialnumber; ?></td>
-                                                      <td><?php echo $row['fullname'];?></td>
-                                                      <input type="hidden" value="<?php echo $row['fullname'];?>" name="fullname[]" id="fullname">
+                                                      <td><?php echo $fullname ?></td>
+                                                      <input type="hidden" value="<?php echo $fullname; ?>" name="fullname[]" id="fullname">
                                                       <td><?php echo $row['contact'];?></td>
                                                       <input type="hidden" value="<?php echo $row['contact'];?>" name="contact[]" id="contact">
                                                       <td width="30%">
@@ -163,6 +165,22 @@
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
+
+    <script>
+      $(document).ready(function(){
+        $('#search').keyup(function(){
+          var search = $(this).val();
+            $.ajax({
+                url:'include/search_rescuer.php',
+                method:'post',
+                data:{search:search},
+                success:function(data){ 
+                  $('#search_table').html(data);
+                }
+            });
+        });
+      });
+    </script>
 </body>
 
 </html>

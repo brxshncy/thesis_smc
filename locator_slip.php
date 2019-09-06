@@ -63,7 +63,7 @@ include 'include/db.php';
         <!-- PAGE CONTAINER-->
         <div class="page-container">
             <!-- HEADER DESKTOP-->
-           <?php include 'header-php.php' ?>
+           <?php include 'rescuer_header.php' ?>
             <!-- HEADER DESKTOP-->
             <!-- END HEADER DESKTOP-->
                 <!-- MODAL -->
@@ -74,8 +74,8 @@ include 'include/db.php';
     <div class="section__content section__content--p30">
         <div class="container-fluid">
           	<?php
-          		if(isset($_SESSION['username'])){
-          			$username = $_SESSION['username'];
+          		if(isset($_SESSION['confirm_username'])){
+          			$username = $_SESSION['confirm_username'];
           			$info = "SELECT * FROM rescuers WHERE username = '$username' ";
           			$query = $conn->query($info);
           			$fetch = mysqli_fetch_assoc($query);
@@ -130,6 +130,12 @@ include 'include/db.php';
                                 <div class="form-group col">
                                     <label><b>Time Return</b></label>
                                     <input type="text" class="form-control" name="time_return" id="time_return" required>
+                            </div>
+                         </div>
+                         <div class="form mt-3">
+                                <div class="form-group col">
+                                    <label><b></b></label>
+                                    <input type="hidden" class="form-control" name="status" id="status" value="unread" readonly>
                             </div>
                          </div>
                          <div class="form mt-2">

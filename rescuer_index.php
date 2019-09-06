@@ -63,7 +63,7 @@ include 'include/db.php';
         <!-- PAGE CONTAINER-->
         <div class="page-container">
             <!-- HEADER DESKTOP-->
-           <?php include 'header-php.php' ?>
+           <?php include 'rescuer_header.php' ?>
             <!-- HEADER DESKTOP-->
             <!-- END HEADER DESKTOP-->
                 <!-- MODAL -->

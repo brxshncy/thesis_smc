@@ -11,9 +11,11 @@ include 'db.php';
 		$date = $_POST['date'];
 		$time = $_POST['time'];
 		$time_return = $_POST['time_return'];
+		$status = $_POST['status'];
+		
 
-		$insert =  "INSERT INTO locatorslip_request (firstname,lastname,username,contact,destination,purpose,date,time,time_return)
-		 VALUES   								 ('$firstname','$lastname','$username','$contact','$destination','$purpose','$date','$time','$time_return')";
+		$insert =  "INSERT INTO locatorslip_request (firstname,lastname,username,contact,destination,purpose,date,time,time_return,status)
+		 VALUES  ('$firstname','$lastname','$username','$contact','$destination','$purpose','$date','$time','$time_return','$status')";
 		$query = $conn->query($insert);
 
 			$_SESSION['request_sent'] = "Request has been sent!";

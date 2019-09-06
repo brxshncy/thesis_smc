@@ -74,14 +74,40 @@
 <form action="include/pcrformdb.php" method="POST">
     <div class="col">
         <div class="card">
-            <div class="card-header bg-primary">
-                <h1 align="center">Pre Hospital Patient Care Form</h1>
+            <div class="card-header bg-light">
+                <h3 align="center" class="p-4">Pre Hospital Patient Care Form</h3>
             </div>
                  <div class="card-body">
-                    <div class="card-title">
-                         <h4 class="ml-2 p-2">Patient's Personal Information</h4>
-                    </div>
-                    <?php if(isset($_SESSION['message'])): ?>
+
+         <!--================================================================================================================-->
+                    <ul class="nav nav-tabs nav-pills nav-fill">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" style="border:1px solid #ccc" id="list_patient">
+                                Patient's Personal Info
+                            </a>    
+                        </li>
+                         <li class="nav-item">
+                            <a class="nav-link inactive_tab1" href="#" style="border:1px solid #ccc" id="list_incident">
+                                Incident Info
+                            </a>    
+                        </li>
+                         <li class="nav-item">
+                            <a class="nav-link inactive_tab1" href="#" style="border:1px solid #ccc" id="list_vs">
+                                 Vital Sign
+                            </a>    
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link inactive_tab1 "  href="#" style="border:1px solid #ccc" id="list_assesment">
+                                 Assesment
+                            </a>    
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link inactive_tab1" href="#" style="border:1px solid #ccc" id="list_rescuer">
+                                 Rescuer Information
+                            </a>    
+                        </li>
+                    </ul>
+  <?php if(isset($_SESSION['message'])): ?>
                          <div class="alert alert-<?=$_SESSION['msg_type']?>">
                                 <?php
                                     echo $_SESSION['message'];
@@ -89,245 +115,272 @@
                                 ?>
                          </div>
                          <?php endif ?>
-                    <hr>
-                    <div class="form-row">
-                            <div class="form-group col-md-5">
-                                <label>First Name</label>
-                                <input type="text" class="form-control" name= "firstname" id="firstname" required="">
-                            </div>
-                            <div class="form-group col-md-5 ">
-                                <label for="inputPassword4">Last Name</label>
-                                <input type="text" class="form-control" name= "lastname" id="lastname" required="">
-                            </div>
-                            <div class="form-group col-md-2 ">
-                                <label>Middle Initial</label>
-                                <input type="text" class="form-control" name= "mi" id="mi" required="">
-                            </div>
-                    </div>
-                    <div class="form-row">
-                            <div class="form-group col-md-1">
-                                <label>Age</label>
-                                <input type="text" class="form-control" name= "age" id="age" required="">
-                            </div>
-                            <div class="form-group col-md-4 ml-2">
-                                 <label>Religion</label>
-                                 <input type="text" class="form-control" name= "religion" id="religion" required="" >
-                            </div>
-                            <div class="form-group col-md-5">
-                                 <label>Nationality</label>
-                                 <input type="text" class="form-control" name= "nationality" id="nationality" required="">
-                            </div>
-                     </div>
-                    <div class="form">
-                            <div class="form-group">
-                                 <label>Address</label>
-                                 <input type="text" class="form-control" name= "address" id="address" required="">
-                            </div>
-                    </div>
-                    <div class="row form-group">
-                                <div class="col">
-                                    <label class=" form-control-label" for="gender">Gender</label>
-                                    <input type="radio" class="ml-2 mr-2" name="gender" id="gender" value="Male" required="">Male
-                                    <input type="radio" class="ml-2 mr-2" name="gender" id="gender" value="Female">Female
-                                </div>          
-                    </div>
-                    <button type="button" id="show_incident-form" class="btn btn-info"> Incident Info</button>
-                     <button type="button" id="show_vs-form" class="btn btn-info">Patient's Vital Sign</button>
-                     <button type="button" id="show_assesment" class="btn btn-info">Assesment</button>
-                     <button type="button" id="show_teaminfo" class="btn btn-info">Rescuer Information</button>
-            </div>  <!--end of card-body-->
-        </div><!--end of card-->
-    </div><!--end of col-->
 
-     <div class="col">
-        <div class="card" id="incident_form">
-                 <div class="card-body">
-                    <div class="card-title">
-                         <h4 class="ml-2 p-2">Incident Information</h4>
+     <!--====================================Patient's Personal Info=================================================-->
+<div class="tab-content" style="margin-top:16px;">
+    <div class="tab-pane active" id="personalinfo_content">
+        <div class="panel panel-default">
+            <div class="panel-heading">Patient's Personal Info</div>
+
+            <div class="panel-body">
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label>First Name</label>
+                        <input type="text" class="form-control" name= "firstname" id="firstname" required="">
                     </div>
-                    <hr>
-                     <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                            <label>Date of Incident</label>
-                                            <input type="date" class="form-control" name= "date_i" id="date_i" require">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                            <label for="inputPassword4">Time of Incident</label>
-                                            <input type="text" class="form-control" name= "time_i" id="time_i"  placeholder="HH/MM/AA" require">
-                                    </div>
-                                 </div>
-                                 <div class="form">
-                                    <div class="form-group">
-                                            <label>General Impression</label>
-                                            <input type="text" class="form-control" name= "impression" id="impression" require">
-                                    </div>
-                                 </div>
-                                 <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                            <label>Relation to Patient</label>
-                                            <input type="text" class="form-control" name= "r_p1" id="contact1" require">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                            <label for="inputPassword4">Contact Number</label>
-                                            <input type="text" class="form-control" name= "contact1" id="contact1" require">
-                                    </div>
-                                 </div>
-                                 <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                            <label>Relation to Patient</label>
-                                            <input type="text" class="form-control" name= "r_p2" id="r_p2" require">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                            <label for="inputPassword4">Contact Number</label>
-                                            <input type="text" class="form-control" name= "contact2" id="contact2" require">
-                                    </div>
-                                 </div>
-                                 <div class="form">
-                                    <div class="form-group">
-                                            <label>Reason For Calling</label>
-                                            <input type="text" class="form-control" name= "reason" id="reason" require">
-                                    </div>
-                                 </div>
-                                 <div class="row form-group">
-                                        <div class="col col-md-6">
-                                            <label for="select" class=" form-control-label">Nature of Incident</label>
-                                                <select name="nature" id="nature" class="form-control-lg form-control">
-                                                    <option value="null">Please select</option>
-                                                    <option value="Medical">Medical</option>
-                                                    <option value="Trauma">Trauma</option>
-                                                    <option value="Fire Response">Fire Response</option>
-                                                    <option value="V A">V A</option>
-                                                    <option value="Activity Event">Activity Event</option>
-                                                </select>
-                                        </div>
-                                         <div class="col col-md-6">
-                                            <label for="select" class=" form-control-label">Neuro</label>
-                                                <select name="neuro" id="neuro" class="form-control-lg form-control">
-                                                    <option value="null">Please select</option>
-                                                    <option value="Alert">Alert</option>
-                                                    <option value="Oriented">Oriented</option>
-                                                    <option value="Confused">Confused</option>
-                                                    <option value="Unresponsive">Unresponsive</option>
-                                                </select>
-                                        </div>
-                                    </div> 
-                                    <br>
-                                     <div class="form-row">
-                                        <div class="form-group col-md-4">
-                                                <label>Call Recieve</label>
-                                                <input type="text" class="form-control" name= "call_recieve" id="call_recieve" require">
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                                <label for="inputPassword4">Unit Enroute</label>
-                                                <input type="text" class="form-control" name= "unit_enroute" id="unit_enroute"  placeholder="HH/MM/AA" require">
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                                <label for="inputPassword4">Arrive at Scene</label>
-                                                <input type="text" class="form-control" name= "arrive_scene" id="arrive_scene"  placeholder="HH/MM/AA" require">
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-4">
+                    <div class="form-group col-md-5 ">
+                        <label for="inputPassword4">Last Name</label>
+                        <input type="text" class="form-control" name= "lastname" id="lastname" required="">
+                    </div>
+                    <div class="form-group col-md-2 ">
+                        <label>Middle Initial</label>
+                        <input type="text" class="form-control" name= "mi" id="mi" required="">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-1">
+                        <label>Age</label>
+                        <input type="text" class="form-control" name= "age" id="age" >
+                    </div>
+                    <div class="form-group col-md-4 ml-2">
+                        <label>Religion</label>
+                        <input type="text" class="form-control" name= "religion" id="religion"  >
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label>Nationality</label>
+                        <input type="text" class="form-control" name= "nationality" id="nationality" >
+                    </div>
+                </div>
+
+                <div class="form">
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" class="form-control" name= "address" id="address" >
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col">
+                        <label class=" form-control-label" for="gender">Gender</label>
+                        <input type="radio" class="ml-2 mr-2" name="gender" id="gender" value="Male">Male
+                        <input type="radio" class="ml-2 mr-2" name="gender" id="gender" value="Female">Female
+                    </div>          
+                </div>
+                    <div align="center">
+                        <button type="button" name="btn_personal_info" id="btn_personal_info" class="btn btn-info btn">
+                            Next
+                        </button>
+                    </div>
+            </div>
+            
+        </div>
+    </div>
+     <!--====================================End Patient's Personal Info=================================================-->
+
+     <!--====================================Incident Details=================================================-->
+<div class="tab-pane fade" id="incident_details">
+    <div class="panel panel-default">
+        <div class="panel-heading">Incident Info</div>
+            <div class="panel-body">
+
+                <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Date of Incident</label>
+                            <input type="date" class="form-control" name= "date_i" id="date_i">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">Time of Incident</label>
+                            <input type="text" class="form-control" name= "time_i" id="time_i"  placeholder="HH/MM/AA">
+                        </div>
+                </div>
+                <div class="form">
+                        <div class="form-group">
+                            <label>General Impression</label>
+                            <input type="text" class="form-control" name= "impression" id="impression">
+                        </div>
+                </div>
+                <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Relation to Patient</label>
+                            <input type="text" class="form-control" name= "r_p1" id="contact1">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">Contact Number</label>
+                            <input type="text" class="form-control" name= "contact1" id="contact1">
+                        </div>
+                </div>
+                 <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Relation to Patient</label>
+                            <input type="text" class="form-control" name= "r_p2" id="r_p2" require">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">Contact Number</label>
+                            <input type="text" class="form-control" name= "contact2" id="contact2" require">
+                        </div>
+                </div>
+                <div class="form">
+                        <div class="form-group">
+                            <label>Reason For Calling</label>
+                            <input type="text" class="form-control" name= "reason" id="reason" require">
+                        </div>
+                </div>
+                <div class="row form-group">
+                        <div class="col col-md-6">
+                            <label for="select" class=" form-control-label">Nature of Incident</label>
+                                <select name="nature" id="nature" class="form-control-lg form-control">
+                                    <option value=""></option>
+                                    <option value="Medical">Medical</option>
+                                    <option value="Trauma">Trauma</option>
+                                    <option value="Fire Response">Fire Response</option>
+                                    <option value="V A">V A</option>
+                                    <option value="Activity Event">Activity Event</option>
+                                </select>
+                        </div>
+                        <div class="col col-md-6">
+                            <label for="select" class=" form-control-label">Neuro</label>
+                                <select name="neuro" id="neuro" class="form-control-lg form-control">
+                                    <option value=""></option>
+                                    <option value="Alert">Alert</option>
+                                    <option value="Oriented">Oriented</option>
+                                    <option value="Confused">Confused</option>
+                                    <option value="Unresponsive">Unresponsive</option>
+                                </select>
+                        </div>
+                </div>
+
+                <div class="form-row">
+                        <div class="form-group col-md-4">
+                                <label>Call Recieve</label>
+                                <input type="text" class="form-control" name= "call_recieve" id="call_recieve">
+                        </div>
+                        <div class="form-group col-md-4">
+                                <label for="inputPassword4">Unit Enroute</label>
+                                <input type="text" class="form-control" name= "unit_enroute" id="unit_enroute">
+                        </div>
+                        <div class="form-group col-md-4">
+                                <label for="inputPassword4">Arrive at Scene</label>
+                                <input type="text" class="form-control" name= "arrive_scene" id="arrive_scene">
+                        </div>
+                </div>
+                <div class="form-row">
+                        <div class="form-group col-md-4">
                                                 <label for="inputPassword4">Time Left Scene</label>
-                                                <input type="text" class="form-control" name= "left_scene" id="left_scene"  placeholder="HH/MM/AA" require">
-                                        </div>
-                                        <div class="form-group col-md-4">
+                                                <input type="text" class="form-control" name= "left_scene" id="left_scene"  placeholder="" require">
+                        </div>
+                        <div class="form-group col-md-4">
                                                 <label for="inputPassword4">Arrive at Destination</label>
-                                                <input type="text" class="form-control" name= "arrive_destination" id="arrive_destination"  placeholder="HH/MM/AA" require">
-                                        </div>
-                                        <div class="form-group col-md-4">
+                                                <input type="text" class="form-control" name= "arrive_destination" id="arrive_destination"  placeholder="" require">
+                        </div>
+                        <div class="form-group col-md-4">
                                                 <label for="inputPassword4">Back In Service</label>
-                                                <input type="text" class="form-control" name= "back_service" id="back_service"  placeholder="HH/MM/AA" require">
+                                                <input type="text" class="form-control" name= "back_service" id="back_service"  placeholder="" require">
                                         </div>
-                                 </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-3">
-                                            <label for="select" class=" form-control-label">Airway</label>
-                                                <select name="airway" id="airway" class="form-control-lg form-control">
-                                                    <option value="null">Please select</option>
-                                                    <option value="Patent">Patent</option>
-                                                    <option value="Impaired">Impaired</option>
-                                                </select>
-                                        </div>
-                                         <div class="col col-md-3">
-                                            <label for="select" class=" form-control-label">Breathing</label>
-                                                <select name="breathing" id="breathing" class="form-control-lg form-control">
-                                                    <option value="null">Please select</option>
-                                                    <option value="Unlabored">Unlabored</option>
-                                                    <option value="Deep">Deep</option>
-                                                    <option value="Shallow">Shallow</option>
-                                                    <option value="Labored">Labored</option>
-                                                    <option value="Retraction">Retraction</option>
-                                                    <option value="Absent">Absent</option>
-                                                </select>
-                                        </div>
-                                        <div class="col col-md-3">
-                                            <label for="select" class=" form-control-label">Pupils</label>
-                                                <select name="pupils" id="pupils" class="form-control-lg form-control">
-                                                    <option value="null">Please select</option>
-                                                    <option value="Normal/Pearl">Normal/Pearl</option>
-                                                    <option value="Constritec(Left/Right)">Constritec(Left/Right)</option>
-                                                    <option value="Dilated(Left/Right)">Dilated(Left/Right)</option>
-                                                    <option value="No Reaction(Left/Right)">No Reaction(Left/Right)</option>
-                                                </select>
-                                        </div>
-                                        <div class="col col-md-3">
-                                            <label for="select" class=" form-control-label">Pulse</label>
-                                                <select name="pulse" id="pulse" class="form-control-lg form-control">
-                                                    <option value="null">Please select</option>
-                                                    <option value="Normal">Normal</option>
-                                                    <option value="Strong">Strong</option>
-                                                    <option value="Weak">Weak</option>
-                                                    <option value="Irregular">Irregular</option>
-                                                     <option value="Regular">Regular</option>
-                                                </select>
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col col-md-4">
-                                            <label for="select" class=" form-control-label">Skin</label>
-                                                <select name="skin" id="skin" class="form-control-lg form-control">
-                                                    <option value="null">Please select</option>
-                                                    <option value="Normal">Normal</option>
-                                                    <option value="Cyanotic">Cyanotic</option>
-                                                    <option value="Pale">Pale</option>
-                                                    <option value="Cold">Cold</option>
-                                                    <option value="Jaundice">Jaundice</option>
-                                                    <option value="Flushed">Flushed</option>
-                                                    <option value="Asthen">Asthen</option>
-                                                </select>
-                                        </div>
-                                         <div class="col col-md-4">
-                                            <label for="select" class=" form-control-label">Skin Type</label>
-                                                <select name="skin_texture" id="skin_texture" class="form-control-lg form-control">
-                                                    <option value="null">Please select</option>
-                                                    <option value="Normal">Normal</option>
-                                                    <option value="Moist">Moist</option>
-                                                    <option value="Dry">Dry</option>
-                                                    <option value="Disphoretic">Disphoretic</option>
-                                                </select>
-                                        </div>
-                                        <div class="col col-md-4">
-                                            <label for="select" class=" form-control-label">CRT</label>
-                                                <select name="crt" id="crt" class="form-control-lg form-control">
-                                                    <option value="null">Please select</option>
-                                                    <option value="1">Prolonged(>2 seconds)</option>
-                                                    <option value="2">Normal(< 2 seconds)</option>
-                                                </select>
-                                        </div>
-                                    </div> 
-                 </div>  <!--end of card-body-->
-        </div><!--end of card-->
-    </div><!--end of col-->
+                </div>
+                <div class="row form-group">
+                        <div class="col col-md-6">
+                            <label for="select" class=" form-control-label">Airway</label>
+                                <select name="airway" id="airway" class="form-control-lg form-control">
+                                    <option value=""></option>
+                                    <option value="Patent">Patent</option>
+                                    <option value="Impaired">Impaired</option>
+                                </select>
+                        </div>
+                        <div class="col col-md-6">
+                            <label for="select" class=" form-control-label">Breathing</label>
+                                <select name="breathing" id="breathing" class="form-control-lg form-control">
+                                    <option value=""></option>
+                                    <option value="Unlabored">Unlabored</option>
+                                    <option value="Deep">Deep</option>
+                                    <option value="Shallow">Shallow</option>
+                                    <option value="Labored">Labored</option>
+                                    <option value="Retraction">Retraction</option>
+                                    <option value="Absent">Absent</option>
+                                </select>
+                        </div>
+                </div>
+                <div class="row form-group">
+                        <div class="col col-md-6">
+                            <label for="select" class=" form-control-label">Pupils</label>
+                                <select name="pupils" id="pupils" class="form-control-lg form-control">
+                                    <option value=""></option>
+                                    <option value="Normal/Pearl">Normal/Pearl</option>
+                                    <option value="Constritec(Left/Right)">Constritec(Left/Right)</option>
+                                    <option value="Dilated(Left/Right)">Dilated(Left/Right)</option>
+                                        <option value="No Reaction(Left/Right)">No Reaction(Left/Right)</option>
+                                </select>
+                        </div>
+                        <div class="col col-md-6">
+                            <label for="select" class=" form-control-label">Pulse</label>
+                                <select name="pulse" id="pulse" class="form-control-lg form-control">
+                                    <option value=""> </option>
+                                    <option value="Normal">Normal</option>
+                                    <option value="Strong">Strong</option>
+                                    <option value="Weak">Weak</option>
+                                    <option value="Irregular">Irregular</option>
+                                    <option value="Regular">Regular</option>
+                                </select>
+                        </div>
+                 </div>
 
-     <div class="col">
-        <div class="card" id="vital_signs">
-                 <div class="card-body">
-                    <div class="card-title">
-                         <h4 class="ml-2 p-2">Patients Vital Signs Info</h4>
-                    </div>
-                    <hr>
-                     <div class="form-row">
+                <div class="row form-group">
+                        <div class="col col-md-4">
+                            <label for="select" class=" form-control-label">Skin</label>
+                                <select name="skin" id="skin" class="form-control-lg form-control">
+                                    <option value=""> </option>
+                                    <option value="Normal">Normal</option>
+                                    <option value="Cyanotic">Cyanotic</option>
+                                    <option value="Pale">Pale</option>
+                                    <option value="Cold">Cold</option>
+                                    <option value="Jaundice">Jaundice</option>
+                                    <option value="Flushed">Flushed</option>
+                                    <option value="Asthen">Asthen</option>
+                                </select>
+                        </div>
+                        <div class="col col-md-4">
+                            <label for="select" class=" form-control-label">Skin Type</label>
+                                <select name="skin_texture" id="skin_texture" class="form-control-lg form-control">
+                                    <option value=""></option>
+                                    <option value="Normal">Normal</option>
+                                    <option value="Moist">Moist</option>
+                                    <option value="Dry">Dry</option>
+                                    <option value="Disphoretic">Disphoretic</option>
+                                </select>
+                        </div>
+                        <div class="col col-md-4">
+                            <label for="select" class=" form-control-label">CRT</label>
+                                <select name="crt" id="crt" class="form-control-lg form-control">
+                                    <option value=""> </option>
+                                    <option value="1">Prolonged(>2 seconds)</option>
+                                    <option value="2">Normal(< 2 seconds)</option>
+                                </select>
+                        </div>
+                </div>
+                <div align="center">
+                    <button type="button" name="btn_personal_info" id="btn_prev_incident" class="btn btn-secondary btn">
+                            Previous
+                        </button>
+                        <button type="button" name="btn_personal_info" id="btn_nxt_incident" class="btn btn-info btn">
+                            Next
+                        </button>
+                    </div> 
+                                   
+        </div>
+    </div>
+</div>
+
+     <!--====================================End ofIncident Details=================================================-->
+
+
+    
+ <!--====================================Vital Signs=================================================-->
+<div class="tab-pane fade" id="vsinfo_content">
+    <div class="panel panel-default">
+        <div class="panel-heading">Vital Signs Info</div>
+
+            <div class="panel-body">
+                <div class="form-row">
                                         <div class="form-group col-md-6">
                                                 <label>Time</label>
                                                 <input type="text" class="form-control" name= "time_vs" id="time_vs">
@@ -359,7 +412,7 @@
                                         <div class="col col-md-4">
                                             <label for="select" class=" form-control-label">Eye</label>
                                                 <select name="eye" id="eye" class="form-control-lg form-control">
-                                                    <option value="null">Please select</option>
+                                                    <option value=""> </option>
                                                     <option value="4">4</option>
                                                     <option value="3">3</option>
                                                     <option value="2">2</option>
@@ -369,7 +422,7 @@
                                          <div class="col col-md-4">
                                             <label for="select" class=" form-control-label">Verbal</label>
                                                 <select name="verbal" id="verbal" class="form-control-lg form-control">
-                                                    <option value="null">Please select</option>
+                                                    <option value=""> </option>
                                                     <option value="5">5</option>
                                                     <option value="4">4</option>
                                                     <option value="3">3</option>
@@ -380,7 +433,7 @@
                                         <div class="col col-md-4">
                                             <label for="select" class=" form-control-label">Motor</label>
                                                 <select name="motor" id="motor" class="form-control-lg form-control">
-                                                    <option value="null">Please select</option>
+                                                    <option value=""> </option>
                                                     <option value="6">6</option>
                                                     <option value="5">5</option>
                                                     <option value="4">4</option>
@@ -396,18 +449,30 @@
                                                 <input type="text" class="form-control" name= "total" id="total" require">
                                         </div>
                                  </div>
+                <div align="center">
+                    <button type="button" name="btn_personal_info" id="btn_prev_vs" class="btn btn-secondary btn">
+                            Previous
+                    </button>
+                    <button type="button" name="btn_personal_info" id="btn_next_vs" class="btn btn-info btn">
+                            Next
+                    </button>
+                </div> 
 
-            </div>  <!--end of card-body-->
-        </div><!--end of card-->
-    </div><!--end of col-->
-    <div class="col">
-        <div class="card" id="assesment">
-                 <div class="card-body">
-                    <div class="card-title">
-                         <h4 class="ml-2 p-2">Assesment</h4>
-                    </div>
-                    <hr>
-                    <div class="form-row">
+
+        </div>
+    </div>
+</div>
+
+
+    <!--====================================End ofVital Signs=================================================-->
+
+ <!--====================================Rescuer Info=================================================-->
+<div class="tab-pane fade" id="assesment_content">
+    <div class="panel panel-default">
+        <div class="panel-heading">Assesment</div>
+
+            <div class="panel-body">
+                  <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label>Signs and Symptoms</label>
                                         <input type="text" class="form-control" name="symtomps" id="symtomps">
@@ -473,7 +538,7 @@
                                         <div class="col col-md-4">
                                             <label for="select" class=" form-control-label">Trauma Case</label>
                                                 <select name="trauma" id="etraumaye" class="form-control-lg form-control">
-                                                    <option value="null">Please select</option>
+                                                    <option value=""></option>
                                                     <option value="Alcohol Intoxication">Alcohol Intoxication</option>
                                                     <option value="Animal Bite">Animal Bite</option>
                                                     <option value="Drowning">Drowning</option>
@@ -488,7 +553,7 @@
                                          <div class="col col-md-4">
                                             <label for="select" class=" form-control-label">Burn(%TBSA)</label>
                                                 <select name="burn" id="burn" class="form-control-lg form-control">
-                                                    <option value="null">Please select</option>
+                                                    <option value=""></option>
                                                     <option value="First Degree">First Degree</option>
                                                     <option value="Second Degree">Second Degree</option>
                                                     <option value="Superficial">Superficial</option>
@@ -498,7 +563,7 @@
                                         <div class="col col-md-4">
                                             <label for="select" class=" form-control-label">Treatment</label>
                                                 <select name="treatment" id="treatment" class="form-control-lg form-control">
-                                                    <option value="null">Please select</option>
+                                                    <option value=""></option>
                                                     <option value="Airway Conduct">Airway Conduct</option>
                                                     <option value="Abdominal Thrus">Abdominal Thrust</option>
                                                     <option value="Bandaging">Bandaging</option>
@@ -524,22 +589,29 @@
                                               <textarea name="narrative" id="narrative" rows="9" placeholder="Write Narratives.." class="form-control"></textarea>
                                     </div>
                                 </div>
-  </div>  <!--end of card-body-->
-        </div><!--end of card-->
-    </div><!--end of col-->
+                                 <div align="center">
+                    <button type="button" name="btn_personal_info" id="btn_prev_assesment" class="btn btn-secondary btn">
+                            Previous
+                    </button>
+                    <button type="button" name="btn_personal_info" id="btn_nxt_assesment" class="btn btn-info btn">
+                            Next
+                    </button>
+                </div> 
+            </div>
+    </div>
+</div>
+            <!--====================================End of Assesment=================================================-->
+    <!--====================================Rescuer Info=================================================-->
+<div class=" tab-pane fade" id="rescuer_content">
+    <div class="panel panel-default">
+        <div class="panel-heading">Team Rescuer Information</div>
 
-    <div class="col">
-        <div class="card" id="team_info">
-                 <div class="card-body">
-                    <div class="card-title">
-                         <h4 class="ml-2 p-2">Team Information</h4>
-                    </div>
-                    <hr>
-                    <div class="row form-group">
+            <div class="panel-body">
+                <div class="row form-group">
                                      <div class="col col-md-4">
                                         <label>Dispatched Unit</label>
                                          <select name="dispatched_unit" class="form-control-lg form-control">
-                                            <option value="null">Select</option>
+                                            <option value=""></option>
                                         <?php
                                             $query = "SELECT * FROM unit_name";
                                             $result = mysqli_query($conn,$query);
@@ -562,6 +634,7 @@
                                     <div class="col col-md-4">
                                         <label>Destination Determination</label>
                                         <select name="desti_deter" class="form-control-lg form-control">
+                                            <option value=""></option>
                                             <option value="Closest Facility">Closest Facility</option>
                                             <option value="Patient's Choice">Patient's Choice</option>
                                             <option value="Family's Choice">Family's Choice</option>
@@ -573,6 +646,7 @@
                                     <div class="col col-md-4">
                                         <label>Responsode mode</label>
                                         <select name="response_mode" class="form-control-lg form-control">
+                                            <option value=""></option>
                                             <option value="No Lights and Siren">No Lights and Siren</option>
                                             <option value="Lights Only">Lights Only</option>
                                             <option value="Lights and Siren">Lights and Siren</option>
@@ -581,6 +655,7 @@
                                     <div class="col col-md-4">
                                         <label>Transport Mode</label>
                                         <select name="transport_mode" class="form-control-lg form-control">
+                                            <option value=""></option>
                                             <option value="No Lights and Siren">No Lights and Siren</option>
                                             <option value="Lights Only">Lights Only"</option>
                                             <option value="Lights and Siren">Lights and Siren</option>
@@ -601,26 +676,32 @@
                                         <input type="text" class="form-control" name="receiving_md" id="receiving_md">
                                     </div>
                                 </div>
-             </div>  <!--end of card-body-->
-        </div><!--end of card-->
-    </div><!--end of col-->
+                                <br>
+                <div align="center">
+                        <button type="button" name="btn_personal_info" id="btn_prev_rescuer" class="btn btn-secondary btn">
+                                    Previous
+                        </button>
+                        <button type="submit" name="upload" id="upload" class="btn btn-success btn">
+                                    Save
+                        </button>
+                </div> 
+            </div>
 
-    <div class="col">
-        <div class="card" style="margin-top:-36px;">
-            <div class="card-body">
-            <input type="submit" name="upload" id="upload" style= "" class="btn btn-primary btn-lg btn-block" value="Upload Data">
-                 </div>  <!--end of card-body-->
-        </div><!--end of card-->
-    </div><!--end of col-->
+
+        </div>
+    </div>
+
+        <!--====================================End of Rescuer Info=================================================-->
+
+
+
+     <!--====================================END OF CONTENTS=================================================-->
+ </div>
+</div>
+        </div>
+    </div>
 </form>
-
-
-
-
-
-
-
-                <!-- END OF MAIN DIVS-->
+    <!--================================================================================================================-->
           </div><!-- end of container-fluid -->
     </div><!-- end of section -->
 </div><!-- end of main-content -->
@@ -654,38 +735,109 @@
 
     <script>
         $(document).ready(function(){
-            $('#incident_form').hide();
-            $('#show_incident-form').on('click',function(){
-                $('#incident_form').toggle(function(){      
-                });
+            $('#btn_personal_info').click(function(){
+                var firstname = $('#firstname').val();
+                var lastname = $('#lastname').val();
+                var mi = $('#mi').val();
+                var age = $('#age').val();
+                var religion = $('#religion').val();
+                var nationality = $('#nationality').val();
+                var address = $('#address').val();
+                var gender = $('#gender').val();
+
+                if(firstname == ''||lastname==''||mi==''||age==''||religion==''||nationality==''||address==''||gender==''){
+                    alert("Please fill all fields!");
+                }
+                else{
+                    $('#list_patient').removeClass('active');
+                    $('#list_patient').removeClass('href data-toggle');
+                    $('#personalinfo_content').removeClass('active');
+                    $('#list_patient').addClass('inactive_tab');
+                    $('#list_incident').removeClass('inactive_tab');
+                    $('#list_incident').addClass('active');
+                    $('#incident_details').attr('href','incident_details');
+                    $('#list_incident').attr('data-toggle','tab');
+                    $('#incident_details').addClass('active in');
+                }
+
             });
-        });
 
-
-        $(document).ready(function(){
-            $('#vital_signs').hide();
-            $('#show_vs-form').on('click',function(){
-                $('#vital_signs').toggle(function(){
-                });
+            $('#btn_prev_incident').click(function(){
+                $('#list_incident').removeClass('active');
+                $('#list_incident').removeAttr('href','data-toggle');
+                $('#list_patient').addClass('active');
+                $('#list_patient').attr('href','personalinfo_content');
+                $('#list_patient').attr('data-toggle','tab');
+                $('#incident_details').removeClass('active in');
+                $('#personalinfo_content').addClass('active in');
             });
-        });
 
-
-        $(document).ready(function(){
-            $('#assesment').hide();
-            $('#show_assesment').on('click',function(){
-                $('#assesment').toggle(function(){
-                });
+            $('#btn_nxt_incident').click(function(){
+                    $('#list_incident').removeClass('active');
+                    $('#list_incident').removeClass('href data-toggle');
+                    $('#incident_details').removeClass('active');
+                    $('#list_incident').addClass('inactive_tab');
+                    $('#list_vs').removeClass('inactive_tab');
+                    $('#list_vs').addClass('active');
+                    $('#vsinfo_content').attr('href','vsinfo_content');
+                    $('#list_vs').attr('data-toggle','tab');
+                    $('#vsinfo_content').addClass('active in');
             });
-        });
 
-
-         $(document).ready(function(){
-            $('#team_info').hide();
-            $('#show_teaminfo').on('click',function(){
-                $('#team_info').toggle(function(){
-                });
+            $('#btn_prev_vs').click(function(){
+                $('#list_vs').removeClass('active');
+                $('#list_vs').removeAttr('href','data-toggle');
+                $('#list_incident').addClass('active');
+                $('#list_incident').attr('href','personalinfo_content');
+                $('#list_incident').attr('data-toggle','tab');
+                $('#vsinfo_content').removeClass('active in');
+                $('#incident_details').addClass('active in');
             });
+
+             $('#btn_next_vs').click(function(){
+                    $('#list_vs').removeClass('active');
+                    $('#list_vs').removeClass('href data-toggle');
+                    $('#vsinfo_content').removeClass('active');
+                    $('#list_vs').addClass('inactive_tab');
+                    $('#list_assesment').removeClass('inactive_tab');
+                    $('#list_assesment').addClass('active');
+                    $('#assesment_content').attr('href','vsinfo_content');
+                    $('#list_assesment').attr('data-toggle','tab');
+                    $('#assesment_content').addClass('active in');
+            });
+
+            $('#btn_prev_assesment').click(function(){
+                $('#list_assesment').removeClass('active');
+                $('#list_assesment').removeAttr('href','data-toggle');
+                $('#list_vs').addClass('active');
+                $('#list_vs').attr('href','personalinfo_content');
+                $('#list_vs').attr('data-toggle','tab');
+                $('#assesment_content').removeClass('active in');
+                $('#vsinfo_content').addClass('active in');
+            });
+
+              $('#btn_nxt_assesment').click(function(){
+                    $('#list_assesment').removeClass('active');
+                    $('#list_assesment').removeClass('href data-toggle');
+                    $('#assesment_content').removeClass('active');
+                    $('#list_rescuer').addClass('inactive_tab');
+                    $('#list_rescuer').removeClass('inactive_tab');
+                    $('#list_rescuer').addClass('active');
+                    $('#rescuer_content').attr('href','rescuer_content');
+                    $('#list_assesment').attr('data-toggle','tab');
+                    $('#rescuer_content').addClass('active in');
+            });
+
+               $('#btn_prev_rescuer').click(function(){
+                $('#list_rescuer').removeClass('active');
+                $('#list_rescuer').removeAttr('href','data-toggle');
+                $('#list_assesment').addClass('active');
+                $('#list_assesment').attr('href','personalinfo_content');
+                $('#list_assesment').attr('data-toggle','tab');
+                $('#rescuer_content').removeClass('active in');
+                $('#assesment_content').addClass('active in');
+            });
+
         });
 
 

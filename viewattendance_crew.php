@@ -112,8 +112,12 @@
                                       </tbody>
                             </table>
                           <br>
-                          <input type="submit" class="btn btn-primary" name="back" id="back" value="Back">
                         </form>
+                        <div class="row mb-4">
+                            <div class="col">
+                                  <a href="view_attendance.php"><button type="submit" class="btn btn-primary">Back</button></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
