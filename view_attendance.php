@@ -145,6 +145,7 @@
       $(document).ready(function(){
           $('#search').keyup(function(){
               var search = $(this).val();
+              
               $.ajax({
                   url: "include/search_date.php",
                   method:"post",

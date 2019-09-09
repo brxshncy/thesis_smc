@@ -215,11 +215,14 @@ include 'include/db.php';
                          <?php endif ?>
                 <h2>Manage Team Rescuer</h2>
                 <hr>
-                <button class="btn btn-info" data-toggle="modal" data-target="#scrollmodal" data-placement="top" title="Add Team ">
-                        Add Team 
+                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#scrollmodal" data-placement="top" title="Add Team ">
+                        <i class="far fa-flag"></i>
                 </button>
-                <button class="btn btn-success" data-toggle="modal" data-target="#addmember" data-placement="top" title="Add Team Member">
-                       Assign Team Crews
+                <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#addmember" data-placement="top" title="Add Team Member">
+                       <i class="fas fa-users"></i>
+                </button>
+                <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#addmember" data-placement="top" title="Add Team Member">
+                       <i class="fas fa-ambulance"></i>
                 </button>
                     <br>
                     <br>

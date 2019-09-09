@@ -5,9 +5,10 @@ $output = "";
 		
 if(isset($_POST['search'])){
 	$search = $_POST['search'];
-	$searc_date = date("M d 20y",strtotime($search));
+	$searc_date = date("Y-m-d",strtotime($search));
 		$qry = "SELECT * FROM unit_attendance WHERE date LIKE '{$searc_date}%' ";
 		$result = $conn->query($qry);
+		
 }
 if($result->num_rows>0){
 	$output = " 
@@ -28,9 +29,9 @@ while($row = mysqli_fetch_assoc($query_date)){
 	$output .= "
 		<tr class='table-default'>
              <td>  $serialnumber </td>
-             <td width='60%'> $date_search  </td>
+             <td width='60%'> ".$date_search." </td>
              <td>                                 
-             <input type='hidden' value='<?php echo {$row['date']} ?>' name='date' id='date'>
+             <input type='hidden' value=".$row['date']." name='date' id='date'>
              <input type='submit'  name ='submit'  class='btn btn-primary' value='Show Attendance'>
              </td>
          </tr>

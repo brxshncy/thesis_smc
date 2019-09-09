@@ -121,6 +121,7 @@
                             This is a danx`ger alert—check it out!
                     </div>
                      <div class="row">
+                      <br>
                        <div class="col mt-4 bg-light p-4">
                         <?php if(isset($_SESSION['message'])): ?>
                          <div class="alert alert-<?=$_SESSION['msg_type']?>">
@@ -140,13 +141,12 @@
                          </div>
                     </div>
                               
-                 <div class="table-responsive-md text-nowrap">      
-                    <table class="table table-striped w-auto table-light" id="table_search">
+                 <div class="table-responsive">      
+                    <table class="table table-striped w-100 table-light" id="table_search">
                         <thead>
                             <tr class="table-info">
                              <th>No.</th>
                              <th>Full Name</th>
-                             <th>General Impression</th>
                              <th>Date Incident</th>
                              <th>Time Incident</th>
                              <th>Respondents</th>
@@ -164,9 +164,8 @@
                                   $counter++;
                             ?>
                             <tr>
-                                <td><?php echo $counter;?></td>
+                                <td class=""><?php echo $counter;?></td>
                                 <td><?php echo $row['firstname'];?><?php echo " "?><?php echo $row['middlename'];?> <?php echo " ";?><?php echo $row['lastname'];?></td>
-                                <td><?php echo $row['impression'];?></td>
                                 <td><?php echo $row['date_i'];?></td>
                                 <td><?php echo $row['time_i'];?></td>
                                 <td><?php echo $row['dispatched_unit'];?></td>
