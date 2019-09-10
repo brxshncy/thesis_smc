@@ -65,10 +65,11 @@ include "include/db.php";
               <div class="col mt-4 bg-light p-4">
                     <h3>Rescuer Activity Log</h3>
                     <hr> 
+                    <form action="include/operation_logs.php" methods="POST">
                         <div class="form-row">
                             <div class="form-group col-md-5">
                                 <label>Type of Incident</label>
-                               <select name="category" id="category" class="form-control">
+                               <select name="category" id="category" class="form-control"  required="">
                                  <option select="selected"></option>
                                   <option value="Illness">Illness</option>
                                   <option value="Accident">Accident</option>
@@ -80,7 +81,7 @@ include "include/db.php";
                </div>
 
               <div class="col mt-4 bg-light p-4">
-                  <form action="include/accident.php" method="POST">
+                  <form action="" method="POST">
                      <h3>Accident</h3>
                       <hr> 
                       <label>Team Name</label>
@@ -99,7 +100,7 @@ include "include/db.php";
                       <div class="form-row mt-2">
                           <div class="form-group col-md-6">
                               <label>What kind of Accident?</label>
-                              <input type="text" name="kind_accident" id="kind_accident" class="form-control" >
+                              <input type="text" name="kind_accident" id="kind_accident" class="form-control" required>
                           </div>
                       </div>
                       <div class="input-group">
@@ -116,46 +117,38 @@ include "include/db.php";
                         <div class="form-row mt-2">
                           <div class="form-group col-md-6">
                               <label>Location of Incident</label>
-                              <input type="text" name="location_incident" id="location_incident" class="form-control" >
+                              <input type="text" name="location_incident" id="location_incident" class="form-control" required>
                           </div>
                            <div class="form-group col-md-6">
                               <label>Date of Incident</label>
-                              <input type="date" name="location_incident" id="location_incident" class="form-control" >
+                              <input type="date" name="location_incident" id="location_incident" class="form-control" required>
                           </div>
                       </div>
                        <div class="form-row mt-2">
                           <div class="form-group col-md-6">
                               <label>Time of Incident</label>
-                              <input type="text" name="location_incident" id="location_incident" class="form-control" >
+                              <input type="text" name="location_incident" id="location_incident" class="form-control" required>
                           </div>
                       </div>
                         <div class="form-row mt-2">
                           <div class="form-group col-md-6">
                               <label>Unit Enroute</label>
-                              <input type="text" name="location_incident" id="location_incident" class="form-control" >
+                              <input type="text" name="location_incident" id="location_incident" class="form-control" required>
                           </div>
                            <div class="form-group col-md-6">
                               <label>Arrive at Scene</label>
-                              <input type="text" name="location_incident" id="location_incident" class="form-control" >
+                              <input type="text" name="location_incident" id="location_incident" class="form-control" required>
                           </div>
                       </div>
                       <div class="input-group">
-                              <input type="text" name="patient[]" id="patient" class="form-control col-md-6" placeholder="Name of Patient" >
+                              
+                              <input type="text" name="patient[]" id="patient" class="form-control col-md-6" placeholder="Name of Patient" required>
                                <span class="input-group-btn">
-                              <button class="btn btn-success ml-2" id="add_patient" type="button">Add</button>
+                              <button class="btn btn-success ml-2" id="add_patient" type="button">Add Patient</button>
                             </span>
                       </div>
-                      <div class="wrapper patient_field">
-                      </div>
-                          <div class="row mt-4">
-                            <div class="col col-md-6" style="margin:auto;">
-                              <button type="submit" id="submit" name="submit" class="btn btn-primary btn-block btn-lg">Submit</button>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
-                  
-             
+                  </form>
+              </div>
 
 
 
@@ -165,9 +158,7 @@ include "include/db.php";
 
 
 
-
-
-       <!--==================================== END OF MAIN CONTENT ============================================================== -->   
+                 <!--==================================== END OF MAIN CONTENT ============================================================== -->   
          </div>
     </div>
 </div>
@@ -207,34 +198,47 @@ include "include/db.php";
     <script src="js/main.js"></script>
 
     <script>
-      $(document).ready(function(){
-        var i = 1;
-          $('#add_vehicle').on('click',function(){
-            i++;
-            $('.wrapper').append('<div class="input-group mt-3" id="row'+i+'" ><input type="text" class="form-control col-md-6" name="vehicle[]" placeholder="Vehicle Involve"> <span class="input-group-btn"> <button class="btn btn-danger ml-3 btn_remove" name="remove" id="row'+i+'" type="button">X</button></span></div>');
-          });
-            $('body').on('click', '.btn_remove',function(e){
-             
-                $(this).parent().parent('div').remove();
-           
-            });                              
-      });
-      $(document).ready(function(){
-          $('#add_patient').on('click',function(){
-            var template = '<div class="input-group mt-2">';
-            template += '<input type="text" name="patient[]" id="patient" class="form-control col-md-6" placeholder="Name of Patient" required>';
-            template += '<span class="input-group-btn">';
-            template += '<button class="btn btn-danger ml-2" id="btn_remove" type="button">Remove</button>';
-            template += '</span>';
-            template +='</div>';
+    $(document).ready(function(){
+        //always get elements from $(document) and use .on() useful for dynamically placed on DOM (html browser)
+        $(document).on('click', '#add_vehicle', function(event){
+        	var me = $(this); //preference ko lang para di ako $(this) ng $(this) parang style sa vb
+        	/* 
+				var i this will get the total count of .input-group on the parent .wrapper
+				this dynamically get the total count that can be used as an unique id
+        		use always unique id attribute to avoid altering elements with same class
+			*/
+        	var input_group_n = $(".wrapper").find(".input-group").length; //pede din $('.wrapper').children(".input-group").length same lang
+        	var i = input_group_n + 1; //formula if the total number of the .input-group is 13 + 1. 14 would be the id for the newly added .input-group
 
-            $('.patient_field').append(template);
-          });
-          $('body').on('click','#btn_remove',function(e){
-              $(this).parent().parent('div').remove();
-          });
-      });
-    </script>;
+        	/*
+				var template para madaling mag edit. hindi 1 liner yung code
+				ang ibig sabihin += is dudugtungan lang nito yung laman ng var template
+
+				kunwari
+				var t = "pogi";
+
+					t += " ako";
+
+				console.log(t); //output : "pogi ako"; 
+        	*/
+        	var template  = '<div class="input-group mt-3">';
+        		template += '	<input type="text" class="form-control col-md-6" name="vehicle[]" placeholder="Vehicle Involve">'; 
+        		template += '		<span class="input-group-btn">'; 
+        		template += '		<button class="btn btn-danger ml-3 btn_remove" name="remove" id="row'+i+'S" type="button">X</button>';
+        		template += '	</span>';
+        		template += '</div>';
+
+        	$(".wrapper").append(template);
+        });
+
+        $(document).on('click', '.btn_remove', function(event){
+        	var me = $(this);
+
+        	me.parent().parent('div').remove();
+        	//e.preventDefault(); //if this is a link with blank href this will avoid adding # on url
+        });                         
+    });
+    </script>
 
    
 

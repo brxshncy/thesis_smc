@@ -88,9 +88,7 @@
                                                     <tr class="table-default">
                                                       <td><?php echo $serialnumber; ?></td>
                                                       <td><?php echo $row['name'];?></td>
-                                                     
                                                       <td><?php echo $row['contact'];?></td>
-                                                    
                                                       <td width="30%">
                                                         <?php
                                                           if($row['status'] === "Present"){

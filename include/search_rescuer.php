@@ -34,20 +34,14 @@ if($result->num_rows>0){
                 <input type='hidden' value=".$fullname." name='fullname[]' id='fullname'>
                 <td>".$row['contact']."</td>
                 <input type='hidden' value=".$row['contact']." name='contact[]' id='contact'>
-                <td width='30%'>
-                <div class='form-check form-check-inline'>
-                <input class='form-check-input 'type='radio' name='status[".$counter."]' id='status' value='Present'>
-                <label class='form-check-label text-success'for='Present'>Present</label>
-                </div>
-                <div class='form-check form-check-inline'>
-                <input class='form-check-input' type='radio' name='status[".$counter."]' id='status' value='Absent'>
-                <label class='form-check-label text-danger'for='Absent'> Absent </label>
-                </div>
-                <div class='form-check form-check-inline'>
-                <input class='form-check-input' type='radio' name='status[".$counter."]'  id='status' value='Late'>
-                <label class='form-check-label text-warning' for='Late'>Late</label>
-                </div>
-                </td>
+                 <td width='30%'>
+                <select name='status' class='form-control'>
+                                                          <option value=''></option>
+                                                          <option value='Absent'>Absent</option>
+                                                          <option value='Present'>Present</option>
+                                                          <option value='Late'>Late</option>
+                                                      </select>
+                                                      </td>
                 </tr>
         ";
   }
