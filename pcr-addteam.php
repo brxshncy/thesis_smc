@@ -58,6 +58,36 @@ include 'include/db.php';
         <?php include 'header-php.php' ?>
         <!-- END OF HEADER DESKTOP-->
 
+                    <!-- modal addteam  -->
+<div class="modal fade" id="vehicle" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="scrollmodalLabel">Add Vehicle</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                         </button>
+                     </div>
+        <div class="modal-body">
+                <form action="include/add_vehicle.php" method="POST">
+                     <div class="form-group">
+                            <label>Vehicle Name</label>
+                             <input type="text" class="form-control" id="vehicle_name" name="vehicle_name" placeholder="">
+                       </div>
+                     <div class="form-group">
+                             <label>Plate No.</label>
+                             <input type="text" class="form-control" id="plate_no" name="plate_no" placeholder="">
+                      </div>
+                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                          <input type="submit" name="upload" id="upload" value="Upload" class="btn btn-primary">
+                                  
+                 </form>                          
+         </div>
+     </div>
+  </div>
+</div>
+     <!-- end of modal addteam  -->
+
             <!-- modal addteam  -->
 <div class="modal fade" id="scrollmodal" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -74,17 +104,45 @@ include 'include/db.php';
                             <label>Team Unit's Name</label>
                              <input type="text" class="form-control" id="unit_name" name="unit_name" placeholder="">
                        </div>
-                     <div class="form-group">
-                             <label> Vehicle Name</label>
-                             <input type="text" class="form-control" id="vehicle_name" name="vehicle_name" placeholder="">
-                      </div>
+                       <label>Vehicle</label>
+                    <select name="vehicle_name" class="form-control">
+                        <option value=""></option>
+                        <?php
+                            $qry = "SELECT * FROM vehicle";
+                            $result = $conn->query($qry) or trigger_error(mysqli_error($conn)." ".($qry));
+                            while($row = mysqli_fetch_assoc($result)){?>
+                                <option value="<?php echo $row['vehicle_name'];?>"><?php echo $row['vehicle_name']; ?></option>
+                           <?php }?>
+
+  
+                    </select>
                       <div class="form-group">
                               <label>Assign Transport Officer</label>
-                              <input type="text" class="form-control" id="transport_officer" name="transport_officer" placeholder="">
+                             <select name ="transport_officer" id="transport_officer" class="form-control">
+                                <option value=""></option>
+                                <?php
+                                  $qry1 = "SELECT * FROM  rescuers";
+                                  $result1 = $conn->query($qry1) or trigger_error(mysqli_error($conn)." ".($qry1));
+                                  while($row = mysqli_fetch_assoc($result1))
+                                    $fullname = $row['firstname']." ".$row['lastname'];
+                                   {?>
+                                      <option value="<?php echo $fullname; ?>"><?php echo $fullname; ?></option>
+                                <?php } ?>
+                             </select>
                       </div>
                       <div class="form-group">
                                <label>Assign Treatment Officer</label>
-                               <input type="text" class="form-control" id="treatment_officer" name="treatment_officer" placeholder="">
+                                <select name ="treatment_officer" id="treatment_officer" class="form-control">
+                                <option value=""></option>
+                                <?php
+                                  $qry1 = "SELECT * FROM  rescuers";
+                                  $result1 = $conn->query($qry1) or trigger_error(mysqli_error($conn)." ".($qry1));
+                                  while($row = mysqli_fetch_assoc($result1))
+                                    $fullname = $row['firstname']." ".$row['lastname'];
+                                   {?>
+                                      <option value="<?php echo $fullname; ?>"><?php echo $fullname; ?></option>
+                                <?php } ?>
+                             </select>
                      </div> 
                                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                   <input type="submit" name="upload" id="upload" value="Upload" class="btn btn-primary">
@@ -126,6 +184,7 @@ include 'include/db.php';
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
+
                   <div class="modal-body">
                         <form action ="include/addteamdb.php" method= "POST" enctype="multipart/form-data">
                                <div class="form-group">
@@ -215,17 +274,23 @@ include 'include/db.php';
                          <?php endif ?>
                 <h2>Manage Team Rescuer</h2>
                 <hr>
-                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#scrollmodal" data-placement="top" title="Add Team ">
-                        <i class="far fa-flag"></i>
-                </button>
-                <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#addmember" data-placement="top" title="Add Team Member">
-                       <i class="fas fa-users"></i>
-                </button>
-                <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#addmember" data-placement="top" title="Add Team Member">
-                       <i class="fas fa-ambulance"></i>
-                </button>
-                    <br>
-                    <br>
+                <nav class="navbar navbar-expend-md bd-default pull-right">
+                  <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#scrollmodal" data-placement="top" title="Add Team ">
+                                <i class="far fa-flag"></i>
+                        </button>
+
+                        <button class="btn btn-success btn-sm ml-1" data-toggle="modal" data-target="#addmember" data-placement="top" title="Add Team Member">
+                               <i class="fas fa-users"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm ml-1" data-toggle="modal" data-target="#vehicle" data-placement="top" title="Add Vehicle">
+                               <i class="fas fa-ambulance"></i>
+                        </button>
+                      </li>
+                    </ul>
+                  </nav>
+                           
                <div class="table-responsive-md">  
                     <table class="table table-bordered">
                         <thead class="thead">
@@ -253,13 +318,13 @@ include 'include/db.php';
                                         <td><?php echo $row['transport_officer'];?></td>
                                         <td><?php echo $row['treatment_officer'];?></td>
                                         <td><?php echo $row['vehicle_name'];?></td>
-                                        <td>
+                                        <td width="10%">
                                            <a href="view_member.php?view=<?php echo $row['id'];?>">
                                             <button class="item" style="color:green;" data-toggle="modal" data-target="#" title="View Unit Members" id="add"> <i class="fa fa-users"></i></button>
-                                        </a> ||
+                                        </a> |
                                              <button class="item edit_modal" style="color:blue;" data-toggle="modal" title="Edit Record" id="<?php echo $row['id'];?>">
                                                 <i class="fa fa-edit"></i>
-                                            </button> ||
+                                            </button>|
                                               <a href="include/delete_team.php?delete=<?php echo $row['id']; ?>"> 
                                             <button class="item" style="color:red;" data-toggle="tooltip" title="Delete Record" id="delete">
                                                  <i class="zmdi zmdi-delete"></i>

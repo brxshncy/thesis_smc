@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 
 if(isset($_POST['search'])){
 	$search = $_POST['search'];
-	$qry = "SELECT * FROM rescuers WHERE firstname LIKE '$search%' OR lastname LIKE '$search%'";
+	$qry = "SELECT * FROM rescuers WHERE firstname LIKE '%$search%' OR lastname LIKE '%$search%'";
 	$result = mysqli_query($conn,$qry) or trigger_error(mysqli_error($conn)." ".$qry);
 }
 if($result->num_rows>0){

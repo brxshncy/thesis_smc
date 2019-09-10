@@ -61,24 +61,12 @@ include "include/db.php";
 <div class="main-content">
     <div class="section__content section__content--p30">
           <div class="container-fluid">
+
               <div class="col mt-4 bg-light p-4">
                     <h3>Rescuer Activity Log</h3>
                     <hr> 
                     <form action="include/operation_logs.php" methods="POST">
                         <div class="form-row">
-                          <div class="form-group col-md-5">
-                                <label>Rescuer Team</label>
-                               <select name="respondents" id="respondents" class="form-control" required="">
-                                <option value=""></option>
-                                  <?php
-                                    $team = "SELECT * FROM unit_name";
-                                    $result = mysqli_query($conn,$team);
-                                    while($row = mysqli_fetch_array($result)){                                  
-                                ?>
-                                  <option value="Illness"><?php echo $row['unit_name'];?> </option>
-                                   <?php }?>
-                               </select>
-                            </div>
                             <div class="form-group col-md-5">
                                 <label>Type of Incident</label>
                                <select name="category" id="category" class="form-control"  required="">
@@ -89,131 +77,88 @@ include "include/db.php";
                                   <option value="Others">Others</option>
                                </select>
                             </div>
-                        </div>
-                        <div class="form-row">
-                          <div class="form-group col-md=5" id="illness_form">
-                              <label>What kind of Illness?</label>
-                              <input type="text" name="illness" id="illness" class="form-control" required>
-                          </div>
-                        </div>
-                        <div class="form-row">
-                          <div class="form-group col-md=5"  id="accident_form">
+                        </div> 
+               </div>
+
+              <div class="col mt-4 bg-light p-4">
+                  <form action="" method="POST">
+                     <h3>Accident</h3>
+                      <hr> 
+                      <label>Team Name</label>
+                      <select name="team_unit" class="form-control col-md-6">
+                        <option value=""></option>
+                        <?php
+                              $qry = "SELECT * FROM unit_name";
+                              $result = $conn->query($qry);
+                              while($row = mysqli_fetch_assoc($result)){
+                          ?>
+                            <option value="<?php echo $row['unit_name']; ?>"> <?php echo $row['unit_name']; ?> </option>
+
+                      <?php } ?>
+                        
+                      </select>
+                      <div class="form-row mt-2">
+                          <div class="form-group col-md-6">
                               <label>What kind of Accident?</label>
-                              <input type="text" name="accident" id="accident" class="form-control" required>
+                              <input type="text" name="kind_accident" id="kind_accident" class="form-control" required>
                           </div>
-                        </div>
-                         <div class="form-row">
-                          <div class="form-group col-md=5"  id="disaster_form">
-                              <label>What kind of Natural Disaster?</label>
-                              <input type="text" name="natural_disaster" id="natural_disaster" class="form-control" required>
+                      </div>
+                      <div class="input-group">
+                            <input type="text" class="form-control col-md-6" name="vehicle[]" placeholder="Vehicle Involve">
+                            <span class="input-group-btn">
+                              <button class="btn btn-success ml-2" id="add_vehicle" type="button">Add</button>
+                            </span>
+                      </div><!-- /input-group -->
+                      
+                       <div class="wrapper" >
+                          
+                      </div><!-- /input-group -->
+                      <hr>
+                        <div class="form-row mt-2">
+                          <div class="form-group col-md-6">
+                              <label>Location of Incident</label>
+                              <input type="text" name="location_incident" id="location_incident" class="form-control" required>
                           </div>
-                        </div>
-                        <div class="form-row">
-                          <div class="form-group col-md=5"  id="others_form">
-                              <label>Enter type of Incident</label>
-                              <input type="text" name="others" id="others" class="form-control" required>
+                           <div class="form-group col-md-6">
+                              <label>Date of Incident</label>
+                              <input type="date" name="location_incident" id="location_incident" class="form-control" required>
                           </div>
-                        </div>
-                         <div class="form-row">
-                              <div class="form-group col-md-5">
-                                <label>Date of Incident</label>
-                                <input type="date" name="date_incident" id="date_incident" class="form-control">
-                              </div>
-                              <div class="form-group col-md-5">
-                                <label>Time of Incident</label>
-                                <input type="text" name="time_incident" id="time_incident" class="form-control">
-                              </div>
+                      </div>
+                       <div class="form-row mt-2">
+                          <div class="form-group col-md-6">
+                              <label>Time of Incident</label>
+                              <input type="text" name="location_incident" id="location_incident" class="form-control" required>
                           </div>
-                          <div class="form-row">
-                              <div class="form-group col-md-5">
-                                <label>Location of Incident</label>
-                                <input type="text" name="location" id="location" class="form-control">
-                              </div>
-                              <div class="form-group col-md-5">
-                                <label>Vehicle Used</label>
-                                <input type="text" name="vehicle" id="vehicle" class="form-control">
-                              </div>
+                      </div>
+                        <div class="form-row mt-2">
+                          <div class="form-group col-md-6">
+                              <label>Unit Enroute</label>
+                              <input type="text" name="location_incident" id="location_incident" class="form-control" required>
                           </div>
-                           <div class="form-row">
-                              <div class="form-group col-md-5">
-                                <label>Unit Enroute</label>
-                                <input type="text" name="unit_enroute" id="unit_enroute" class="form-control">
-                              </div>
-                              <div class="form-group col-md-5">
-                                <label>Arrive at Scene</label>
-                                <input type="text" name="arrive_scene" id="arrive_scene" class="form-control">
-                              </div>
+                           <div class="form-group col-md-6">
+                              <label>Arrive at Scene</label>
+                              <input type="text" name="location_incident" id="location_incident" class="form-control" required>
                           </div>
-                          <div class="form-row">
-                              <div class="form-group col-md-5">
-                                <label>No. of Patients</label>
-                                  <select name="number_patient" id="number_patient" class="form-control">
-                                      <option value="null"></option>
-                                      <option value="1">1</option>
-                                      <option value="2">2</option>
-                                      <option value="3">3</option>
-                                      <option value="4">4</option>
-                                      <option value="5">5</option>
-                                  </select>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col col-md-6">
-                                  <button type="submit" name="submit" id="submit"  class="btn btn-primary">Submit</button> 
-                              </div>
-                        </div>    
-                    </form>
+                      </div>
+                      <div class="input-group">
+                              
+                              <input type="text" name="patient[]" id="patient" class="form-control col-md-6" placeholder="Name of Patient" required>
+                               <span class="input-group-btn">
+                              <button class="btn btn-success ml-2" id="add_patient" type="button">Add Patient</button>
+                            </span>
+                      </div>
+                  </form>
               </div>
-              <br>
 
 
-<div class="col">
-    <div class="card" id="patient_form">
-        <div class="card-body">
-            <div class="card-title">
-                <h4 class="ml-2 p-2">Patient Information</h4>
-            </div>
-            <hr>
-            <form action="include/patient.php" method="POST">
-                <div class="form-row">
-                    <div class="col col-md-5">
-                        <label>First Name</label>
-                        <input type="text" class="form-control" name="firstname" id="firstname">
-                    </div>
-                    <div class="col col-md-5">
-                        <label>Last Name</label>
-                        <input type="text" class="form-control" name="lastname" id="lastname">
-                    </div>
-                </div>
-                <div class="form-row">
-                  <div class="col mt-2">
-                        <label>Address</label>
-                        <input type="text" class="form-control" name="address" id="address">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="col col-md-5 mt-2">
-                        <label>Gender</label>
-                        <select name="gender" id="gender" class="form-control">
-                            <option value=""></option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                        </select>
-                  </div>
-                </div>
-                <div class="form-row">
-                    <div class="col mt-2">
-                      <label>General Impression</label>
-                      <input type="text" class="form-control" name="impression" id="impression">
-                    </div>
-                </div>
-                <button type="submit" name="submit" id="submit" class="btn btn-primary btn-block mt-3" style="">Save</button>
-            </form>
-        </div>
-    </div>
-</div>
 
 
+
+
+
+
+
+                 <!--==================================== END OF MAIN CONTENT ============================================================== -->   
          </div>
     </div>
 </div>
@@ -253,34 +198,18 @@ include "include/db.php";
     <script src="js/main.js"></script>
 
     <script>
-      $("#illness_form").hide();
-      $("#accident_form").hide();
-      $("#disaster_form").hide();
-      $("#others_form").hide();
-
-        $('#category').on('change', function() {
-              if ($("#category").val() === "Illness") {
-                $("#illness_form").show();
-              } else {
-                $("#illness_form").hide();
-              }
-              if ($("#category").val() === "Accident") {
-                $("#accident_form").show();
-              } else {
-                $("#accident_form").hide();
-              }
-              if ($("#category").val() === "Natural Disaster") {
-                $("#disaster_form").show();
-              } else {
-                $("#disaster_form").hide();
-              }
-               if ($("#category").val() === "Others") {
-                $("#others_form").show();
-              } else {
-                $("#others_form").hide();
-              }
-            });
-
+      $(document).ready(function(){
+        var i = 1;
+          $('#add_vehicle').on('click',function(){
+            i++;
+            $('.wrapper').append('<div class="input-group mt-3" id="row'+i+'" ><input type="text" class="form-control col-md-6" name="vehicle[]" placeholder="Vehicle Involve"> <span class="input-group-btn"> <button class="btn btn-danger ml-3 btn_remove" name="remove" id="row'+i+'" type="button">X</button></span></div>');
+          });
+            $('body').on('click', '.btn_remove',function(e){
+             
+                $(this).parent('div').remove();
+           
+            });                              
+      });
     </script>
 
    

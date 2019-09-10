@@ -1,0 +1,38 @@
+
+
+if(accident){
+	
+	what kind of accident?
+	vehicles involve
+	date 
+	location
+	time
+	unit enroute
+	arrive at scene
+	no. of patients
+	inventory
+}
+
+if(illness){
+	what kind of illness?
+	no of patient?
+	date 
+	location
+	time
+	unit enroute
+	arrive at scene
+	inventory
+
+}
+
+if(natural disaster){
+	what kind of disaster
+	location
+	date
+	time
+	unit enroute
+	arrive at scene
+	baranggay state
+	baranggay captain
+	inventory
+}
