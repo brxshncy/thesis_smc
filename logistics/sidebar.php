@@ -9,19 +9,19 @@
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
                         <li><a href="pcr-record.php">
-                                <i class="fas fa-files-o"></i>Dashboard
+                                <i class="fas fa-tasks"></i>Dashboard
                             </a>
                         </li>
                         <li><a href="pcr-record.php">
-                                <i class="fas fa-files-o"></i>Add Category
+                                <i class="fas fa-tags"></i>Add Category
                             </a>
                         </li>
-                         <li><a href="pcr-record.php">
-                                <i class="fas fa-files-o"></i>In-Items
+                         <li><a href="logistics_in_items.php">
+                                <i class="fas fa-arrow-circle-right"></i>In-Items
                             </a>
                         </li>
                         <li><a href="pcr-record.php">
-                                <i class="fas fa-files-o"></i>Out-Items
+                                <i class="fas fa-arrow-circle-left"></i>Out-Items
                             </a>
                         </li>
                     </ul>

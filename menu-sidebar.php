@@ -49,7 +49,7 @@
                         </li>
 
                         <li>
-                            <a href="respondent-graph.php">
+                            <a href="operation_chart.php">
                             <i class="fas  fa-bar-chart-o"></i>Chart
                         </a>
                         </li>

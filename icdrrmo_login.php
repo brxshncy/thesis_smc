@@ -53,6 +53,13 @@ $msg = '';
                         </div>
                         <div class="login-form">
                             <form action="include/admin.php" method="post">
+                                <?php if(isset($_SESSION['logistics_msg'])): ?>
+                                    <div class="alert alert-danger">
+                                        <?php echo $_SESSION['logistics_msg'];
+                                                unset($_SESSION['logistics_msg']);
+                                         ?>
+                                    </div>
+                                <?php endif ?>
                                 <div class="form-group">
                                     <label>User Name</label>
                                     <input class="au-input au-input--full" type="text" name="username" id="username" placeholder="">

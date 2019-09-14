@@ -120,23 +120,23 @@ include "include/db.php";
                           </div>
                            <div class="form-group col-md-6">
                               <label>Date of Incident</label>
-                              <input type="date" name="location_incident" id="location_incident" class="form-control" >
+                              <input type="date" name="date_incident" id="date_incident" class="form-control" >
                           </div>
                       </div>
                        <div class="form-row mt-2">
                           <div class="form-group col-md-6">
                               <label>Time of Incident</label>
-                              <input type="text" name="location_incident" id="location_incident" class="form-control" >
+                              <input type="text" name="time_incident" id="time_incident" class="form-control" >
                           </div>
                       </div>
                         <div class="form-row mt-2">
                           <div class="form-group col-md-6">
                               <label>Unit Enroute</label>
-                              <input type="text" name="location_incident" id="location_incident" class="form-control" >
+                              <input type="text" name="unit_enroute" id="unit_enroute" class="form-control" >
                           </div>
                            <div class="form-group col-md-6">
                               <label>Arrive at Scene</label>
-                              <input type="text" name="location_incident" id="location_incident" class="form-control" >
+                              <input type="text" name="arrive_scene" id="arrive_scene" class="form-control" >
                           </div>
                       </div>
                       <div class="input-group">
@@ -145,7 +145,7 @@ include "include/db.php";
                               <button class="btn btn-success ml-2" id="add_patient" type="button">Add</button>
                             </span>
                       </div>
-                      <div class="wrapper patient_field">
+                      <div class=" patient_field">
                       </div>
                           <div class="row mt-4">
                             <div class="col col-md-6" style="margin:auto;">
@@ -234,7 +234,7 @@ include "include/db.php";
               $(this).parent().parent('div').remove();
           });
       });
-    </script>;
+    </script>
 
    
 

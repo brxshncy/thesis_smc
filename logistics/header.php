@@ -1,6 +1,6 @@
 
 <?php 
-  session_start();
+ 
   ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +14,7 @@
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>Patient Care Records</title>
+    <title>Logistics</title>
 
     <!-- Fontfaces CSS-->
     <link href="css/font-face.css" rel="stylesheet" media="all">

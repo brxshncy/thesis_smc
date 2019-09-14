@@ -4,26 +4,32 @@ include 'db.php';
 session_start();
 
 	if(isset($_POST['submit'])){
-
-		$vehicle = $_POST['vehicle'];
-
-		foreach($vehicle as $vehicle){
-			echo $vehicle ."". "<br>";
-		}
-		/*$team_unit = $_POST['team_unit'];
 		$kind_accident  = $_POST['kind_accident'];
-		$vehicle = $_POST['vehicle'];
-		$vehicle_involve = count($vehicle);
+		$vehicle_involve = $_POST['vehicle'];
+		$location_incident = $_POST['location_incident'];
+		$date_incident = $_POST['date_incident'];
+		$time_incident	 = $_POST['time_incident'];
+		$unit_enroute = $_POST['unit_enroute'];
+		$arrive_scene = $_POST['arrive_scene'];
+		$patient  = $_POST['patient'];
 
-		if($vehicle_involve > 1 ){
-			for($i = 0; $i < $vehicle_involve; $i++){
-				if(trim($vehicle[$i]) !=''){
-					echo $vehicle[$i] ." ". "<br>";
-				}
-			}
+		$new = [
+		 	'vehicle_involve' => $vehicle_involve,
+		 	'patient' => $patient,
+		];
 
+		$new = serialize($new);
+
+		$qry = "INSERT INTO accident 
+				(kind_accident, location_incident, date_incident, time_incident, unit_enroute, arrive_scene, new) VALUES
+				('$kind_accident','$location_incident','$date_incident','$time_incident','$unit_enroute','$arrive_scene', '$new')";
+		
+		$result = mysqli_query($conn,$qry) or trigger_error(mysqli_error($conn)." ".$qry);
+
+		if($result){
+			echo "insert succesfully";
+			header("location:../operation_logbook.php");
 		}
-	}*/
 }
 
 ?>

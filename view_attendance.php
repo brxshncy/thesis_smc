@@ -93,7 +93,7 @@
                                                   $result = $conn->query("SELECT DISTINCT date FROM unit_attendance ORDER BY date DESC"); 
                                                   $serialnumber=0; 
                                                   while($row = mysqli_fetch_assoc($result)){
-                                                  $serialnumber++;
+                                                  $serialnumber++;      
                                                     ?> 
                                                     <tr class="table-default">
                                                       <td><?php echo $serialnumber;?></td>

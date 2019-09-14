@@ -1,4 +1,4 @@
-<?php
+;<?php
 session_start();
 include 'db.php';
 $msg ='';
@@ -10,21 +10,23 @@ $msg ='';
 		$result = mysqli_query($conn,$sql);
 		if(mysqli_num_rows($result)==1){
 			$qry = mysqli_fetch_array($result);
-			$_SESSION['username'] = $qry['username'];
-			$_SESSION['password'] = $qry['password'];
+			$_SESSION['username_admin'] = $qry['username'];
+			$_SESSION['password_password'] = $qry['password'];
 			$_SESSION['admin_type'] = $qry['admin_type'];
 
-			if($qry['admin_type']=="operation"){
+			if($_SESSION['admin_type']=="operation"){
 				header("Location:../operation_index.php");
+
 			}
-			else if($qry['admin_type']=="communication"){
+			else if($_SESSION['admin_type']=="communication"){
 				echo "communication";
 			}
-			else if($qry['admin_type']=="training"){
+			else if($_SESSION['admin_type']=="training"){
 				echo "training";
 			}
-			else if($qry['admin_type']=="logistics"){
-				echo "logistics";
+			else if($_SESSION['admin_type']=="logistics"){
+
+				header("location:../logistics_index.php");
 			}
 		}
 			else{
