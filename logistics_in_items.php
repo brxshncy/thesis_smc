@@ -1,5 +1,6 @@
 <?php 
 include 'include/db.php';  
+session_start();
 ?>
 <?php include 'logistics/header.php';?>
 
@@ -9,9 +10,20 @@ include 'include/db.php';
 
 		        	<div class="card">
       						<div class="card-header">
-      						  	<b> In Items<b>
+      						  	<b> In Items</b>
       						 </div>
           							<div class="card-body">
+          								<?php
+          									if(isset($_SESSION['msg'])):?>
+          										<div class="alert alert-success">
+          											<?php
+          												echo $_SESSION['msg'];
+          												unset($_SESSION['msg']);
+          											?>
+          										</div>
+
+          									<?php endif?>
+          								
           								<div class="row">
           									<div class="col-md-6">
           										<input type="text" class="form-control" placeholder="Search">
@@ -34,24 +46,28 @@ include 'include/db.php';
           												</tr>
           											</thead>
                                                     <tbody>
+                                                    	<?php
+                                                    		$qry = "SELECT * FROM items";
+                                                    		$result = $conn->query($qry);
+                                                    		while($row = mysqli_fetch_assoc($result)){
+                                                    	?>
                                                         <tr>
-                                                            <td width="10%"></td>
-                                                            <td width="20%"></td>
-                                                            <td width="40%"></td>
-                                                            <td width="10%"></td>
-                                                            <td width="10%"></td>
-                                                            <td width="10%">
+                                                            <td width=""><p style="font-family:'Arial','sans-serif' "><?php echo $row['item_code']; ?></p></td>
+                                                            <td width=""><?php echo $row['item_name']; ?></td>
+                                                            <td width=""><?php echo $row['item_description']; ?></td>
+                                                            <td width=""><?php echo $row['quantity']; ?></td>
+                                                            <td width=""><?php echo $row['unit_measure']; ?></td>
+                                                            <td width="">
                                                                 <i class="fas fa-edit (alias) text-primary ml-4"></i> | <i class="zmdi zmdi-delete text-danger"></i> 
                                                             </td>
                                                         </tr>
+                                                    <?php }?>
                                                     </tbody>
           										</table>
           									</div>
           								</div>
           						 </div>
-				      	</div>
-
-                    
+				      	</div>  
    		</div>
 	</div>
 </div>
@@ -61,7 +77,7 @@ include 'include/db.php';
                              <!-- Modal -->
 <div class="modal fade" id="add_item">
     <div class="modal-dialog modal-lg">
-        <form action="" method="post">
+        <form action="include/items.php" method="post">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">  Add Item</h5>
@@ -76,11 +92,11 @@ include 'include/db.php';
                                 </div>
                                 <div class="form-group">
                                     <label class="text-danger">*Item Name</label>
-                                    <input type="text" name="item_code" id="item_code" class="form-control">
+                                    <input type="text" name="item_name" id="item_name" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label class="text-danger">*Item Description</label>
-                                    <textarea name="item_description" class="form-control"></textarea>
+                                    <textarea name="item_description" id="item_description" class="form-control"></textarea>
                                 </div>
                                 <div class="row form-group">
                                     <div class="col-md-6">
@@ -89,18 +105,19 @@ include 'include/db.php';
                                     </div>
                                     <div class="col-md-6">
                                         <label>*Unit of Measure</label>
-                                        <input type="text" name="unit" id="unit" class="form-control">
+                                        <input type="text" name="unit_measure" id="unit_measure" class="form-control">
                                     </div>
                                 </div>
                          </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-primary" name="submit">Save</button>
                         </div>
                 </div>
         </form>
     </div>
 </div>
+
                        <!-- Modal -->
 
 

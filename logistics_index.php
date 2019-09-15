@@ -11,7 +11,7 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'logistics'
 <div class="main-content">
     <div class="section__content section__content--p30">
         <div class="container-fluid">
-
+ASDASDASD
         </div>
     </div>
 </div>
