@@ -30,10 +30,12 @@ while($row = mysqli_fetch_assoc($query_date)){
 		<tr class='table-default'>
              <td>  $serialnumber </td>
              <td width='60%'> ".$date_search." </td>
-             <td>                                 
+             <td> 
+             <form action='viewattendance_crew.php' method='POST'>                                 
              <input type='hidden' value=".$row['date']." name='date' id='date'>
              <input type='submit'  name ='submit'  class='btn btn-primary' value='Show Attendance'>
              </td>
+             </form>
          </tr>
 	";
 		}

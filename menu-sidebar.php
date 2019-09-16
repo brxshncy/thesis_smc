@@ -16,13 +16,13 @@
 
                         <li>
                             <a href="pcr-addteam.php">
-                            <i class="fas fa-ambulance"></i>Assign Team
+                            <i class="fas fa-ambulance"></i>Manage Team
                         </a>
                         </li>
 
                         <li>
                             <a href="operation_attendance.php">
-                            <i class="far fa-clipboard"></i>Rescuer Attendance
+                            <i class="fas fa-clipboard"></i>Rescuer Attendance
                         </a>
                         </li>
 

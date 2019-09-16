@@ -105,11 +105,11 @@
                                                     <tr class="table-default">
                                                       <td><?php echo $serialnumber; ?></td>
                                                       <td><?php echo $fullname ?></td>
-                                                      <input type="hidden" value="<?php echo $fullname; ?>" name="fullname" id="fullname">
+                                                      <input type="hidden" value="<?php echo $fullname; ?>" name="fullname[]" id="fullname">
                                                       <td><?php echo $row['contact'];?></td>
-                                                      <input type="hidden" value="<?php echo $row['contact'];?>" name="contact" id="contact">
+                                                      <input type="hidden" value="<?php echo $row['contact'];?>" name="contact[]" id="contact">
                                                       <td width="30%">
-                                                      <select name="status" class="form-control">
+                                                      <select name="status[<?php echo  $counter; ?>]" class="form-control">
                                                           <option value=""></option>
                                                           <option value="Absent">Absent</option>
                                                           <option value="Present">Present</option>

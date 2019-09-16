@@ -79,7 +79,6 @@
                   </div>  
                 
                       <div class="table-responsive-md">
-                          <form action="viewattendance_crew.php" method="POST">
                             <table class="table table-bordered" id="table_search">
                                 <thead class="thead">
                                       <tr class="table-primary">
@@ -98,16 +97,16 @@
                                                     <tr class="table-default">
                                                       <td><?php echo $serialnumber;?></td>
                                                       <td width="60%"><?php echo date("M d 20y",strtotime($row['date']));?></td>
-                                                      <td>                                 
+                                                      <td>   
+                                                      <form action="viewattendance_crew.php" method="POST">                              
                                                           <input type="hidden" value="<?php echo $row['date'];?>" name="date" id="date">
                                                           <input type="submit"  name ="submit" class="btn btn-primary" value="Show Attendance">
+                                                        </form>
                                                       </td>
                                                     </tr>
                                              <?php } ?>
                                       </tbody>
                             </table>
-
-                        </form>
                     </div>
                 </div>
             </div>

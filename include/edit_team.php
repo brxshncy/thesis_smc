@@ -30,11 +30,29 @@ if(isset($_POST['edit_team'])){
                       </div>
                       <div class="form-group">
                               <label>Assign Transport Officer</label>
-                              <input type="text" class="form-control" id="transport_officer" name="transport_officer"value="<?php echo $transport_officer;?>">
+                              <select name="transport_officer" id="transport_officer" class="form-control">
+                                <option value=""></option>
+                                <?php
+                                  $qry = $conn->query("SELECT * FROM rescuers");
+                                  while($row = mysqli_fetch_assoc($qry)){
+                                    $name = $row ['firstname']." ".$row['lastname'];
+                                    echo '<option value = "'.$name.'"> '.$name.' </option>';
+                                  }
+                                ?>
+                              </select>
                       </div>
                       <div class="form-group">
                                <label>Assign Treatment Officer</label>
-                               <input type="text" class="form-control" id="treatment_officer" name="treatment_officer" value="<?php echo $treatment_officer;?>">
+                                <select name="treatment_officer" id="treatment_officer" class="form-control">
+                                <option value=""></option>
+                                <?php
+                                  $qry1 = $conn->query("SELECT * FROM rescuers");
+                                  while($row = mysqli_fetch_assoc($qry1)){
+                                    $name = $row ['firstname']." ".$row['lastname'];
+                                    echo '<option value = "'.$name.'"> '.$name.' </option>';
+                                  }
+                                ?>
+                              </select>
                      </div> 
                                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                   <input type="submit" name="upload" id="upload" value="Upload" class="btn btn-primary">

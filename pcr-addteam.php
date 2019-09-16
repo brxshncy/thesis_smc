@@ -15,7 +15,7 @@ include 'include/db.php';
   <meta name="keywords" content="au theme template">
 
   <!-- Title Page-->
-  <title>Manage Team Rescuer</title>
+  <title>Manage Team of Rescuer's</title>
 
   <!-- Fontfaces CSS-->
   <link href="css/font-face.css" rel="stylesheet" media="all">
@@ -123,11 +123,11 @@ include 'include/db.php';
                                 <?php
                                   $qry1 = "SELECT * FROM  rescuers";
                                   $result1 = $conn->query($qry1) or trigger_error(mysqli_error($conn)." ".($qry1));
-                                  while($row = mysqli_fetch_assoc($result1))
-                                    $fullname = $row['firstname']." ".$row['lastname'];
-                                   {?>
-                                      <option value="<?php echo $fullname; ?>"><?php echo $fullname; ?></option>
-                                <?php } ?>
+                                   while($row = $result1->fetch_assoc()){
+                                          $name = $row['firstname']." ".$row['lastname'];
+                                          echo '<option value="'.$name.'">' .$name. '</option>';
+                                        }
+                                     ?>
                              </select>
                       </div>
                       <div class="form-group">
@@ -137,11 +137,11 @@ include 'include/db.php';
                                 <?php
                                   $qry1 = "SELECT * FROM  rescuers";
                                   $result1 = $conn->query($qry1) or trigger_error(mysqli_error($conn)." ".($qry1));
-                                  while($row = mysqli_fetch_assoc($result1))
-                                    $fullname = $row['firstname']." ".$row['lastname'];
-                                   {?>
-                                      <option value="<?php echo $fullname; ?>"><?php echo $fullname; ?></option>
-                                <?php } ?>
+                                 while($row = $result1->fetch_assoc()){
+                                          $name = $row['firstname']." ".$row['lastname'];
+                                          echo '<option value="'.$name.'">' .$name. '</option>';
+                                        }
+                                     ?>
                              </select>
                      </div> 
                                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
