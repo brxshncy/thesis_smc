@@ -318,7 +318,7 @@ include 'include/db.php';
                                         <td><?php echo $row['transport_officer'];?></td>
                                         <td><?php echo $row['treatment_officer'];?></td>
                                         <td><?php echo $row['vehicle_name'];?></td>
-                                        <td width="10%">
+                                        <td width="">
                                            <a href="view_member.php?view=<?php echo $row['id'];?>">
                                             <button class="item" style="color:green;" data-toggle="modal" data-target="#" title="View Unit Members" id="add"> <i class="fa fa-users"></i></button>
                                         </a> |

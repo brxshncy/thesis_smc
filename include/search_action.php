@@ -15,7 +15,7 @@ $output = '';
                             <tr class='table-info'>
                              <th>ID</th>
                              <th>Full Name</th>
-                             <th>General Impression</th>
+                            
                              <th>Date Incident</th>
                              <th>Time Incident</th>
                              <th>Respondents</th>
@@ -28,7 +28,7 @@ $output = '';
                 <tr>
                     <td>".$row['id']."</td>
                               <td>".$row['firstname'].' '.$row['middlename'].' '.$row['lastname']. "</td>
-                              <td>".$row['impression']."</td>
+                             
                               <td>".$row['date_i']."</td>
                               <td>".$row['time_i']."</td>
                               <td>".$row['dispatched_unit']."</td>
@@ -46,9 +46,7 @@ $output = '';
                                              <button class='item' style='color:red;' data-toggle='tooltip' data-placement='top'title='Delete'>
                                                  <i class='zmdi zmdi-delete'></i></button>
                                         </a> ||
-                                         <button class='item' data-toggle='tooltip' data-placement='top' title='Print Details'>
-                                                  <i class='fa fa-print'></i>
-                                              </button>
+                                        
                                             
                                     
                                 </td>

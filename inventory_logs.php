@@ -1,4 +1,31 @@
+<?php 
+include 'include/db.php';  
+session_start();
+?>
+<?php include 'logistics/header.php';?>
 
+<div class="main-content">
+  <div class="section__content section__content--p30">
+      <div class="container-fluid">
+
+
+
+
+      
+
+
+
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<?php include 'footer.php';?>
 <!-- Jquery JS-->
     <script src="vendor/jquery-3.2.1.min.js"></script>
     
@@ -24,25 +51,18 @@
     <!-- Main JS-->
     <script src="js/main.js"></script>
     <script>
-        $(document).ready(function(){
-            $(document).on('click','.edit_button',function(){
-                var id = $(this).attr('id');
-
-                $.ajax({
-                    url: "include/edit_items_in.php",
-                    method:"post",
-                    data:{id:id},
-                    success:function(data){
-                        $('#update_details').html(data);
-                        $('#edit_modal').modal('show');
-                    }
-                });
-                
-            })
-        });
+      
     </script>
   
 
 </body>
 
 </html>
+
+
+
+
+
+
+
+    

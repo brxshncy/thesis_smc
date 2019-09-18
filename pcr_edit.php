@@ -1,6 +1,5 @@
 
 <?php
- include 'include/db.php';
  session_start();
 ?>
 <!DOCTYPE html>
@@ -15,7 +14,7 @@
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>Patient Care Report Form</title>
+    <title>Edit Patient Care Report Form</title>
 
     <!-- Fontfaces CSS-->
     <link href="css/font-face.css" rel="stylesheet" media="all">
@@ -34,7 +33,7 @@
     <link href="vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
     <link href="vendor/slick/slick.css" rel="stylesheet" media="all">
     <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
-    <link href="vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
+    <link href="vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">di
 
     <!-- Main CSS-->
     <link href="css/theme.css" rel="stylesheet" media="all">
@@ -50,7 +49,7 @@
         <!-- END HEADER MOBILE-->
         
         <!-- MENU SIDEBAR-->
-        <?php include 'rescuer_sidebar.php';?>
+        <?php include 'menu-sidebar.php';?>
         <!-- END MENU SIDEBAR-->
 
         <!-- PAGE CONTAINER-->
@@ -70,8 +69,16 @@
 
 
     <!--================================================================================================================-->
+    <?php
+include 'include/db.php';
+    if(isset($_GET['view'])){
+        $id = $_GET['view'];
 
-<form action="include/pcrformdb.php" method="POST">
+        $qry = "SELECT * FROM pcr WHERE id = '$id'";
+        $result = mysqli_query($conn,$qry) or trigger_error(mysqli_error($conn)." ".$qry);
+        while($row = mysqli_fetch_assoc($result)){?>
+
+<form action="include/pcrformedit.php" method="POST">
     <div class="col">
         <div class="card">
             <div class="card-header bg-light">
@@ -108,7 +115,7 @@
                         </li>
                     </ul>
   <?php if(isset($_SESSION['message'])): ?>
-                         <div class="alert alert-<?=$_SESSION['msg_type']?> mt-2">
+                         <div class="alert alert-<?=$_SESSION['msg_type']?>">
                                 <?php
                                     echo $_SESSION['message'];
                                     unset($_SESSION['message']);
@@ -123,49 +130,48 @@
             <div class="panel-heading">Patient's Personal Info</div>
 
             <div class="panel-body">
-                <input type="hidden" class="form-control" name="status" id="status" value="unread" readonly>
                 <div class="form-row">
                     <div class="form-group col-md-5">
                         <label>First Name</label>
-                        <input type="text" class="form-control" name= "firstname" id="firstname" required="">
+                        <input type="text" class="form-control" name= "firstname" id="firstname" value="<?php echo $row['firstname'];?>" required="">
                     </div>
                     <div class="form-group col-md-5 ">
                         <label for="inputPassword4">Last Name</label>
-                        <input type="text" class="form-control" name= "lastname" id="lastname" required="">
+                        <input type="text" class="form-control" name= "lastname" id="lastname" value="<?php echo $row['lastname'];?>" required="">
                     </div>
                     <div class="form-group col-md-2 ">
                         <label>Middle Initial</label>
-                        <input type="text" class="form-control" name= "mi" id="mi" required="">
+                        <input type="text" class="form-control" name= "mi" id="mi" value="<?php echo $row['middlename'];?>"required="">
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-1">
                         <label>Age</label>
-                        <input type="text" class="form-control" name= "age" id="age" >
+                        <input type="text" class="form-control" name="age" value="<?php echo $row['age'];?>"id="age" >
                     </div>
                     <div class="form-group col-md-4 ml-2">
                         <label>Religion</label>
-                        <input type="text" class="form-control" name= "religion" id="religion"  >
+                        <input type="text" class="form-control" name= "religion" value="<?php echo $row['religion'];?>"id="religion"  >
                     </div>
                     <div class="form-group col-md-5">
                         <label>Nationality</label>
-                        <input type="text" class="form-control" name= "nationality" id="nationality" >
+                        <input type="text" class="form-control" name= "nationality" value="<?php echo $row['nationality'];?>" id="nationality" >
                     </div>
                 </div>
 
                 <div class="form">
                     <div class="form-group">
                         <label>Address</label>
-                        <input type="text" class="form-control" name= "address" id="address" >
+                        <input type="text" class="form-control" name= "address" value="<?php echo $row['address'];?>" id="address" >
                     </div>
                 </div>
 
                 <div class="row form-group">
                     <div class="col">
                         <label class=" form-control-label" for="gender">Gender</label>
-                        <input type="radio" class="ml-2 mr-2" name="gender" id="gender" value="Male">Male
-                        <input type="radio" class="ml-2 mr-2" name="gender" id="gender" value="Female">Female
+                        <input type="radio" class="ml-2 mr-2" name="gender" id="gender" value="Male" <?php echo $row['gender'] == 'Male'? 'checked' : ''; ?>>Male
+                        <input type="radio" class="ml-2 mr-2" name="gender" id="gender" value="Female" <?php echo $row['gender'] == 'Female'? 'checked' : ''; ?>>Female
                     </div>          
                 </div>
                     <div align="center">
@@ -188,43 +194,43 @@
                 <div class="form-row">
                         <div class="form-group col-md-6">
                             <label>Date of Incident</label>
-                            <input type="date" class="form-control" name= "date_i" id="date_i">
+                            <input type="date" class="form-control" name= "date_i"  value="<?php echo $row['date_i'];?>"id="date_i">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputPassword4">Time of Incident</label>
-                            <input type="text" class="form-control" name= "time_i" id="time_i"  placeholder="HH/MM/AA">
+                            <input type="text" class="form-control" name= "time_i" id="time_i" value="<?php echo $row['time_i'];?>" placeholder="HH/MM/AA">
                         </div>
                 </div>
                 <div class="form">
                         <div class="form-group">
                             <label>General Impression</label>
-                            <input type="text" class="form-control" name= "impression" id="impression">
+                            <input type="text" class="form-control" name= "impression" value="<?php echo $row['impression'];?>"id="impression">
                         </div>
                 </div>
                 <div class="form-row">
                         <div class="form-group col-md-6">
                             <label>Relation to Patient</label>
-                            <input type="text" class="form-control" name= "r_p1" id="contact1">
+                            <input type="text" class="form-control" name= "r_p1"value="<?php echo $row['r_p1'];?>" id="contact1">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputPassword4">Contact Number</label>
-                            <input type="text" class="form-control" name= "contact1" id="contact1">
+                            <input type="text" class="form-control" name= "contact1"value="<?php echo $row['contact1'];?>" id="contact1">
                         </div>
                 </div>
                  <div class="form-row">
                         <div class="form-group col-md-6">
                             <label>Relation to Patient</label>
-                            <input type="text" class="form-control" name= "r_p2" id="r_p2" require">
+                            <input type="text" class="form-control" name= "r_p2" value="<?php echo $row['r_p2'];?>"id="r_p2" require>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputPassword4">Contact Number</label>
-                            <input type="text" class="form-control" name= "contact2" id="contact2" require">
+                            <input type="text" class="form-control" name= "contact2"value="<?php echo $row['contact2'];?>" id="contact2" require>
                         </div>
                 </div>
                 <div class="form">
                         <div class="form-group">
                             <label>Reason For Calling</label>
-                            <input type="text" class="form-control" name= "reason" id="reason" require">
+                            <input type="text" class="form-control" name= "reason" value="<?php echo $row['reason'];?>" id="reason" require>
                         </div>
                 </div>
                 <div class="row form-group">
@@ -232,21 +238,21 @@
                             <label for="select" class=" form-control-label">Nature of Incident</label>
                                 <select name="nature" id="nature" class="form-control-lg form-control">
                                     <option value=""></option>
-                                    <option value="Medical">Medical</option>
-                                    <option value="Trauma">Trauma</option>
-                                    <option value="Fire Response">Fire Response</option>
-                                    <option value="V A">V A</option>
-                                    <option value="Activity Event">Activity Event</option>
+                                    <option value="Medical" <?php echo $row['nature'] == 'Medical'? 'selected' : ''; ?>>Medical</option>
+                                    <option value="Trauma" <?php echo $row['nature'] == 'Trauma'? 'selected' : ''; ?>>Trauma</option>
+                                    <option value="Fire Response" <?php echo $row['nature'] == '>Fire Response'? 'selected' : ''; ?>>Fire Response</option>
+                                    <option value="V A"  <?php echo $row['nature'] == '>V A<'? 'selected' : ''; ?>>V A</option>
+                                    <option value="Activity Event"  <?php echo $row['nature'] == '>Activity Event'? 'selected' : ''; ?>>Activity Event</option>
                                 </select>
                         </div>
                         <div class="col col-md-6">
                             <label for="select" class=" form-control-label">Neuro</label>
                                 <select name="neuro" id="neuro" class="form-control-lg form-control">
                                     <option value=""></option>
-                                    <option value="Alert">Alert</option>
-                                    <option value="Oriented">Oriented</option>
-                                    <option value="Confused">Confused</option>
-                                    <option value="Unresponsive">Unresponsive</option>
+                                    <option value="Alert" <?php echo $row['neuro'] == 'Alert'? 'selected' : ''; ?>>Alert</option>
+                                    <option value="Oriented" <?php echo $row['neuro'] == 'Oriented'? 'selected' : ''; ?>>Oriented</option>
+                                    <option value="Confused" <?php echo $row['neuro'] == 'Confused'? 'selected' : ''; ?>>Confused</option>
+                                    <option value="Unresponsive" <?php echo $row['neuro'] == 'Unresponsive'? 'selected' : ''; ?>> Unresponsive</option>
                                 </select>
                         </div>
                 </div>
@@ -254,29 +260,29 @@
                 <div class="form-row">
                         <div class="form-group col-md-4">
                                 <label>Call Recieve</label>
-                                <input type="text" class="form-control" name= "call_recieve" id="call_recieve">
+                                <input type="text" class="form-control" name= "call_recieve" value="<?php echo $row['call_recieve'];?>"  id="call_recieve">
                         </div>
                         <div class="form-group col-md-4">
                                 <label for="inputPassword4">Unit Enroute</label>
-                                <input type="text" class="form-control" name= "unit_enroute" id="unit_enroute">
+                                <input type="text" class="form-control" name= "unit_enroute" value="<?php echo $row['unit_enroute'];?>" id="unit_enroute">
                         </div>
                         <div class="form-group col-md-4">
                                 <label for="inputPassword4">Arrive at Scene</label>
-                                <input type="text" class="form-control" name= "arrive_scene" id="arrive_scene">
+                                <input type="text" class="form-control" name= "arrive_scene" value="<?php echo $row['arrive_scene'];?>" id="arrive_scene">
                         </div>
                 </div>
                 <div class="form-row">
                         <div class="form-group col-md-4">
-                                                <label for="inputPassword4">Time Left Scene</label>
-                                                <input type="text" class="form-control" name= "left_scene" id="left_scene"  placeholder="" require">
+                             <label for="inputPassword4">Time Left Scene</label>
+                            <input type="text" class="form-control" name= "left_scene" id="left_scene" value="<?php echo $row['left_scene'];?>" placeholder="" require">
                         </div>
                         <div class="form-group col-md-4">
-                                                <label for="inputPassword4">Arrive at Destination</label>
-                                                <input type="text" class="form-control" name= "arrive_destination" id="arrive_destination"  placeholder="" require">
+                            <label for="inputPassword4">Arrive at Destination</label>
+                                                <input type="text" class="form-control" name= "arrive_destination" value="<?php echo $row['arrive_destination'];?>"id="arrive_destination"  placeholder="" require">
                         </div>
                         <div class="form-group col-md-4">
-                                                <label for="inputPassword4">Back In Service</label>
-                                                <input type="text" class="form-control" name= "back_service" id="back_service"  placeholder="" require">
+                            <label for="inputPassword4">Back In Service</label>
+                            <input type="text" class="form-control" name= "back_service" value="<?php echo $row['back_service'];?>"id="back_service"  placeholder="" require">
                                         </div>
                 </div>
                 <div class="row form-group">
@@ -284,20 +290,20 @@
                             <label for="select" class=" form-control-label">Airway</label>
                                 <select name="airway" id="airway" class="form-control-lg form-control">
                                     <option value=""></option>
-                                    <option value="Patent">Patent</option>
-                                    <option value="Impaired">Impaired</option>
+                                    <option value="Patent" <?php echo $row['airway'] == 'Patent'? 'selected' : ''; ?>>Patent</option>
+                                    <option value="Impaired"  <?php echo $row['airway'] == 'Impaired'? 'selected' : ''; ?>>Impaired</option>
                                 </select>
                         </div>
                         <div class="col col-md-6">
                             <label for="select" class=" form-control-label">Breathing</label>
                                 <select name="breathing" id="breathing" class="form-control-lg form-control">
                                     <option value=""></option>
-                                    <option value="Unlabored">Unlabored</option>
-                                    <option value="Deep">Deep</option>
-                                    <option value="Shallow">Shallow</option>
-                                    <option value="Labored">Labored</option>
-                                    <option value="Retraction">Retraction</option>
-                                    <option value="Absent">Absent</option>
+                                    <option value="Unlabored" <?php echo $row['breathing'] == 'Unlabored'? 'selected' : ''; ?>>Unlabored</option>
+                                    <option value="Deep" <?php echo $row['breathing'] == 'Deep'? 'selected' : ''; ?>>Deep</option>
+                                    <option value="Shallow" <?php echo $row['breathing'] == 'Shallow'? 'selected' : ''; ?>>Shallow</option>
+                                    <option value="Labored" <?php echo $row['breathing'] == 'Labored'? 'selected' : ''; ?>>Labored</option>
+                                    <option value="Retraction" <?php echo $row['breathing'] == 'Retraction'? 'selected' : ''; ?>>Retraction</option>
+                                    <option value="Absent" <?php echo $row['breathing'] == 'Absent'? 'selected' : ''; ?>>Absent</option>
                                 </select>
                         </div>
                 </div>
@@ -306,21 +312,21 @@
                             <label for="select" class=" form-control-label">Pupils</label>
                                 <select name="pupils" id="pupils" class="form-control-lg form-control">
                                     <option value=""></option>
-                                    <option value="Normal/Pearl">Normal/Pearl</option>
-                                    <option value="Constritec(Left/Right)">Constritec(Left/Right)</option>
-                                    <option value="Dilated(Left/Right)">Dilated(Left/Right)</option>
-                                        <option value="No Reaction(Left/Right)">No Reaction(Left/Right)</option>
+                                    <option value="Normal/Pearl" <?php echo $row['pupils'] == 'Normal/Pearl'? 'selected' : ''; ?>>Normal/Pearl</option>
+                                    <option value="Constritec(Left/Right)" <?php echo $row['pupils'] == 'Constritec(Left/Right)'? 'selected' : ''; ?>>Constritec(Left/Right)</option>
+                                    <option value="Dilated(Left/Right)" <?php echo $row['pupils'] == 'Dilated(Left/Right)'? 'selected' : ''; ?>>Dilated(Left/Right)</option>
+                                        <option value="No Reaction(Left/Right)" <?php echo $row['pupils'] == 'No Reaction(Left/Right)'? 'selected' : ''; ?>>No Reaction(Left/Right)</option>
                                 </select>
                         </div>
                         <div class="col col-md-6">
                             <label for="select" class=" form-control-label">Pulse</label>
                                 <select name="pulse" id="pulse" class="form-control-lg form-control">
                                     <option value=""> </option>
-                                    <option value="Normal">Normal</option>
-                                    <option value="Strong">Strong</option>
-                                    <option value="Weak">Weak</option>
-                                    <option value="Irregular">Irregular</option>
-                                    <option value="Regular">Regular</option>
+                                    <option value="Normal" <?php echo $row['pulse'] == 'Normal'? 'selected' : ''; ?>>Normal</option>
+                                    <option value="Strong" <?php echo $row['pulse'] == 'Strong'? 'selected' : ''; ?>>Strong</option>
+                                    <option value="Weak" <?php echo $row['pulse'] == 'Weak'? 'selected' : ''; ?>>Weak</option>
+                                    <option value="Irregular" <?php echo $row['pulse'] == 'Irregular'? 'selected' : ''; ?>>Irregular</option>
+                                    <option value="Regular" <?php echo $row['pulse'] == 'Regular'? 'selected' : ''; ?>>Regular</option>
                                 </select>
                         </div>
                  </div>
@@ -330,31 +336,31 @@
                             <label for="select" class=" form-control-label">Skin</label>
                                 <select name="skin" id="skin" class="form-control-lg form-control">
                                     <option value=""> </option>
-                                    <option value="Normal">Normal</option>
-                                    <option value="Cyanotic">Cyanotic</option>
-                                    <option value="Pale">Pale</option>
-                                    <option value="Cold">Cold</option>
-                                    <option value="Jaundice">Jaundice</option>
-                                    <option value="Flushed">Flushed</option>
-                                    <option value="Asthen">Asthen</option>
+                                    <option value="Normal"<?php echo $row['skin'] == 'Normal'? 'selected' : ''; ?>>Normal</option>
+                                    <option value="Cyanotic"<?php echo $row['skin'] == 'Cyanotic'? 'selected' : ''; ?>>Cyanotic</option>
+                                    <option value="Pale"<?php echo $row['skin'] == 'Pale'? 'selected' : ''; ?>>Pale</option>
+                                    <option value="Cold"<?php echo $row['skin'] == 'Cold'? 'selected' : ''; ?>>Cold</option>
+                                    <option value="Jaundice"<?php echo $row['skin'] == 'Jaundice'? 'selected' : ''; ?>>Jaundice</option>
+                                    <option value="Flushed"<?php echo $row['skin'] == 'Flushed'? 'selected' : ''; ?>>Flushed</option>
+                                    <option value="Asthen"<?php echo $row['skin'] == 'Asthen'? 'selected' : ''; ?>>Asthen</option>
                                 </select>
                         </div>
                         <div class="col col-md-4">
                             <label for="select" class=" form-control-label">Skin Type</label>
                                 <select name="skin_texture" id="skin_texture" class="form-control-lg form-control">
                                     <option value=""></option>
-                                    <option value="Normal">Normal</option>
-                                    <option value="Moist">Moist</option>
-                                    <option value="Dry">Dry</option>
-                                    <option value="Disphoretic">Disphoretic</option>
+                                    <option value="Normal" <?php echo $row['skin_texture'] == 'Normal'? 'selected' : ''; ?>>Normal</option>
+                                    <option value="Moist" <?php echo $row['skin_texture'] == 'Moist'? 'selected' : ''; ?>>Moist</option>
+                                    <option value="Dry" <?php echo $row['skin_texture'] == 'Dry'? 'selected' : ''; ?>>Dry</option>
+                                    <option value="Disphoretic" <?php echo $row['skin_texture'] == 'Disphoretic'? 'selected' : ''; ?>>Disphoretic</option>
                                 </select>
                         </div>
                         <div class="col col-md-4">
                             <label for="select" class=" form-control-label">CRT</label>
                                 <select name="crt" id="crt" class="form-control-lg form-control">
                                     <option value=""> </option>
-                                    <option value="1">Prolonged(>2 seconds)</option>
-                                    <option value="2">Normal(< 2 seconds)</option>
+                                    <option value="Prolonged(>2 seconds)"  <?php echo $row['crt'] == 'Prolonged(>2 seconds)'? 'selected' : ''; ?>>Prolonged(>2 seconds)</option>
+                                    <option value="Prolonged(>2 seconds)" <?php echo $row['crt'] == 'Prolonged(>2 seconds)'? 'selected' : ''; ?>>Normal(< 2 seconds)</option>
                                 </select>
                         </div>
                 </div>
@@ -379,34 +385,33 @@
 <div class="tab-pane fade" id="vsinfo_content">
     <div class="panel panel-default">
         <div class="panel-heading">Vital Signs Info</div>
-
             <div class="panel-body">
                 <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                                <label>Time</label>
-                                                <input type="text" class="form-control" name= "time_vs" id="time_vs">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                                <label for="inputPassword4">Blood Pressure</label>
-                                                <input type="text" class="form-control" name= "bp" id="bp">
-                                        </div>
-                                 </div>
+                     <div class="form-group col-md-6">
+                            <label>Time</label>
+                            <input type="text" class="form-control" name= "time_vs" value="<?php echo $row['time_vs'];?>" id="time_vs">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputPassword4">Blood Pressure</label>
+                         <input type="text" class="form-control" name= "bp" value="<?php echo $row['bp'];?>" id="bp">
+                    </div>
+                </div>
                                  <div class="form-row">
                                         <div class="form-group col-md-3">
                                                 <label>Pulse Rate</label>
-                                                <input type="text" class="form-control" name= "pr" id="pr" >
+                                                <input type="text" class="form-control" name= "pr" value="<?php echo $row['pr'];?>"  id="pr" >
                                         </div>
                                         <div class="form-group col-md-3">
                                                 <label for="inputPassword4">Risk ratio</label>
-                                                <input type="text" class="form-control" name= "rr" id="rr" ">
+                                                <input type="text" class="form-control" name= "rr" value="<?php echo $row['rr'];?>"  id="rr" ">
                                         </div>
                                         <div class="form-group col-md-3">
                                                 <label>Temperature</label>
-                                                <input type="text" class="form-control" name= "temp" id="temp">
+                                                <input type="text" class="form-control" name= "temp" value="<?php echo $row['temp'];?>" id="temp">
                                         </div>
                                         <div class="form-group col-md-3">
                                                 <label for="inputPassword4">02 Stat</label>
-                                                <input type="text" class="form-control" name= "stat" id="stat">
+                                                <input type="text" class="form-control" name= "stat" value="<?php echo $row['02stat'];?>" id="stat">
                                         </div>
                                  </div>
                                   <div class="row form-group">
@@ -414,40 +419,40 @@
                                             <label for="select" class=" form-control-label">Eye</label>
                                                 <select name="eye" id="eye" class="form-control-lg form-control">
                                                     <option value=""> </option>
-                                                    <option value="4">4</option>
-                                                    <option value="3">3</option>
-                                                    <option value="2">2</option>
-                                                    <option value="1">1</option>
+                                                    <option value="4" <?php echo $row['eye'] == '4'? 'selected': '';?>>4</option>
+                                                    <option value="3" <?php echo $row['eye'] == '3'? 'selected': '';?>>3</option>
+                                                    <option value="2" <?php echo $row['eye'] == '2'? 'selected': '';?>>2</option>
+                                                    <option value="1" <?php echo $row['eye'] == '1'? 'selected': '';?>>1</option>
                                                 </select>
                                         </div>
                                          <div class="col col-md-4">
                                             <label for="select" class=" form-control-label">Verbal</label>
                                                 <select name="verbal" id="verbal" class="form-control-lg form-control">
                                                     <option value=""> </option>
-                                                    <option value="5">5</option>
-                                                    <option value="4">4</option>
-                                                    <option value="3">3</option>
-                                                    <option value="2">2</option>
-                                                    <option value="1">1</option>
+                                                    <option value="5" <?php echo $row['verbal'] == '5'? 'selected': '';?>>5</option>
+                                                    <option value="4" <?php echo $row['verbal'] == '4'? 'selected': '';?>>4</option>
+                                                    <option value="3" <?php echo $row['verbal'] == '3'? 'selected': '';?>>3</option>
+                                                    <option value="2" <?php echo $row['verbal'] == '2'? 'selected': '';?>>2</option>
+                                                    <option value="1" <?php echo $row['verbal'] == '1'? 'selected': '';?>>1</option>
                                                 </select>
                                         </div>
                                         <div class="col col-md-4">
                                             <label for="select" class=" form-control-label">Motor</label>
                                                 <select name="motor" id="motor" class="form-control-lg form-control">
                                                     <option value=""> </option>
-                                                    <option value="6">6</option>
-                                                    <option value="5">5</option>
-                                                    <option value="4">4</option>
-                                                    <option value="3">3</option>
-                                                    <option value="2">2</option>
-                                                    <option value="1">1</option>
+                                                    <option value="6" <?php echo $row['motor'] == '6'? 'selected': '';?>>6</option>
+                                                    <<option value="5"<?php echo $row['motor'] == '5'? 'selected': '';?>>5</option>
+                                                    <option value="4" <?php echo $row['motor'] == '4'? 'selected': '';?>>4</option>
+                                                    <option value="3" <?php echo $row['motor'] == '3'? 'selected': '';?>>3</option>
+                                                    <option value="2" <?php echo $row['motor'] == '2'? 'selected': '';?>>2</option>
+                                                    <option value="1" <?php echo $row['motor'] == '1'? 'selected': '';?>>1</option>
                                                 </select>
                                         </div>
                                     </div> 
                                     <div class="form-row">
                                         <div class="form-group col-md-2">
                                                 <label>Total</label>
-                                                <input type="text" class="form-control" name= "total" id="total" require">
+                                                <input type="text" class="form-control" value="<?php echo $row['total'];?>" name= "total" id="total" require>
                                         </div>
                                  </div>
                 <div align="center">
@@ -476,63 +481,63 @@
                   <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label>Signs and Symptoms</label>
-                                        <input type="text" class="form-control" name="symtomps" id="symtomps">
+                                        <input type="text" class="form-control" value="<?php echo $row['symtomps'];?>" name="symtomps" id="symtomps">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>Allergies</label>
-                                        <input type="text" class="form-control" name="allergies" id="allergies">
+                                        <input type="text" class="form-control"value="<?php echo $row['allergies'];?>" name="allergies" id="allergies">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>Meds</label>
-                                        <input type="text" class="form-control" name="meds" id="meds">
+                                        <input type="text" class="form-control" value="<?php echo $row['meds'];?>" name="meds" id="meds">
                                     </div>
                                  </div>
                                   <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label>Past Illness</label>
-                                        <input type="text" class="form-control" name="past_ill" id="past_ill">
+                                        <input type="text" class="form-control" value="<?php echo $row['past_ill'];?>" name="past_ill" id="past_ill">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>Last Oral Intake</label>
-                                        <input type="text" class="form-control" name="oral_intake" id="oral_intake">
+                                        <input type="text" class="form-control" value="<?php echo $row['oral_intake'];?>" name="oral_intake" id="oral_intake">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>Time of Intake</label>
-                                        <input type="text" class="form-control" name="time_oral" id="time_oral">
+                                        <input type="text" class="form-control" value="<?php echo $row['time_oral'];?>" name="time_oral" id="time_oral">
                                     </div>
                                  </div>
                                  <div class="form">
                                     <div class="form-group">
                                         <label>Events Prior</label>
-                                        <input type="text" class="form-control" name="events_prior" id="events_prior">
+                                        <input type="text" class="form-control" value="<?php echo $row['events_prior'];?>" name="events_prior" id="events_prior">
                                     </div>
                                 </div>
                                  <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label>Onset</label>
-                                        <input type="text" class="form-control" name="onset" id="onset">
+                                        <input type="text" class="form-control" value="<?php echo $row['onset'];?>" name="onset" id="onset">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>Provocation</label>
-                                        <input type="text" class="form-control" name="provocation" id="provocation">
+                                        <input type="text" class="form-control" value="<?php echo $row['provocation'];?>" name="provocation" id="provocation">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>Quality</label>
-                                        <input type="text" class="form-control" name="quality" id="quality">
+                                        <input type="text" class="form-control" value="<?php echo $row['quality'];?>" name="quality" id="quality">
                                     </div>
                                  </div>
                                   <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label>Radiation</label>
-                                        <input type="text" class="form-control" name="radiation" id="radiation">
+                                        <input type="text" class="form-control" value="<?php echo $row['radiation'];?>" name="radiation" id="radiation">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>Severity</label>
-                                        <input type="text" class="form-control" name="severity" id="severity">
+                                        <input type="text" class="form-control" value="<?php echo $row['severity'];?>" name="severity" id="severity">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>Timing</label>
-                                        <input type="text" class="form-control" name="timing_i" id="timing_i">
+                                        <input type="text" class="form-control" value="<?php echo $row['timing_i'];?>" name="timing_i" id="timing_i">
                                     </div>
                                  </div>
                                  <div class="row form-group">
@@ -540,54 +545,54 @@
                                             <label for="select" class=" form-control-label">Trauma Case</label>
                                                 <select name="trauma" id="etraumaye" class="form-control-lg form-control">
                                                     <option value=""></option>
-                                                    <option value="Alcohol Intoxication">Alcohol Intoxication</option>
-                                                    <option value="Animal Bite">Animal Bite</option>
-                                                    <option value="Drowning">Drowning</option>
-                                                    <option value="Electrocution">Electrocution</option>
-                                                    <option value="Fall">Fall</option>
-                                                    <option value="Gunshot Wound">Gunshot Wound</option>
-                                                    <option value="Hit and run">Hit and run</option>
-                                                    <option value="Mauling">Mauling</option>
-                                                    <option value="Stab Wound">Stab Wound</option>
+                                                    <option value="Alcohol Intoxication" <?php echo $row['trauma'] == 'Alcohol Intoxication'? 'selected': '';?>>Alcohol Intoxication</option>
+                                                    <option value="Animal Bite" <?php echo $row['trauma'] == 'Animal Bite'? 'selected': '';?>>Animal Bite</option>
+                                                    <option value="Drowning" <?php echo $row['trauma'] == 'Drowning'? 'selected': '';?>>Drowning</option>
+                                                    <option value="Electrocution" <?php echo $row['trauma'] == 'Electrocution'? 'selected': '';?>>Electrocution</option>
+                                                    <option value="Fall" <?php echo $row['trauma'] == 'Fall'? 'selected': '';?>>Fall</option>
+                                                    <option value="Gunshot Wound" <?php echo $row['trauma'] == 'Gunshot Wound'? 'selected': '';?>>Gunshot Wound</option>
+                                                    <option value="Hit and run" <?php echo $row['trauma'] == 'Hit and run'? 'selected': '';?>>Hit and run</option>
+                                                    <option value="Mauling" <?php echo $row['trauma'] == 'Mauling'? 'selected': '';?>>Mauling</option>
+                                                    <option value="Stab Wound" <?php echo $row['trauma'] == 'Stab Wound'? 'selected': '';?>>Stab Wound</option>
                                                 </select>
                                         </div>
                                          <div class="col col-md-4">
                                             <label for="select" class=" form-control-label">Burn(%TBSA)</label>
                                                 <select name="burn" id="burn" class="form-control-lg form-control">
                                                     <option value=""></option>
-                                                    <option value="First Degree">First Degree</option>
-                                                    <option value="Second Degree">Second Degree</option>
-                                                    <option value="Superficial">Superficial</option>
-                                                    <option value="Deep">Deep</option>
+                                                    <option value="First Degree" <?php echo $row['burn'] == 'First Degree'? 'selected': '';?>>First Degree</option>
+                                                    <option value="Second Degree" <?php echo $row['burn'] == 'Second Degree'? 'selected': '';?>>Second Degree</option>
+                                                    <option value="Superficial" <?php echo $row['burn'] == 'Superficial'? 'selected': '';?>>Superficial</option>
+                                                    <option value="Deep" <?php echo $row['burn'] == 'Deep'? 'selected': '';?>>Deep</option>
                                                 </select>
                                         </div>
                                         <div class="col col-md-4">
                                             <label for="select" class=" form-control-label">Treatment</label>
                                                 <select name="treatment" id="treatment" class="form-control-lg form-control">
                                                     <option value=""></option>
-                                                    <option value="Airway Conduct">Airway Conduct</option>
-                                                    <option value="Abdominal Thrus">Abdominal Thrust</option>
-                                                    <option value="Bandaging">Bandaging</option>
-                                                    <option value="Burn Care">Burn Care</option>
-                                                    <option value="Cold Application">Cold Application</option>
-                                                    <option value="Defibrillation">Defibrillation</option>
-                                                    <option value="Extrication">Extrication</option>
-                                                    <option value="Rescue Breathing">Rescue Breathing</option>
-                                                    <option value="Nebulization">Nebulization</option>
-                                                    <option value="Oxygen">Oxygen</option>
-                                                    <option value="Spine Immobilization">Spine Immobilization</option>
-                                                    <option value="Suctioning">Suctioning</option>
-                                                    <option value="Spliting/Traction">Spliting/Traction</option>
-                                                    <option value="VS Checked">VS Checked</option>
-                                                    <option value="Wound Cleaning/Dressing">Wound Cleaning/Dressing</option>
-                                                    <option value="CPR">CPR</option>
+                                                    <option value="Airway Conduct"  <?php echo $row['treatment'] == 'Airway Conduct'? 'selected': '';?>>Airway Conduct</option>
+                                                    <option value="Abdominal Thrus"  <?php echo $row['treatment'] == 'Abdominal Thrus'? 'selected': '';?>>Abdominal Thrust</option>
+                                                    <option value="Bandaging"  <?php echo $row['treatment'] == 'Bandaging'? 'selected': '';?>>Bandaging</option>
+                                                    <option value="Burn Care"  <?php echo $row['treatment'] == 'Burn Care" '? 'selected': '';?>>Burn Care</option>
+                                                    <option value="Cold Application" <?php echo $row['treatment'] == 'Cold Application'? 'selected': '';?>>Cold Application</option>
+                                                    <option value="Defibrillation"  <?php echo $row['treatment'] == 'Defibrillation'? 'selected': '';?>>Defibrillation</option>
+                                                    <option value="Extrication"  <?php echo $row['treatment'] == 'Extrication'? 'selected': '';?>>Extrication</option>
+                                                    <option value="Rescue Breathing" <?php echo $row['treatment'] == 'Rescue Breathing'? 'selected': '';?>>Rescue Breathing</option>
+                                                    <option value="Nebulization" <?php echo $row['treatment'] == 'Nebulization"'? 'selected': '';?>>Nebulization</option>
+                                                    <option value="Oxygen" <?php echo $row['treatment'] == 'Oxygen"'? 'selected': '';?>>Oxygen</option>
+                                                    <option value="Spine Immobilization" <?php echo $row['treatment'] == 'Spine Immobilization'? 'selected': '';?>>Spine Immobilization</option>
+                                                    <option value="Suctioning"  <?php echo $row['treatment'] == 'Suctioning'? 'selected': '';?>>Suctioning</option>
+                                                    <option value="Spliting/Traction"  <?php echo $row['treatment'] == 'Spliting/Traction'? 'selected': '';?>>Spliting/Traction</option>
+                                                    <option value="VS Checked" <?php echo $row['treatment'] == 'VS Checked'? 'selected': '';?>>VS Checked</option>
+                                                    <option value="Wound Cleaning/Dressing" <?php echo $row['treatment'] == 'Wound Cleaning/Dressing'? 'selected': '';?>>Wound Cleaning/Dressing</option>
+                                                    <option value="CPR" <?php echo $row['treatment'] == 'CPR'? 'selected': '';?>>CPR</option>
                                                 </select>
                                         </div>
                                     </div>
                                     <div class="form">
                                         <div class="form-group">
                                             <label>Narratives</label>
-                                              <textarea name="narrative" id="narrative" rows="9" placeholder="Write Narratives.." class="form-control"></textarea>
+                                              <textarea name="narrative" id="narrative" rows="9" placeholder="Write Narratives.." class="form-control"> <?php echo $row['narrative'];?></textarea>
                                     </div>
                                 </div>
                                  <div align="center">
@@ -616,19 +621,19 @@
                                         <?php
                                             $query = "SELECT * FROM unit_name";
                                             $result = mysqli_query($conn,$query);
-                                            while($row=mysqli_fetch_assoc($result)){
+                                            while($row1=mysqli_fetch_assoc($result)){
                                                 ?>
-                                            <option value="<?php echo $row['unit_name'];?>"><?php echo $row['unit_name'];?></option>
+                                            <option value="<?php echo $row1['unit_name'];?>"><?php echo $row1['unit_name'];?></option>
                                        <?php } ?>
                                             </select>
                                     </div>
                                     <div class="col col-md-4">
                                         <label>Treatment Officer</label>
-                                        <input type="text" class="form-control" name="treatment_officer" id="treatment_officer">
+                                        <input type="text" class="form-control" value ="<?php echo $row['treatment_officer'];?>" name="treatment_officer" id="treatment_officer">
                                     </div>
                                     <div class="col col-md-4">
                                         <label>Trasnport Officer</label>
-                                        <input type="text" class="form-control" name="transport_officer" id="transport_officer">
+                                        <input type="text" class="form-control" value = "<?php echo $row['transport_officer'];?>" name="transport_officer" id="transport_officer">
                                     </div>
                                 </div>
                                 <div class="row form-group">
@@ -636,12 +641,12 @@
                                         <label>Destination Determination</label>
                                         <select name="desti_deter" class="form-control-lg form-control">
                                             <option value=""></option>
-                                            <option value="Closest Facility">Closest Facility</option>
-                                            <option value="Patient's Choice">Patient's Choice</option>
-                                            <option value="Family's Choice">Family's Choice</option>
-                                            <option value="Medical Direction">Medical Direction</option>
-                                            <option value="Law Enforcement Choice">Law Enforcement Choice</option>
-                                            <option value="Protocol">Protocol</option>
+                                            <option value="Closest Facility" <?php echo $row['desti_deter'] == 'Closest Facility' ? 'selected': '';?> >Closest Facility</option>
+                                            <option value="Patient's Choice" <?php echo $row['desti_deter'] == "Patient's Choice" ? 'selected': '';?>>Patient's Choice</option>
+                                            <option value="Family's Choice" <?php echo $row['desti_deter'] == "Family's Choice" ? 'selected': '';?>>Family's Choice</option>
+                                            <option value="Medical Direction" <?php echo $row['desti_deter'] == "Medical Direction" ? 'selected': '';?>>Medical Direction</option>
+                                            <option value="Law Enforcement Choice" <?php echo $row['desti_deter'] == "Law Enforcement Choice" ? 'selected': '';?>>Law Enforcement Choice</option>
+                                            <option value="Protocol" <?php echo $row['desti_deter'] == "Protocol" ? 'selected': '';?>>Protocol</option>
                                         </select>
                                     </div>
                                     <div class="col col-md-4">
@@ -670,7 +675,7 @@
                                 <div class="form">
                                     <div class="col">
                                         <label>Receiving Facility</label>
-                                        <input type="text" class="form-control" name="receiving_facility" id="receiving_facility">
+                                        <input type="text" class="form-control" value="<?php echo $row['receiving_facility'];?>" name="receiving_facility" id="receiving_facility">
                                     </div>
                                     <div class="col">
                                         <label>Receiving MD/RN/Relative</label>
@@ -702,6 +707,7 @@
         </div>
     </div>
 </form>
+<?php }}?>
     <!--================================================================================================================-->
           </div><!-- end of container-fluid -->
     </div><!-- end of section -->

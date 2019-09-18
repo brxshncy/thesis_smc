@@ -1,4 +1,5 @@
   <!-- MENU SIDEBAR-->
+  <?php include 'include/db.php';?>
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
                 <a href="#">
@@ -9,8 +10,24 @@
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
                         <li>
+                            <a href="pcr-list.php">
+                                <i class="fas fa-files-o"></i>
+                                Patient Care Reports
+                                <?php
+                                        $qry = "SELECT * FROM pcr WHERE status = 'unread' ";
+                                        $result = $conn->query($qry);
+                                        $count_status = mysqli_num_rows($result);
+                                        if($count_status>0){
+                                    ?>
+                                    <span class="badge badge-danger"><?php echo $count_status; ?> </span>
+                                    <?php
+                                         }
+                                    ?>
+                            </a>
+                        </li>
+                         <li>
                             <a href="pcr-record.php">
-                                <i class="fas fa-files-o"></i>Patient Care Report
+                                <i class="fas fa-files-o"></i>PCR Records
                             </a>
                         </li>
 
@@ -35,7 +52,6 @@
                                 <i class="fa fa-archive"></i>
                                     Locator Slip Requests 
                                     <?php
-                                        include 'include/db.php';
                                         $qry = "SELECT * FROM locatorslip_request WHERE status = 'unread' ";
                                         $result = $conn->query($qry);
                                         $count_status = mysqli_num_rows($result);

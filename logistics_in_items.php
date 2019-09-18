@@ -23,6 +23,16 @@ session_start();
           										</div>
 
           									<?php endif?>
+          									<?php
+          									if(isset($_SESSION['update'])):?>
+          										<div class="alert alert-info">
+          											<?php
+          												echo $_SESSION['update'];
+          												unset($_SESSION['update']);
+          											?>
+          										</div>
+
+          									<?php endif?>
           								
           								<div class="row">
           									<div class="col-md-6">
@@ -58,7 +68,10 @@ session_start();
                                                             <td width=""><?php echo $row['quantity']; ?></td>
                                                             <td width=""><?php echo $row['unit_measure']; ?></td>
                                                             <td width="">
-                                                                <i class="fas fa-edit (alias) text-primary ml-4"></i> | <i class="zmdi zmdi-delete text-danger"></i> 
+                                          			  <button class="item edit_button" style="color:blue;" data-toggle="tooltip" data-placement="top" title="Edit" 
+                                          			  id="<?php echo $row['id'];?>">
+                                                             <i class="fas fa-edit (alias) "></i></button> |
+                                                              <i class="zmdi zmdi-delete text-danger"></i> 
                                                             </td>
                                                         </tr>
                                                     <?php }?>
@@ -118,7 +131,27 @@ session_start();
     </div>
 </div>
 
-                       <!-- Modal -->
+         			 <!-- Modal -->
+
+         			  <!-- Edit Modal -->
+<div class="modal fade" id="edit_modal">
+    <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">  Edit Item</h5>
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                       <div class="modal-body" id= "update_details" >
+                              
+
+                        </div>
+                </div>
+    </div>
+</div>
+
+         			 <!-- Modal -->
 
 
 <?php include 'footer.php';?>

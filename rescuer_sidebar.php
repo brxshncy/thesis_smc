@@ -9,6 +9,11 @@
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
                         <li>
+                           <a href="pcr-form.php">
+                            <i class="fas fa-files-o"></i>Patient Care Report
+                        </a>
+                        </li>
+                        <li>
                            <a href="locator_slip.php">
                             <i class="fas  fa-archive"></i>Request Locator Slip
                         </a>
