@@ -14,9 +14,7 @@ session_start();
 							if(isset($_POST['id'])){
 							$id = $_POST['id'];
 								
-								$sender = "SELECT un.id as u_id FROM unit_name un LEFT JOIN  pcr p ON p.team = un.id WHERE un.id = '$id'";
-								$qry = $conn->query($sender);
-								$id_sender = mysqli_fetch_object($qry);
+								
 
 								$query = "SELECT * FROM pcr WHERE id = '$id' ";
 								$view = mysqli_query($conn, $query);
@@ -27,6 +25,10 @@ session_start();
 							
 						<input type="hidden" value="<?php echo $row['id'];?>" name="id">
 						<input type="hidden" value="read" name="status">
+						<label>Team ID</label>
+						<input type="text" value="<?php echo $row['team']; ?> " name="team_id">
+						<label>Sender ID</label>
+						<input type="text" value="<?php echo $row['sender']; ?> " name="sender_id">
 							<tr class="table-info">
 								<th colspan = 2><h2 style="color:#fff;" align="center">Patient Personal Information</h2></th>
 							</tr>

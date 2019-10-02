@@ -96,7 +96,9 @@
                                             </thead>
                                 <tbody>
                             <?php
-                                    $locator = "SELECT pcr.id as id,t.unit_name AS team, pcr.sender AS sender from pcr LEFT JOIN unit_name t ON t.id = pcr.team ";
+                                    $locator = "SELECT pcr.id AS id, un.unit_name AS team, CONCAT(r.firstname,' ',r.lastname) AS sender FROM pcr 
+                                                LEFT JOIN unit_name un ON un.id = pcr.team 
+                                                LEFT JOIN rescuers r ON r.id = pcr.sender";
                                     $counter = 0;
                                     $result = $conn->query($locator);
                                     $field_count = $result->field_count;

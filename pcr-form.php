@@ -85,10 +85,10 @@
                     $info = "SELECT * FROM rescuers WHERE username = '$username' ";
                     $query = $conn->query($info);
                     $fetch = mysqli_fetch_assoc($query);
-                    $name = $fetch['firstname']." ".$fetch['lastname'];
+                    $id = $fetch['id'];
                 }
             ?>     
-            <input type="hidden" name="sender" value="<?php echo $name;?>">
+            <input type="hidden" name="sender" value="<?php echo $id;?>">
             <input type="hidden" name="team" value="<?php echo $fetch['team_unit']; ?>">
             
 

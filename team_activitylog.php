@@ -135,7 +135,7 @@ session_start();
                         <td><?php echo $row->impression ?></td>
 
                    <?php }   }else{
-                     echo "<td colspan='4'>No recent activity Logs</td>";
+                     echo "<td colspan='6'>No recent activity Logs</td>";
                    }
                     }
                 ?>

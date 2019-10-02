@@ -133,6 +133,9 @@ include 'include/db.php';
                 <div class="form-row">
                     <input type="hidden" class="form-control" value="<?php echo $row['id'];?>" name="update_id" id="update_data">
                     <input type="hidden" class="form-control" value="read" name="status" id="status">
+                     <input type="hidden" class="form-control" value="<?php echo $row['team'];?>" name="team" id="update_data">
+                     <input type="hidden" class="form-control" value="<?php echo $row['sender'];?>" name="sender" id="update_data">
+
                     <div class="form-group col-md-5">
                         <label>First Name</label>
                         <input type="text" class="form-control" name= "firstname" id="firstname" value="<?php echo $row['firstname'];?>" required="">

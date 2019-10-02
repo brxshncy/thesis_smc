@@ -79,6 +79,8 @@ if(isset($_POST['upload'])){
 		$receiving_facility = mysqli_escape_string($conn,$_POST['receiving_facility']);
 		$receiving_md = mysqli_escape_string($conn,$_POST['receiving_md']);
 		$status = $_POST['status'];
+		$team = $_POST['team'];
+		$sender = $_POST['sender'];
 	 
 	$update = "UPDATE pcr SET 	firstname = '$firstname', lastname = '$lastname', 
 								middlename = '$mi', age = '$age',
@@ -103,7 +105,7 @@ if(isset($_POST['upload'])){
 								burn = '$burn', treatment = '$treatment', narrative = '$narrative', transport_officer = '$transport_officer',
 								treatment_officer = '$treatment_officer', dispatched_unit = '$dispatched_unit', desti_deter = '$desti_deter',
 								response_mode = '$response_mode', transport_mode = '$transport_mode', receiving_facility = '$receiving_facility',
-								receiving_md = '$receiving_md', status = '$status'
+								receiving_md = '$receiving_md', status = '$status', sender = '$sender', team = '$team'
 
 								WHERE id = '$edit_id' ";
 	$result = $conn->query($update) OR trigger_error(mysqli_error($update)." ".$update);
@@ -111,8 +113,8 @@ if(isset($_POST['upload'])){
 	if($result){
 		// SQL INSERT
 		$insert = "INSERT INTO
-		 pcr_official (firstname,lastname,middlename,religion,nationality,age,gender,address,date_i,time_i,impression,r_p1,contact1,r_p2,contact2,reason,nature,neuro,call_recieve,unit_enroute,arrive_scene,left_scene,arrive_destination,back_service,airway,breathing,pupils,pulse,skin,skin_texture,crt,time_vs,bp,pr,rr,temp,02stat,eye,verbal,motor,total,symtomps,allergies,meds,past_ill,oral_intake,time_oral,onset,provocation,quality,radiation,severity,timing_i,events_prior,trauma,burn,treatment,narrative,transport_officer,treatment_officer,dispatched_unit,desti_deter,response_mode,transport_mode,receiving_facility,receiving_md,status) 
-		VALUES('$firstname','$lastname','$mi','$religion','$nationality','$age','$gender','$address','$date_i','$time_i','$impression','$r_p1','$contact1','$r_p2','$contact2','$reason','$nature','$neuro','$call_recieve ','$unit_enroute','$arrive_scene','$left_scene','$arrive_destination','$back_service','$airway','$breathing','$pupils','$pulse','$skin','$skin_texture','$crt','$time_vs','$bp','$pr','$rr','$temp','$stat','$eye','$verbal','$motor','$total','$symtomps','$allergies','$meds','$past_ill','$oral_intake','$time_oral','$onset','$provocation','$quality','$radiation','$severity','$timing_i','$events_prior','$trauma','$burn','$treatment','$narrative','$transport_officer','$treatment_officer','$dispatched_unit','$desti_deter','$response_mode','$transport_mode','$receiving_facility','$receiving_md','$status')";
+		 pcr_official (firstname,lastname,middlename,religion,nationality,age,gender,address,date_i,time_i,impression,r_p1,contact1,r_p2,contact2,reason,nature,neuro,call_recieve,unit_enroute,arrive_scene,left_scene,arrive_destination,back_service,airway,breathing,pupils,pulse,skin,skin_texture,crt,time_vs,bp,pr,rr,temp,02stat,eye,verbal,motor,total,symtomps,allergies,meds,past_ill,oral_intake,time_oral,onset,provocation,quality,radiation,severity,timing_i,events_prior,trauma,burn,treatment,narrative,transport_officer,treatment_officer,dispatched_unit,desti_deter,response_mode,transport_mode,receiving_facility,receiving_md,status,rescuer_id,team_id) 
+		VALUES('$firstname','$lastname','$mi','$religion','$nationality','$age','$gender','$address','$date_i','$time_i','$impression','$r_p1','$contact1','$r_p2','$contact2','$reason','$nature','$neuro','$call_recieve ','$unit_enroute','$arrive_scene','$left_scene','$arrive_destination','$back_service','$airway','$breathing','$pupils','$pulse','$skin','$skin_texture','$crt','$time_vs','$bp','$pr','$rr','$temp','$stat','$eye','$verbal','$motor','$total','$symtomps','$allergies','$meds','$past_ill','$oral_intake','$time_oral','$onset','$provocation','$quality','$radiation','$severity','$timing_i','$events_prior','$trauma','$burn','$treatment','$narrative','$transport_officer','$treatment_officer','$dispatched_unit','$desti_deter','$response_mode','$transport_mode','$receiving_facility','$receiving_md','$status','$sender','$team')";
 		$result2 = $conn->query($insert);
 		
 		$del = "DELETE FROM pcr WHERE pcr.id = '$edit_id' ";
