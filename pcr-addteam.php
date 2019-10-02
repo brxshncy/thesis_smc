@@ -104,6 +104,7 @@ include 'include/db.php';
                             <label>Team Unit's Name</label>
                              <input type="text" class="form-control" id="unit_name" name="unit_name" placeholder="">
                        </div>
+                      <div class="form-group">
                        <label>Vehicle</label>
                     <select name="vehicle_name" class="form-control">
                         <option value=""></option>
@@ -116,7 +117,8 @@ include 'include/db.php';
 
   
                     </select>
-                      <div class="form-group">
+                  </div>
+                      <!--<div class="form-group">
                               <label>Assign Transport Officer</label>
                              <select name ="transport_officer" id="transport_officer" class="form-control">
                                 <option value=""></option>
@@ -124,8 +126,11 @@ include 'include/db.php';
                                   $qry1 = "SELECT * FROM  rescuers";
                                   $result1 = $conn->query($qry1) or trigger_error(mysqli_error($conn)." ".($qry1));
                                    while($row = $result1->fetch_assoc()){
+                                          $id = $row['id'];
                                           $name = $row['firstname']." ".$row['lastname'];
-                                          echo '<option value="'.$name.'">' .$name. '</option>';
+                                          $username = $row['username'];
+                                          $role = $row['id'];
+                                          echo '<option value="'.$id.'">' .$name. '</option>';
                                         }
                                      ?>
                              </select>
@@ -139,11 +144,12 @@ include 'include/db.php';
                                   $result1 = $conn->query($qry1) or trigger_error(mysqli_error($conn)." ".($qry1));
                                  while($row = $result1->fetch_assoc()){
                                           $name = $row['firstname']." ".$row['lastname'];
-                                          echo '<option value="'.$name.'">' .$name. '</option>';
+                                          $id = $row['id'];
+                                          echo '<option value="'.$id.'">' .$name. '</option>';
                                         }
                                      ?>
                              </select>
-                     </div> 
+                     </div> -->
                                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                   <input type="submit" name="upload" id="upload" value="Upload" class="btn btn-primary">
                                   
@@ -188,15 +194,20 @@ include 'include/db.php';
                   <div class="modal-body">
                         <form action ="include/addteamdb.php" method= "POST" enctype="multipart/form-data">
                                <div class="form-group">
-                                    <label>Members Registered</label>
+                                    <label>Members Available</label>
                                     <select class="form-control" id="members" name="members">
-                                      <option value="">Select</option>
+                                      <option value=""></option>
                                     <?php
                                         $members = $conn->query("SELECT * FROM rescuers");
-                                        while($row = $members->fetch_assoc()){
+                                        if(mysqli_num_rows($members)>0){
+                                           while($row = $members->fetch_assoc()){
                                           $name = $row['firstname']." ".$row['lastname'];
-                                          echo '<option value="'.$row['id'].'">' .$name. '</option>';
+                                         echo !$row['team_unit']? '<option value="'.$row['id'].'">' .$name. '</option>' : '';
                                         }
+                                        }else{
+                                          echo '<option>No members available</option>';
+                                        }
+                                       
                                      ?>
                                       </select>
                                 </div>
@@ -233,7 +244,17 @@ include 'include/db.php';
                                               <input type="text" class="form-control" name="username" id="username" readonly>
                                          </div>
                                   </div>
+                                <div class="form-group mt-4">
+                                    <label>Role</label>
+                                    <select class="form-control col-md-6" id="role" name="role">
+                                    <option value=""></option>
+                                    <option value="Treatment Officer">Treatment Officer</option>
+                                    <option value="Treatment Officer">Treatment Officer</option>
+                                    <option value="Member">Member</option>
+                                    </select>
+                              </div>
                           </div>
+                          
 
                               <div class="form-group mt-4">
                                     <label>Team Name</label>
@@ -242,7 +263,7 @@ include 'include/db.php';
                                         $select_team = $conn->query("SELECT * FROM unit_name");
                                         while($select = $select_team->fetch_assoc()){
                                     ?>  
-                                              <option><?php echo $select['unit_name'];?></option>
+                                              <option value="<?php echo $select['id']; ?>"><?php echo $select['unit_name'];?></option>
                                             
                                          <?php }?>
                                  </select>
@@ -290,49 +311,89 @@ include 'include/db.php';
                       </li>
                     </ul>
                   </nav>
-                           
-               <div class="table-responsive-md">  
-                    <table class="table table-bordered">
-                        <thead class="thead">
-                          <tr class="table-primary" style="border-color:black;">
 
-                                   <th>No.</th>
-                                   <th>Team Unit Name</th>
-                                   <th >Transport Officer</th>
-                                   <th>Treatment Officer</th>
-                                   <th >Vehicle</th>                               
-                                   <th>Action</th>
-                          </tr>
-                         </thead>
-                             <tbody>
-                                <?php                                    
-                                     $result = $conn->query("SELECT * FROM unit_name");
-                                     $counter = 0;
-                                       while($row = $result->fetch_assoc()){
-                                        $counter++;
-                                 ?>
-                                    
-                                     <tr class="table-default">
-                                        <td><?php echo $counter;?></td>
-                                        <td><?php echo $row['unit_name'];?></td>
-                                        <td><?php echo $row['transport_officer'];?></td>
-                                        <td><?php echo $row['treatment_officer'];?></td>
-                                        <td><?php echo $row['vehicle_name'];?></td>
-                                        <td width="">
-                                           <a href="view_member.php?view=<?php echo $row['id'];?>">
-                                            <button class="item" style="color:green;" data-toggle="modal" data-target="#" title="View Unit Members" id="add"> <i class="fa fa-users"></i></button>
-                                        </a> |
-                                             <button class="item edit_modal" style="color:blue;" data-toggle="modal" title="Edit Record" id="<?php echo $row['id'];?>">
-                                                <i class="fa fa-edit"></i>
-                                            </button>|
-                                              <a href="include/delete_team.php?delete=<?php echo $row['id']; ?>"> 
-                                            <button class="item" style="color:red;" data-toggle="tooltip" title="Delete Record" id="delete">
-                                                 <i class="zmdi zmdi-delete"></i>
-                                            </button></a>                                  
-                                        </td>
-                                     </tr>  
 
-                                    <?php } ?>            
+
+<?php                                    
+$q = "SELECT ";
+$q .= "t.id,";
+$q .= "t.unit_name,";
+
+$q .= "(SELECT DISTINCT CONCAT(sub_r.firstname, ' ', sub_r.lastname) as name ";
+$q .= "FROM teams sub_tm";
+$q .= " LEFT JOIN rescuers sub_r ON sub_r.id = sub_tm.rescuers_id";
+$q .= " WHERE";
+$q .= "   sub_tm.role = 'Treatment Officer'";
+$q .= "   AND t.id = sub_tm.team_id) as treatment_officer,"; //<-- sudo column name is treatment officer
+
+$q .= "(SELECT DISTINCT CONCAT(sub_r.firstname, ' ', sub_r.lastname) as name ";
+$q .= "FROM teams sub_tm";
+$q .= " LEFT JOIN rescuers sub_r ON sub_r.id = sub_tm.rescuers_id" ;
+$q .= " WHERE";
+$q .= "   sub_tm.role = 'Transport Officer'";
+$q .= "   AND t.id = sub_tm.team_id) as transport_officer,"; //<-- sudo column name is transport officer
+
+$q .= "t.vehicle_name ";
+$q .= "FROM";
+$q .= " unit_name as t";
+
+
+
+
+ $result = $conn->query($q);
+$counter = 0;
+?>
+           
+
+<div class="table-responsive-md">  
+    <table class="table table-bordered">
+       <thead class="thead">
+          <tr class="table-primary" style="border-color:black;">
+              <th>No.</th>
+              <th>Team</th>
+              <th >Transport Officer</th>
+              <th>Treatment Officer</th>
+              <th >Vehicle</th>                               
+              <th>Action</th>
+          </tr>
+       </thead>
+<tbody>
+ <?php if(mysqli_num_rows($result) > 0) { ?>
+  <?php while($row = $result->fetch_object()){
+  $counter++;
+?>
+  <tr class="table-default">
+    <td><?php echo $counter;?></td>
+    <td><?php echo $row->unit_name;?></td>
+    <td><?php echo (isset($row->treatment_officer) && !empty($row->treatment_officer)) ? $row->treatment_officer : 'No assigned'; ?></td>
+    <td><?php echo (isset($row->transport_officer) && !empty($row->transport_officer)) ? $row->transport_officer : 'No assigned'; ?></td>
+    <td><?php echo $row->vehicle_name;?></td>
+    <td width="">
+        <a href="view_member.php?view=<?php echo $row->id;?>">
+         <button class="item" style="color:green;" data-toggle="modal" data-target="#" title="View Unit Members" id="add"> <i class="fa fa-users"></i></button>
+        </a> |
+        <button class="item edit_modal" style="color:blue;" data-toggle="modal" title="Edit Record" id="<?php echo $row->id;?>">
+             <i class="fa fa-edit"></i>
+        </button>|
+        <a href="include/delete_team.php?delete=<?php echo $row->id; ?>"> 
+          <button class="item" style="color:red;" data-toggle="tooltip" title="Delete Record" id="delete">
+          <i class="zmdi zmdi-delete"></i>
+        </button></a> |
+        <a href="team_activitylog.php?log=<?php echo $row->id;?>">
+        <button class="item" style="color:;" data-toggle="tooltip" title="View Activity Log" id="delete">
+           <i class="fas  fa-book text-info"></i>
+        </button>  </a>                             
+   </td>
+  </tr>  
+                                    <?php }  ?> 
+                                    <?php } else { ?>
+                                      <td>No data</td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <?php } ?>           
                              </tbody>
                     </table>
                 </div>
@@ -411,7 +472,6 @@ $(document).ready(function(){
         });
       }
       else{
-        alert("Please select from select box");
         $('#other_info').css("display","none");
       }
     })

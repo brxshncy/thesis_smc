@@ -11,7 +11,7 @@
                     <ul class="list-unstyled navbar__list">
                         <li>
                             <a href="pcr-list.php">
-                                <i class="fas fa-files-o"></i>
+                                <i class="fas fa-wheelchair"></i>
                                 Patient Care Reports
                                 <?php
                                         $qry = "SELECT * FROM pcr WHERE status = 'unread' ";

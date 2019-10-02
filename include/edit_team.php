@@ -25,8 +25,16 @@ if(isset($_POST['edit_team'])){
                              <input type="text" class="form-control" id="unit_name" name="unit_name" value="<?php echo $unit_name;?>">
                        </div>
                      <div class="form-group">
-                             <label> Vehicle Name</label>
-                             <input type="text" class="form-control" id="vehicle_name" name="vehicle_name" value="<?php echo $vehicle_name;?>">
+                      <label>Vehicle</label>
+                      <select name="vehicle_name" class="form-control" id="vehicle">
+                        <option value=""></option>
+                            <?php
+                            $qry = "SELECT * FROM vehicle";
+                            $result = $conn->query($qry) or trigger_error(mysqli_error($conn)." ".($qry));
+                            while($row = mysqli_fetch_assoc($result)){?>
+                                <option value="<?php echo $row['vehicle_name'];?>"><?php echo $row['vehicle_name']; ?></option>
+                           <?php }?>
+                          </select>
                       </div>
                       <div class="form-group">
                               <label>Assign Transport Officer</label>

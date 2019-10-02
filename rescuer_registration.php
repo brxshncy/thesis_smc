@@ -43,7 +43,7 @@ include 'rescuer_regdb.php';
                         <span style = "font-weight:bold;" class="text-danger">ICDRRMO Rescuer</span> Registration Form
                 </div>
                       <div class="card-body">
-                            <form action="rescuer_registration.php" method="post">
+                            <form action="rescuer_registration.php" method="post" enctype="multipart/form-data">
                                 <?php if(isset($_SESSION['success'])): ?>
                                     <div class="alert alert-success">
 
@@ -95,6 +95,11 @@ include 'rescuer_regdb.php';
                                 </div>
                                 <div class="col col-md-6">
                                     <input type="password" style ="border-radius:10px;"name="confirm_password" id="confirm_password" class="au-input au-input--full border border-secondary" placeholder="Retype Password">
+                                </div>
+                            </div>
+                            <div class="form-row mt-4">
+                                <div class="col col-md-6">
+                                    <input type="file" name="profile_picture" id="profile_picture">
                                 </div>
                             </div>
                              <button class="au-btn au-btn--block au-btn--green m-b-20 mt-4" type="submit" name="register">Register</button>

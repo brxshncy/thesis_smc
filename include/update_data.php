@@ -72,7 +72,7 @@ global $conn;
 		$receiving_facility = $_POST['receiving_facility'];
 		$receiving_md = $_POST['receiving_md'];
 	 
-	$update = "UPDATE pcr SET 	firstname = '$firstname', lastname = '$lastname', 
+	$update = "UPDATE pcr_official SET 	firstname = '$firstname', lastname = '$lastname', 
 								middlename = '$middlename', age = '$age',
 								religion= '$religion', nationality = '$nationality',
 								gender ='$gender', address = '$address', 

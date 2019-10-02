@@ -16,7 +16,7 @@ session_start();
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>Members</title>
+    <title>Activity Log</title>
 
     <!-- Fontfaces CSS-->
     <link href="css/font-face.css" rel="stylesheet" media="all">
@@ -87,57 +87,61 @@ session_start();
     <div class="section__content section__content--p30">
           <div class="container-fluid">
             <div class="jumbotron" style="background-color: #fff;">
-            <div id="no-members">
-              <h1>No Members Yet</h1>
+                <div class="row">
+                    <div class="col">
+                <?php
+                    if(isset($_GET['log'])){
+                        $id = $_GET['log'];
+                        $qry = "SELECT * FROM unit_name WHERE id  = '$id'";
+                        $result  = $conn->query($qry);
+                        while($row = mysqli_fetch_assoc($result)){?>
+                        <h3> <?php echo $row['unit_name'];?> Activity Logs</h3>
+                <?php }} ?>
+                
+                    </div>
             </div>
-                    <div class="row">
-                    <?php
+                <hr> 
+            <div class="table-responsive-md">
+                <table class="table table-bordered">
+                    <thead class="thead">
+                        <tr class="table-primary" style="border-color:black;">
+                            <th>No.</th>
+                            <th>Patient Name</th>
+                            <th>Date of Incident</th>
+                            <th>Time of Incident</th>
+                            <th>Incident</th>
+                            <th>Status</th>
+                            
 
-                    if(isset($_GET['view'])){
-                                $id = $_GET['view'];
-                       /* $query = "SELECT unit_name.unit_name as unit_name, assign_rescuer.id as id, assign_rescuer.firstname as firstname,assign_rescuer.lastname as lastname, assign_rescuer.gender as gender, assign_rescuer.address as address, assign_rescuer.contact as contact FROM unit_name, assign_rescuer WHERE unit_name.unit_name = assign_rescuer.unit_name AND unit_name.id = '$id' ";   */ 
+                        </tr>
+                </thead>
+                <tbody>
+                <?php 
+                    if(isset($_GET['log'])){
+                        $id = $_GET['log'];
+                        $qry = "SELECT p. *, CONCAT(p.firstname,' ',p.lastname) as name,p.date_i AS date_i,p.time_i as time_i,p.reason as incident,p.impression as impression, p.dispatched_unit as team FROM pcr p LEFT JOIN unit_name un ON un.id = p.dispatched_unit WHERE p.team = '$id'";
+                        $result = $conn->query($qry) or trigger_error(mysqli_error($conn)." ".$qry);
+                        $counter = 0;
+                        if(mysqli_num_rows($result)){
+                        while($row = $result->fetch_object()){
+                                 $counter++; 
+                                 $date = date("M d 20y",strtotime($row->date_i));
+                         ?>
+                        <td><?php echo $counter; ?></td>
+                        <td><?php echo $row->name ?> </td>
+                        <td><?php echo $date ?></td>
+                        <td><?php echo $row->time_i?></td>
+                        <td><?php echo $row->incident?></td>
+                        <td><?php echo $row->impression ?></td>
 
-                        $query = "SELECT ar.*, CONCAT(r1.firstname,' ', r1.lastname) AS name, r1.address AS address, r1.profile_picture AS profile, r1.gender AS gender, r1.contact AS contact, ar.role as role, team.unit_name AS team FROM teams ar LEFT JOIN rescuers r1 ON r1.id = ar.rescuers_id LEFT JOIN unit_name team ON team.id =ar.team_id WHERE ar.team_id = '$id' ";
-
-
-                        $result = $conn->query($query);
-                        if (mysqli_num_rows($result)>0){      
-                        while($row = $result->fetch_object()){   
-                        $name = $row->name;  
-                                        
-                     ?>                 
-                        <div class="col-md-4 ">
-                             <div class="card">
-                                     <div class="card-header">
-                                      <strong class="card-title mb-3">Profile</strong>
-                                      </div>
-                                          <div class="card-body">
-                                              <div class="mx-auto d-block">
-                                                 <img class="rounded-circle mx-auto d-block" src="images/<?php echo $row->profile; ?>" alt="Card image cap">
-                                                  <h5 class="text-sm-center mt-2 mb-1"><?php echo $name; ?></h5>
-                                                <div class="location text-sm-center">
-                                                <i class="fa fa-map-marker"></i> <?php echo $row->address;?></div>
-                                           </div>
-                                                    <hr>
-                                                    <p>Gender: <?php echo $row->gender;?></p>
-                                                    <p>Contact: <?php echo $row->contact;?></p>
-                                                    <p class="">Role: <i class="text-success"><?php echo $row->role; ?></i></p>
-                                                    <p>Action: <a></a> <a href=""></a>
-                                                        <button class="item edit_button"  style="color:blue;" data-toggle="modal"  data-placement="top" id="<?php echo $row->id; ?>" title="Edit">
-                                                             <i class="fa fa-edit"></i>
-                                                        </button> || <a href="include/delete_member.php?delete=<?php echo $row->id; ?>" style="color:red;" title="Delete">  <i class="fa fa-scissors"></i></a></p> 
-
-                                                        <script type="text/javascript">
-                                                          document.getElementById('no-members').style.display = 'none';
-                                                       </script>
-                         </div>
-                    </div> 
-                 </div>
-                    <?php  
-                    
-                        }}} 
-                    ?> 
-                </div>
+                   <?php }   }else{
+                     echo "<td colspan='4'>No recent activity Logs</td>";
+                   }
+                    }
+                ?>
+            </tbody>
+            </table>
+        </div>
               </div>            
          </div>
     </div>
@@ -159,7 +163,7 @@ session_start();
 
 
 
-    <!-- Jquery JS-->
+    <!-- Jquery JS--> 
     <script src="vendor/jquery-3.2.1.min.js"></script>
     <!-- Bootstrap JS-->
     <script src="vendor/bootstrap-4.1/popper.min.js"></script>

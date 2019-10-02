@@ -14,7 +14,7 @@
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>Operation Crew Attendance</title>
+    <title>Rescuer Attendance</title>
 
     <!-- Fontfaces CSS-->
     <link href="css/font-face.css" rel="stylesheet" media="all">
@@ -74,14 +74,14 @@
                   <div class="row">
                       <div class="col mb-3">
                         <input class="au-input au-input--xl mt-2" type="text" name="search" id="search" placeholder="Search Name..." />
-                          <a href="view_attendance.php" class="btn btn-success btn-md pull-right">View Attendance</a>
+                          <a href="view_attendance.php" class="btn btn-success btn-md pull-right mt-1">View Attendance</a>
                         </div>
                   </div>  
                 <div class="alert alert-info" role="alert">
                       <div class="row justify-content-center">
                         <p>Date: <?php echo date("M-d-Y");?></p>
                      </div>
-                </div>
+                </div>  
                       <div class="table-responsive-md">
                           <form action="include/attendance_crew.php" method="POST">
                             <table class="table table-bordered" id="search_table">

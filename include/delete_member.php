@@ -6,9 +6,9 @@ session_start();
 require "db.php";
 
 //IF DELETE IS CLIKED
-if(isset($_GET['delete'])){
+if(isset($_GET['delete'])){	
 			$id = $_GET['delete']; 
-			$delete = "DELETE FROM assign_rescuer WHERE id = $id";
+			$delete = "DELETE FROM teams WHERE id = $id";
 			
 			//SESSION MESSAGE
 			if(mysqli_query($conn,$delete)){

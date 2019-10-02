@@ -9,9 +9,10 @@ session_start();
 
 		// declaring variable
 			//PATIENT PERSONAL INFO
+		$id = $_POST['id'];
 		$firstname = mysqli_escape_string($conn,$_POST['firstname']);
 		$lastname =  mysqli_escape_string($conn,$_POST['lastname']);
-		$mi =  mysqli_escape_string($conn,$_POST['mi']);
+		$mi =  mysqli_escape_string($conn,$_POST['middlename']);
 		$religion =  mysqli_escape_string($conn,$_POST['religion']);
 		$nationality =  mysqli_escape_string($conn,$_POST['nationality']);
 		$age =  mysqli_escape_string($conn,$_POST['age']);
@@ -84,31 +85,23 @@ session_start();
 		$receiving_facility = mysqli_escape_string($conn,$_POST['receiving_facility']);
 		$receiving_md = mysqli_escape_string($conn,$_POST['receiving_md']);
 		$status = $_POST['status'];
-		$sender = $_POST['sender'];
-		$team = $_POST['team'];	
 
 
 		// SQL INSERT
 		$insert = "INSERT INTO
-		 pcr (firstname,lastname,middlename,religion,nationality,age,gender,address,date_i,time_i,impression,r_p1,contact1,r_p2,contact2,reason,nature,neuro,call_recieve,unit_enroute,arrive_scene,left_scene,arrive_destination,back_service,airway,breathing,pupils,pulse,skin,skin_texture,crt,time_vs,bp,pr,rr,temp,02stat,eye,verbal,motor,total,symtomps,allergies,meds,past_ill,oral_intake,time_oral,onset,provocation,quality,radiation,severity,timing_i,events_prior,trauma,burn,treatment,narrative,transport_officer,treatment_officer,dispatched_unit,desti_deter,response_mode,transport_mode,receiving_facility,receiving_md,status,sender,team) 
-		VALUES('$firstname','$lastname','$mi','$religion','$nationality','$age','$gender','$address','$date_i','$time_i','$impression','$r_p1','$contact1','$r_p2','$contact2','$reason','$nature','$neuro','$call_recieve ','$unit_enroute','$arrive_scene','$left_scene','$arrive_destination','$back_service','$airway','$breathing','$pupils','$pulse','$skin','$skin_texture','$crt','$time_vs','$bp','$pr','$rr','$temp','$stat','$eye','$verbal','$motor','$total','$symtomps','$allergies','$meds','$past_ill','$oral_intake','$time_oral','$onset','$provocation','$quality','$radiation','$severity','$timing_i','$events_prior','$trauma','$burn','$treatment','$narrative','$transport_officer','$treatment_officer','$dispatched_unit','$desti_deter','$response_mode','$transport_mode','$receiving_facility','$receiving_md','$status','$sender','$team')";
+		 pcr_official (firstname,lastname,middlename,religion,nationality,age,gender,address,date_i,time_i,impression,r_p1,contact1,r_p2,contact2,reason,nature,neuro,call_recieve,unit_enroute,arrive_scene,left_scene,arrive_destination,back_service,airway,breathing,pupils,pulse,skin,skin_texture,crt,time_vs,bp,pr,rr,temp,02stat,eye,verbal,motor,total,symtomps,allergies,meds,past_ill,oral_intake,time_oral,onset,provocation,quality,radiation,severity,timing_i,events_prior,trauma,burn,treatment,narrative,transport_officer,treatment_officer,dispatched_unit,desti_deter,response_mode,transport_mode,receiving_facility,receiving_md,status) 
+		VALUES('$firstname','$lastname','$mi','$religion','$nationality','$age','$gender','$address','$date_i','$time_i','$impression','$r_p1','$contact1','$r_p2','$contact2','$reason','$nature','$neuro','$call_recieve ','$unit_enroute','$arrive_scene','$left_scene','$arrive_destination','$back_service','$airway','$breathing','$pupils','$pulse','$skin','$skin_texture','$crt','$time_vs','$bp','$pr','$rr','$temp','$stat','$eye','$verbal','$motor','$total','$symtomps','$allergies','$meds','$past_ill','$oral_intake','$time_oral','$onset','$provocation','$quality','$radiation','$severity','$timing_i','$events_prior','$trauma','$burn','$treatment','$narrative','$transport_officer','$treatment_officer','$dispatched_unit','$desti_deter','$response_mode','$transport_mode','$receiving_facility','$receiving_md','$status')";
 
 
-		//SESSION MESSAGE IF DATA IS INSERTED
+		$result = mysqli_query($conn,$insert) or trigger_error(mysqli_error($conn)." ".$insert);
 
-		
-				$_SESSION['message'] = "PCR has been sent to admin";
-				$_SESSION['msg_type'] = "success";
-
-
-
-		//CHECK IF QUERY FUNCTION WORKED
-		if(mysqli_query($conn,$insert)){
-			header("location:../pcr-form.php");
+		if($result){
+				$_SESSION['success_msg'] = "PCR submitted to database successfully!";
+			$del = "DELETE FROM pcr WHERE id = '$id'";
+			$result_del = $conn->query($del);
+			if($result_del){
+				header("location:../pcr-list.php");
+			}
 		}
-		else{
-			echo "Error:" .$insert. "<br>" .mysqli_error($conn);
-		}	
-
 }
 ?>

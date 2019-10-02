@@ -1,7 +1,7 @@
 <?php include 'include/db.php'; ?>
 <?php include 'operation/template_header.php'; ?>
 
-   <!--Edit Modal -->
+   <!--View Modal -->
                     <div class="modal fade" id="pcr" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
@@ -19,6 +19,26 @@
                       </div>
                     </div>
                   </div>
+            <!-- end View scroll -->
+
+            <!--Submit Modal -->
+                    <div class="modal fade" id="pcr_submit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                         
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Patient Care Report</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body" id= "submit_pcr" >
+                              
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
             <!-- end modal scroll -->
 
  <!-- MAIN CONTENT-->
@@ -27,6 +47,24 @@
         <div class="container-fluid">
 
                 <div class="">
+                     <?php
+                        if(isset($_SESSION['success_msg'])): ?>
+                            <div class="alert alert-success">
+                                <?php 
+                                     echo $_SESSION['success_msg'];
+                                     unset($_SESSION['success_msg']);
+                                ?>
+                            </div>
+                    <?php endif ?>
+                    <?php
+                        if(isset($_SESSION['delete_msg'])): ?>
+                            <div class="alert alert-danger">
+                                <?php 
+                                     echo $_SESSION['delete_msg'];
+                                     unset($_SESSION['delete_msg']);
+                                ?>
+                            </div>
+                    <?php endif ?>
                     <?php if(isset($_SESSION['msg'])): ?>
                         <div class="alert alert-success">
                             <?php echo $_SESSION['msg'];
@@ -41,38 +79,61 @@
                             ?>
                         </div>
                     <?php endif ?>
+                    <?php if(isset($_SESSION['message'])): ?>
+                        <div class="alert alert-success">
+                            <?php echo $_SESSION['message'];
+                                    unset($_SESSION['message']);
+                    ?>
+                <?php endif ?>
+            </div>
                                 <table class="table table-hover table-light" id="table_search">
                                             <thead class="table-primary">
                                                 <th>No.</th>
                                                 <th>From</th>
+                                                <th>From Team</th>
                                                 <th>Request</th>
                                                 <th>Action</th>
                                             </thead>
                                 <tbody>
-                                <?php
-                                    $locator = "SELECT * FROM pcr";
+                            <?php
+                                    $locator = "SELECT pcr.id as id,t.unit_name AS team, pcr.sender AS sender from pcr LEFT JOIN unit_name t ON t.id = pcr.team ";
                                     $counter = 0;
                                     $result = $conn->query($locator);
                                     $field_count = $result->field_count;
+                                    if(mysqli_num_rows($result)){
+
+
                                     if($field_count>0){  
-                                        while($row = mysqli_fetch_assoc($result)){
+                                        while($row = mysqli_fetch_object($result)){
                                             $counter ++;
-                                            $id = $row['id'];
+                                            $id = $row->id;
+                                            $sender = $row->sender;
+                                            $team = $row->team;
                                             
 
                                 ?>
                                 <tr>
-                                        <td width="5%" class=""><?php echo $counter; ?></td>
-                                        <td width="30%" class=""><?php echo $row['dispatched_unit']; ?></td>
+
+                                        <td width="" class=""><?php echo $counter; ?></td>
+                                        <td width="" class=""><?php echo $sender; ?></td>
+                                        <td><?php
+                                                if(empty($team)){
+                                                    echo "Not yet assigned";
+                                                }else{
+                                                    echo $team;
+                                                }
+
+                                             ?>
+                                        </td>
                                         <td>
-                                            <button type="button"  class="btn btn-success btn-sm view_info" id="<?php echo $id; ?>">
-                                                    View Full PCR Details
+                                            <button type="button" title="View Details" class="item text-success view_info" id="<?php echo $id; ?>">
+                                                 <i class="fas fa-envelope"></i>
                                             </button> 
                                         </td>
-                                        <td width="30%">
+                                        <td width="">
                                             <div class="row">
-                                               <a href="pcr_edit.php?view=<?php echo $row['id'];?>"><button type="button" class="btn btn-primary btn-sm">Edit</button></a>
-                                               <button type="button" class="btn btn-danger btn-sm ml-2">Delete</button>
+                                               <a href="pcr_edit.php?view=<?php echo $row->id;?>"><button type="button" class="item text-info"> <i class="fas fa-edit"></i></button></a>
+                                               <a href="pcr_delete.php?view=<?php echo $row->id;?>"><button type="button" class="item text-danger ml-2"> <i class="zmdi zmdi-delete"></i></button></a>
                                             </div>
                                         </td>
                             </tr>
@@ -80,16 +141,19 @@
                              
                                 <?php
                                          }
-                                    }else{
-                                        echo "No pending request";
+                                    }
+                                }
+                                    else{
+                                        echo "<tr><td>No pending request</td><tr>";
                                     }
                                 ?>
                     </table> 
 
-            </div> 
+             
         </div>  
     </div>
 </div>
+
 
    <?php include 'footer.php';?>
 
@@ -130,6 +194,19 @@
                      $('#pcr').modal('show');
                 }
             });
+      });
+
+      $('.submit_info').click(function(){
+            var id = $(this).attr('id');
+           $.ajax({
+            url: "pcr-submit-modal.php",
+            method:"POST",
+            data:{id:id},
+            success:function(data){
+                $('#submit_pcr').html(data);
+                $('#pcr_submit').modal('show');
+            }
+           });
       });
 });
 </script>

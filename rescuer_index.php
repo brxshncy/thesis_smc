@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 include 'include/db.php';
 			if(!isset($_SESSION['confirm_username'])){
 				$_SESSION['msg'] = "You must log in first to view this page!";
@@ -53,20 +55,11 @@ include 'include/db.php';
 
 <body class="animsition">
     <div class="page-wrapper">
-        <!-- HEADER MOBILE-->
-        <!-- END HEADER MOBILE-->
         <?php include 'header-mobile.php'; ?>
-        <!-- MENU SIDEBAR-->
         <?php include 'rescuer_sidebar.php';?>
-        <!-- END MENU SIDEBAR-->
-
-        <!-- PAGE CONTAINER-->
         <div class="page-container">
-            <!-- HEADER DESKTOP-->
            <?php include 'rescuer_header.php' ?>
-            <!-- HEADER DESKTOP-->
-            <!-- END HEADER DESKTOP-->
-                <!-- MODAL -->
+            
 
 
  <!-- MAIN CONTENT-->
@@ -79,11 +72,14 @@ include 'include/db.php';
           			$info = "SELECT * FROM rescuers WHERE username = '$username' ";
           			$query = $conn->query($info);
           			$fetch = mysqli_fetch_assoc($query);
+                  
 
           			
           		}
           	?>		
-            <h1>Welcome <?php echo $fetch['firstname']; ?> </h1>
+            <h1>Welcome <?php echo $_SESSION['fullname']; ?> 
+             
+        </h1>
                             </div>
                         </div>
                     </div>

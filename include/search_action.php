@@ -6,7 +6,7 @@ $output = '';
     if(isset($_POST['search'])){
       $search = $_POST['search'];
 
-      $query = "SELECT * FROM pcr WHERE firstname LIKE '%$search%' OR lastname LIKE '%$search%' OR middlename LIKE '%$search%' ";
+      $query = "SELECT * FROM pcr_official WHERE firstname LIKE '%$search%' OR lastname LIKE '%$search%' OR middlename LIKE '%$search%' ORDER BY id ASC ";
       $result = mysqli_query($conn,$query); 
     }
     if($result->num_rows>0){

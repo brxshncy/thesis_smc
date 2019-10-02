@@ -5,7 +5,7 @@ global $conn;
 	if(isset($_POST['edit_id'])){
 		$id = $_POST['edit_id'];
 
-		$fetch = "SELECT * FROM pcr WHERE id = '$id' ";
+		$fetch = "SELECT * FROM pcr_official WHERE id = '$id' ";
 		$result = mysqli_query($conn,$fetch);
 		while($data = mysqli_fetch_array($result)){
 				$id = $data['id'];
@@ -138,7 +138,7 @@ global $conn;
                                  </div><!--end of col-6-->
                                      <div class="col-6">
                                          <div class="form-group">
-                                             <label for="email-input" class=" form-control-label">Nationality </label>
+                                             <label for="email-input" class=" form-control-label">nationality </label>
                                      <input type="text" name="nationality" id= "nationality" class="form-control" value="<?php echo $nationality;?>">
                                      </div><!--end of form-group-->
                                 </div><!--end of col-6-->

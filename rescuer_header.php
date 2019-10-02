@@ -1,5 +1,10 @@
-<?php  session_start();
+<?php  
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 $username = $_SESSION['confirm_username'];
+
+
  ?>
 <header class="header-desktop">
 <div class="section__content section__content--p30">
@@ -8,85 +13,40 @@ $username = $_SESSION['confirm_username'];
 <form class="form-header" action="" method="POST">   
 </form>
 <div class="header-button">
-    <div class="noti-wrap">
-        <div class="noti__item js-item-menu">
-            <i class="zmdi zmdi-comment-more"></i>
-            <span class="quantity"></span>
-        <div class="mess-dropdown js-dropdown mr-2">                                 
-        </div>
-        </div>
-        <div class="noti__item js-item-menu">
-            <i class="zmdi zmdi-email"></i>
-            <span class="quantity"></span>                               
-        </div>
-        <div class="noti__item js-item-menu">
-            <i class="zmdi zmdi-notifications"></i>
-            <?php 
-                include 'include/db.php'; 
-                $query = "SELECT * FROM locatorslip_record WHERE username = '$username' AND status= 'unread' ";
-                $result = $conn->query($query);
-                $count_status = mysqli_num_rows($result);
-                if($count_status > 0){
-            ?>
-            <span class="quantity"><?php echo $count_status; ?></span>
-            <?php
-                }
-            ?>
-        </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
+   
 
 
 
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
-                                            <img src="images/icon/avatar-01.jpg" alt="John Doe" />
+                                            <img src="images/<?php echo $_SESSION['user_profile']; ?>" style="width:100px;" alt="John Doe"/>
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#">Bruce Real</a>
+                                            <a class="js-acc-btn" href="#"><?php echo $_SESSION['fullname'];?> </a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
                                                 <div class="image">
                                                     <a href="#">
-                                                        <img src="images/icon/avatar-01.jpg" alt="John Doe" />
+                                                        <img src="images/<?php echo $_SESSION['user_profile']; ?>" alt="John Doe" />
                                                     </a>
                                                 </div>
                                                 <div class="content">
                                                     <h5 class="name">
-                                                        <a href="#">ICDRRMO Admin</a>
+                                                        <a href="#">ICDRRMO Rescuer</a>
                                                     </h5>
-                                                    <span class="email">johndoe@example.com</span>
+                                                    <span class="email"><?php echo $_SESSION['confirm_username']; ?></span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
                                                 <div class="account-dropdown__item">
-                                                    <a href="#">
+                                                    <a href="rescuer_profile.php">
                                                         <i class="zmdi zmdi-account"></i>Account</a>
-                                                </div>
-                                                <div class="account-dropdown__item">
-                                                    <a href="#">
-                                                        <i class="zmdi zmdi-settings"></i>Setting</a>
-                                                </div>
-                                                <div class="account-dropdown__item">
-                                                    <a href="#">
-                                                        <i class="zmdi zmdi-money-box"></i>Billing</a>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__footer">
-                                                <a href="operation_logout.php">
+                                                <a href="rescuer_logout.php">
                                                     <i class="zmdi zmdi-power"></i>Logout</a>
                                             </div>
                                         </div>

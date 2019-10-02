@@ -20,6 +20,18 @@ $errors = array();
 		$username = mysqli_escape_string($conn,$_POST['username']);
 		$password = mysqli_escape_string($conn,$_POST['password']);
 		$confirm_password = mysqli_escape_string($conn,$_POST['confirm_password']);
+		$profile_pic = $_FILES['profile_picture']['name'];
+		$target = 'images/' .$profile_pic;
+
+		if(move_uploaded_file($_FILES['profile_picture']['tmp_name'], $target)){
+			echo "success";
+		}
+		else{
+			array_push($errors,"Fail to upload file");
+		}
+		
+
+
 
 		//FORM VALIDATION
 
@@ -45,7 +57,7 @@ $errors = array();
 
 		if(count($errors) == 0){
 			$password1 = md5($password);
-			$insert = "INSERT INTO rescuers (firstname,lastname,address,gender,contact,username,password) VALUES ('$firstname','$lastname','$address','$gender','$contact','$username','$password1')";
+			$insert = "INSERT INTO rescuers (firstname,lastname,address,gender,contact,username,password,profile_picture) VALUES ('$firstname','$lastname','$address','$gender','$contact','$username','$password1','$profile_pic')";
 			$query = $conn->query($insert);
 			$_SESSION['username'] = $username;
 			$_SESSION['success'] = "You are now registered !";
@@ -73,6 +85,8 @@ $errors = array();
 					$_SESSION['confirm_username'] = $username;
 					$_SESSION['firstname'] = $data['firstname'];
 					$_SESSION['success'] = "You are now logged in!";
+					$_SESSION['fullname'] = $data['firstname']." ".$data['lastname'];
+					$_SESSION['user_profile'] = $data['profile_picture'];
 					header("location:rescuer_index.php");
 			}
 		else{

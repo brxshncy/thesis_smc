@@ -66,7 +66,7 @@
 						<?php
 							if(isset($_GET['view'])){
 								$id = $_GET['view'];
-								$query = "SELECT * FROM pcr WHERE id = '$id' ";
+								$query = "SELECT * FROM pcr_official WHERE id = '$id' ";
 								$view = mysqli_query($conn, $query);
 								while($row = mysqli_fetch_array($view)){
 

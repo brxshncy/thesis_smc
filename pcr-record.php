@@ -155,7 +155,7 @@
                         </thead>
                         <tbody>
                             <?php
-                              $select = "SELECT * FROM pcr ORDER BY id DESC";
+                              $select = "SELECT * FROM pcr_official ORDER BY id ASC";
                               $counter = 0;
                               $result = mysqli_query($conn,$select);
                             ?>
@@ -175,7 +175,8 @@
                                                 <i class="fa fa-eye"></i>
                                              </button>
                                         </a> ||
-                                            <button class="item edit_button" style="color:blue;"data-toggle="modal"  data-placement="top" id="<?php echo $row['id']; ?>" title="Update Details">
+                                        <a href="pcrofficial_edit.php?view=<?php echo $row['id'];?>">
+                                            <button class="item" style="color:blue;"data-toggle="modal"  data-placement="top" id="<?php echo $row['id']; ?>" title="Update Details">
                                                  <i class="fa fa-edit (alias)"></i>
                                             </button> ||
                                              <button class="item del_btn" style="color:red;" data-toggle="modal" data-placement="top" title="Delete" id="<?php echo $row['id']; ?>">

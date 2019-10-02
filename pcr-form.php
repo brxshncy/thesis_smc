@@ -58,7 +58,7 @@
         <!--END OF PAGE CONTAINER-->
 
         <!-- HEADER DESKTOP-->
-        <?php include 'header-php.php' ?>
+        <?php include 'rescuer_header.php' ?>
         <!-- END OF HEADER DESKTOP-->
 
 
@@ -67,11 +67,32 @@
 <div class="main-content">
     <div class="section__content section__content--p30">
         <div class="container-fluid">
-
+  <?php if(isset($_SESSION['message'])): ?>
+                         <div class="alert alert-<?=$_SESSION['msg_type']?> mt-2">
+                                <?php
+                                    echo $_SESSION['message'];
+                                    unset($_SESSION['message']);
+                                ?>
+                         </div>
+                         <?php endif ?>
 
     <!--================================================================================================================-->
 
 <form action="include/pcrformdb.php" method="POST">
+    <?php
+                if(isset($_SESSION['confirm_username'])){
+                    $username = $_SESSION['confirm_username'];
+                    $info = "SELECT * FROM rescuers WHERE username = '$username' ";
+                    $query = $conn->query($info);
+                    $fetch = mysqli_fetch_assoc($query);
+                    $name = $fetch['firstname']." ".$fetch['lastname'];
+                }
+            ?>     
+            <input type="hidden" name="sender" value="<?php echo $name;?>">
+            <input type="hidden" name="team" value="<?php echo $fetch['team_unit']; ?>">
+            
+
+           
     <div class="col">
         <div class="card">
             <div class="card-header bg-light">
@@ -80,6 +101,7 @@
                  <div class="card-body">
 
          <!--================================================================================================================-->
+
                     <ul class="nav nav-tabs nav-pills nav-fill">
                         <li class="nav-item">
                             <a class="nav-link active" href="#" style="border:1px solid #ccc" id="list_patient">
@@ -107,14 +129,6 @@
                             </a>    
                         </li>
                     </ul>
-  <?php if(isset($_SESSION['message'])): ?>
-                         <div class="alert alert-<?=$_SESSION['msg_type']?> mt-2">
-                                <?php
-                                    echo $_SESSION['message'];
-                                    unset($_SESSION['message']);
-                                ?>
-                         </div>
-                         <?php endif ?>
 
      <!--====================================Patient's Personal Info=================================================-->
 <div class="tab-content" style="margin-top:16px;">
@@ -353,8 +367,8 @@
                             <label for="select" class=" form-control-label">CRT</label>
                                 <select name="crt" id="crt" class="form-control-lg form-control">
                                     <option value=""> </option>
-                                    <option value="1">Prolonged(>2 seconds)</option>
-                                    <option value="2">Normal(< 2 seconds)</option>
+                                    <option value="Prolonged(>2 seconds)">Prolonged(>2 seconds)</option>
+                                    <option value="Normal(< 2 seconds)">Normal(< 2 seconds)</option>
                                 </select>
                         </div>
                 </div>
@@ -412,7 +426,7 @@
                                   <div class="row form-group">
                                         <div class="col col-md-4">
                                             <label for="select" class=" form-control-label">Eye</label>
-                                                <select name="eye" id="eye" class="form-control-lg form-control">
+                                                <select name="eye" id="eye" class="form-control-lg form-control sum-selector">
                                                     <option value=""> </option>
                                                     <option value="4">4</option>
                                                     <option value="3">3</option>
@@ -422,7 +436,7 @@
                                         </div>
                                          <div class="col col-md-4">
                                             <label for="select" class=" form-control-label">Verbal</label>
-                                                <select name="verbal" id="verbal" class="form-control-lg form-control">
+                                                <select name="verbal" id="verbal" class="form-control-lg form-control sum-selector">
                                                     <option value=""> </option>
                                                     <option value="5">5</option>
                                                     <option value="4">4</option>
@@ -433,7 +447,7 @@
                                         </div>
                                         <div class="col col-md-4">
                                             <label for="select" class=" form-control-label">Motor</label>
-                                                <select name="motor" id="motor" class="form-control-lg form-control">
+                                                <select name="motor" id="motor" class="form-control-lg form-control sum-selector">
                                                     <option value=""> </option>
                                                     <option value="6">6</option>
                                                     <option value="5">5</option>
@@ -445,10 +459,12 @@
                                         </div>
                                     </div> 
                                     <div class="form-row">
-                                        <div class="form-group col-md-2">
-                                                <label>Total</label>
-                                                <input type="text" class="form-control" name= "total" id="total" require">
-                                        </div>
+                                        <div class="input-group">
+                                              <span class="input-group-btn">
+                                                <button class="btn btn-default btn-primary" id="total" type="button">Total</button>
+                                              </span>
+                                              <input type="text" class="form-control col-md-3 ml-2" name="total" id="total_input" readonly="">
+                                            </div>
                                  </div>
                 <div align="center">
                     <button type="button" name="btn_personal_info" id="btn_prev_vs" class="btn btn-secondary btn">
@@ -609,26 +625,30 @@
 
             <div class="panel-body">
                 <div class="row form-group">
-                                     <div class="col col-md-4">
+                                     <div class="col col-md-3">
                                         <label>Dispatched Unit</label>
-                                         <select name="dispatched_unit" class="form-control-lg form-control">
+                                         <select name="" id="teams" class="form-control-lg form-control">
                                             <option value=""></option>
                                         <?php
                                             $query = "SELECT * FROM unit_name";
                                             $result = mysqli_query($conn,$query);
                                             while($row=mysqli_fetch_assoc($result)){
                                                 ?>
-                                            <option value="<?php echo $row['unit_name'];?>"><?php echo $row['unit_name'];?></option>
+                                            <option value="<?php echo $row['id'];?>"><?php echo $row['unit_name'];?></option>
                                        <?php } ?>
                                             </select>
                                     </div>
-                                    <div class="col col-md-4">
-                                        <label>Treatment Officer</label>
-                                        <input type="text" class="form-control" name="treatment_officer" id="treatment_officer">
+                                     <div class="col col-md-3">
+                                        <label>Team</label>
+                                        <input type="text" class="form-control" name="dispatched_unit" id="dispatched_unit" readonly="">
                                     </div>
-                                    <div class="col col-md-4">
+                                    <div class="col col-md-3">
+                                        <label>Treatment Officer</label>
+                                        <input type="text" class="form-control" name="treatment_officer" id="treatment_officer" readonly="">
+                                    </div>
+                                    <div class="col col-md-3">
                                         <label>Trasnport Officer</label>
-                                        <input type="text" class="form-control" name="transport_officer" id="transport_officer">
+                                        <input type="text" class="form-control" name="transport_officer" id="transport_officer" readonly="">
                                     </div>
                                 </div>
                                 <div class="row form-group">
@@ -838,6 +858,31 @@
                 $('#rescuer_content').removeClass('active in');
                 $('#assesment_content').addClass('active in');
             });
+
+               $('#total').click(function(){
+                   var eye = parseInt($('#eye :selected').val());
+                   var verbal = parseInt($('#verbal :selected').val());
+                   var motor = parseInt($('#motor :selected').val());
+                   
+                   var total = eye + verbal + motor;
+                   $('#total_input').val(total);
+               });
+
+               $('#teams').change(function(){
+                    var id = $(this).val();
+                   
+                    $.ajax({
+                        url: "team_info.php",
+                        method: "post",
+                        data:{id:id},
+                        dataType:"JSON",    
+                        success:function(data){
+                            $('#dispatched_unit').val(data.unit_name);
+                            $('#treatment_officer').val(data.treatment_officer);
+                            $('#transport_officer').val(data.transport_officer);
+                        }
+                    });
+               })
 
         });
 

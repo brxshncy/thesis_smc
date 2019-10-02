@@ -34,6 +34,9 @@
                                     $locator = "SELECT * FROM locatorslip_request";
                                     $counter = 0;
                                     $result = $conn->query($locator);
+                                    if(mysqli_num_rows($result)){
+
+
                                     $field_count = $result->field_count;
                                     if($field_count>0){  
                                         while($row = mysqli_fetch_assoc($result)){
@@ -61,8 +64,8 @@
                              
                                 <?php
                                          }
-                                    }else{
-                                        echo "No pending request";
+                                    }}else{
+                                        echo "<tr><td>No pending request</td></tr>";
                                     }
                                 ?>
                     </table> 
