@@ -47,6 +47,10 @@
                             <a href="operation_logbook.php">
                                 <i class="fas fa-user-md"></i>Rescuer Activity Log </a>
                         </li>
+                         <li>
+                            <a href="opr_inventory.php">
+                                <i class="fas fa-list-ol"></i>Inventory</a>
+                        </li>
                        <li>
                             <a href="locator_request.php">
                                 <i class="fa fa-archive"></i>

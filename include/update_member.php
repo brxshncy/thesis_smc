@@ -10,8 +10,11 @@
 		$role = $_POST['role'];	
 
 		$update = "UPDATE teams SET 
-					team_id = '$team_id'
-					WHERE id = '$edit_id'";
+					team_id = '$team_id',
+					role = '$role'
+					WHERE id = '$edit_id'"
+
+					;
 
 					$result = mysqli_query($conn,$update);
 

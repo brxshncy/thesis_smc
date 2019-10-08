@@ -25,10 +25,10 @@ session_start();
 							
 						<input type="hidden" value="<?php echo $row['id'];?>" name="id">
 						<input type="hidden" value="read" name="status">
-						<label>Team ID</label>
-						<input type="text" value="<?php echo $row['team']; ?> " name="team_id">
-						<label>Sender ID</label>
-						<input type="text" value="<?php echo $row['sender']; ?> " name="sender_id">
+						
+						<input type="hidden" value="<?php echo $row['team']; ?> " name="team_id">
+						
+						<input type="hidden" value="<?php echo $row['sender']; ?> " name="sender_id">
 							<tr class="table-info">
 								<th colspan = 2><h2 style="color:#fff;" align="center">Patient Personal Information</h2></th>
 							</tr>

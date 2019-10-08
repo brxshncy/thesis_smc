@@ -90,7 +90,7 @@
                                             <thead class="table-primary">
                                                 <th>No.</th>
                                                 <th>From</th>
-                                                <th>From Team</th>
+                                                <th>Team</th>
                                                 <th>Request</th>
                                                 <th>Action</th>
                                             </thead>

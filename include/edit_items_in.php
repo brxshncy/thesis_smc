@@ -33,7 +33,7 @@ session_start();
         </div>
         <div class="form-group">
              <label class="text-danger">*Item Description</label>
-             <textarea name="item_description" id="item_description"  class="form-control"> <?php echo $item_name; ?></textarea>
+             <textarea name="item_description" id="item_description"  class="form-control"> <?php echo $item_description; ?></textarea>
          </div>
         <div class="row form-group">
             <div class="col-md-6">

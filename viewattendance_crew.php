@@ -70,7 +70,7 @@
                                       <tr class="table-primary">
                                         <td>No.</td>
                                         <td>Name</td>
-                                        <td>Contact</td>
+                                        <td>Team</td>
                                         <td>Status</td>
                                       </tr>
                                 </thead>
@@ -79,7 +79,7 @@
                                                 if(isset($_POST['submit'])){
                                                     $date = $_POST['date'];
 
-                                                  $result = $conn->query("SELECT * FROM unit_attendance WHERE date = '$date'");
+                                                  $result = $conn->query("SELECT *, CONCAT(r.firstname,' ',r.lastname) AS name, t.unit_name as team  FROM unit_attendance ua LEFT JOIN rescuers r ON ua.rescuer_id = r.id LEFT JOIN unit_name t ON ua.team_id = t.id WHERE date = '$date'");
                                                   $serialnumber = 0;
                                                   $counter=0;
                                                   while($row = mysqli_fetch_assoc($result)){
@@ -88,7 +88,7 @@
                                                     <tr class="table-default">
                                                       <td><?php echo $serialnumber; ?></td>
                                                       <td><?php echo $row['name'];?></td>
-                                                      <td><?php echo $row['contact'];?></td>
+                                                      <td><?php echo $row['team'];?></td>
                                                       <td width="30%">
                                                         <?php
                                                           if($row['status'] === "Present"){

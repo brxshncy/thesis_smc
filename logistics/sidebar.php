@@ -24,6 +24,16 @@
                                 <i class="fas fa-folder-open"></i>Activity Logs
                             </a>
                         </li>
+                        <li><a href="logistics_requestitem.php">
+                                <i class="fas fa-bell"></i>Request
+                                <?php 
+                                    $select = "SELECT * FROM opr_item_request WHERE status = 'unread' ";
+                                    $result = $conn->query($select) OR trigger_error(mysqli_error($conn)." ".$select);
+                                    $notification = mysqli_num_rows($result);
+                                ?>
+                                <span class="badge badge-danger"> <?php echo $notification; ?></span>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>

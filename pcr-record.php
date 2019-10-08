@@ -137,7 +137,6 @@
                     <div class="row">
                       <div class="col mb-3">
                           <input class="au-input au-input--xl mt-2" type="text" name="search" id="search" placeholder="Search for datas &amp; records..." />
-                           <a href="pcr-form.php"> <button class="btn btn-primary ml-2 btn-block" data-placement="top" title="Input Patient Care Report"> Patient Care Report </button></a>
                          </div>
                     </div>
                               
@@ -155,7 +154,7 @@
                         </thead>
                         <tbody>
                             <?php
-                              $select = "SELECT * FROM pcr_official ORDER BY id ASC";
+                              $select = "SELECT *, un.unit_name AS unit_name, pcr_official.id AS id FROM pcr_official LEFT JOIN unit_name un ON un.id = pcr_official.team_id ORDER BY pcr_official.id  ASC";
                               $counter = 0;
                               $result = mysqli_query($conn,$select);
                             ?>
@@ -168,7 +167,7 @@
                                 <td><?php echo $row['firstname'];?><?php echo " "?><?php echo $row['middlename'];?> <?php echo " ";?><?php echo $row['lastname'];?></td>
                                 <td><?php echo $row['date_i'];?></td>
                                 <td><?php echo $row['time_i'];?></td>
-                                <td><?php echo $row['dispatched_unit'];?></td>
+                                <td><?php echo $row['unit_name'];?></td>
                                 <td>
                                        <a href="pcr_view.php?view=<?php echo $row['id'];?>">
                                             <button class="item" style="color:green;" data-toggle="tooltip" data-placement="top" title="View Full Details">
@@ -178,7 +177,7 @@
                                         <a href="pcrofficial_edit.php?view=<?php echo $row['id'];?>">
                                             <button class="item" style="color:blue;"data-toggle="modal"  data-placement="top" id="<?php echo $row['id']; ?>" title="Update Details">
                                                  <i class="fa fa-edit (alias)"></i>
-                                            </button> ||
+                                            </button> </a>||
                                              <button class="item del_btn" style="color:red;" data-toggle="modal" data-placement="top" title="Delete" id="<?php echo $row['id']; ?>">
                                                  <i class="zmdi zmdi-delete"></i></button>
                                 </td>
@@ -279,6 +278,7 @@
               }
            })
         });
+     
       });
 
         

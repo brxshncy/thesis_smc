@@ -8,7 +8,8 @@ error_reporting(E_ALL);
 
 if(isset($_POST['search'])){
 	$search = $_POST['search'];
-	$qry = "SELECT * FROM rescuers WHERE firstname LIKE '%$search%' OR lastname LIKE '%$search%'";
+	/*$qry = "SELECT * FROM rescuers WHERE firstname LIKE '%$search%' OR lastname LIKE '%$search%'";*/
+  $qry =  "SELECT *, t.unit_name as team FROM rescuers r LEFT JOIN  unit_name t ON t.id = r.team_unit WHERE firstname LIKE '%$search%' OR lastname LIKE '%$search%' OR t.unit_name LIKE '%$search%'";
 	$result = mysqli_query($conn,$qry) or trigger_error(mysqli_error($conn)." ".$qry);
 }
 if($result->num_rows>0){
@@ -17,7 +18,7 @@ if($result->num_rows>0){
                                       <tr class='table-primary'>
                                         <td>No.</td>
                                         <td>Name</td>
-                                        <td>Contact</td>
+                                        <td>Team</td>
                                         <td>Action</td>
                                       </tr>
                                 </thead>
@@ -32,7 +33,7 @@ if($result->num_rows>0){
                 <td>".$serialnumber."</td>
                 <td>" .$fullname."</td>
                 <input type='hidden' value=".$fullname." name='fullname[]' id='fullname'>
-                <td>".$row['contact']."</td>
+                <td>".$row['team']."</td>
                 <input type='hidden' value=".$row['contact']." name='contact[]' id='contact'>
                  <td width='30%'>
                 <select name='status' class='form-control'>

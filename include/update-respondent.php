@@ -7,13 +7,11 @@ if(isset($_POST['upload'])){
 	$id = $_POST['id'];
 			$unit_name = $_POST['unit_name'];
 			$vehicle_name = $_POST['vehicle_name'];
-			$transport_officer = $_POST['transport_officer'];
-			$treatment_officer = $_POST['treatment_officer'];
+			
 
 						$update = "UPDATE unit_name SET unit_name ='$unit_name ',
-						vehicle_name ='$vehicle_name',
-						transport_officer ='$transport_officer',
-						treatment_officer ='$treatment_officer' WHERE id = '$id' ";
+						vehicle_name ='$vehicle_name'
+						 WHERE id = '$id' ";
 
 	$result = mysqli_query($conn,$update);
 

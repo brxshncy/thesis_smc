@@ -5,14 +5,15 @@ global $conn;
 if(isset($_POST['edit_team'])){
 	$id = $_POST['edit_team'];
 
-	$fetch = "SELECT * FROM unit_name WHERE id = '$id' ";
+	$fetch = "SELECT un.*,(SELECT DISTINCT CONCAT(r.firstname,' ',r.lastname) as name FROM teams t LEFT JOIN rescuers r ON r.id = t.rescuers_id WHERE t.role = 'Transport Officer' AND un.id = t.team_id) as transport_officer, (SELECT DISTINCT CONCAT (r.firstname,' ',r.lastname) AS name FROM teams t LEFT JOIN rescuers r ON r.id = t.rescuers_id WHERE t.role = 'Treatment Officer' AND un.id = t.team_id) AS treatment_officer  FROM unit_name un WHERE un.id = '$id' ";
 	$result = mysqli_query($conn,$fetch);
 	while($row = mysqli_fetch_assoc($result)){
 			$id = $row['id'];
 			$unit_name = $row['unit_name'];
 			$vehicle_name = $row['vehicle_name'];
-			$transport_officer = $row['transport_officer'];
-			$treatment_officer = $row['treatment_officer'];
+      $transport_officer = $row['transport_officer'];
+      $treatment_officer = $row['treatment_officer'];
+			
 	}
 }
 
@@ -38,29 +39,11 @@ if(isset($_POST['edit_team'])){
                       </div>
                       <div class="form-group">
                               <label>Assign Transport Officer</label>
-                              <select name="transport_officer" id="transport_officer" class="form-control">
-                                <option value=""></option>
-                                <?php
-                                  $qry = $conn->query("SELECT * FROM rescuers");
-                                  while($row = mysqli_fetch_assoc($qry)){
-                                    $name = $row ['firstname']." ".$row['lastname'];
-                                    echo '<option value = "'.$name.'"> '.$name.' </option>';
-                                  }
-                                ?>
-                              </select>
+                              <input type="text" value="<?php echo (isset($transport_officer) && !empty($transport_officer)) ? $transport_officer : 'No assigned'?>" class="form-control" readonly="">
                       </div>
                       <div class="form-group">
                                <label>Assign Treatment Officer</label>
-                                <select name="treatment_officer" id="treatment_officer" class="form-control">
-                                <option value=""></option>
-                                <?php
-                                  $qry1 = $conn->query("SELECT * FROM rescuers");
-                                  while($row = mysqli_fetch_assoc($qry1)){
-                                    $name = $row ['firstname']." ".$row['lastname'];
-                                    echo '<option value = "'.$name.'"> '.$name.' </option>';
-                                  }
-                                ?>
-                              </select>
+                                 <input type="text" value="<?php echo (isset($treatment_officer) && !empty($treatment_officer)) ? $treatment_officer : 'No assigned' ?>" class="form-control" readonly="">
                      </div> 
                                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                   <input type="submit" name="upload" id="upload" value="Upload" class="btn btn-primary">

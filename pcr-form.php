@@ -206,7 +206,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputPassword4">Time of Incident</label>
-                            <input type="text" class="form-control" name= "time_i" id="time_i"  placeholder="HH/MM/AA">
+                            <input type="text" class="form-control" name= "time_i" id="time_i"  placeholder="">
                         </div>
                 </div>
                 <div class="form">
@@ -877,9 +877,22 @@
                         data:{id:id},
                         dataType:"JSON",    
                         success:function(data){
-                            $('#dispatched_unit').val(data.unit_name);
-                            $('#treatment_officer').val(data.treatment_officer);
-                            $('#transport_officer').val(data.transport_officer);
+                           if(typeof data.unit_name !== "undefined" && data.unit_name){
+                                    $('#dispatched_unit').val(data.unit_name);
+                                } else {
+                                     $('#dispatched_unit').val('No Data');
+                                }
+                            if(typeof data.treatment_officer !== "undefined" && data.treatment_officer){
+                                    $('#treatment_officer').val(data.treatment_officer);
+                                } else {
+                                     $('#treatment_officer').val('No Data');
+                                }
+                            if(typeof data.transport_officer !== "undefined" && data.transport_officer){
+                                $('#transport_officer').val(data.transport_officer);
+                            }else{
+                                $('#transport_officer').val('No Data');
+                            }
+                            
                         }
                     });
                })

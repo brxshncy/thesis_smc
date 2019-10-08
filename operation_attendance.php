@@ -61,7 +61,14 @@
     <div class="section__content section__content--p30">
        <div class="container-fluid">
             <div class="jumbotron" style="background-color: #fff;">
-                <h2>Attendance Sheet</h2>
+              <div class="row">
+                  <div class="col">
+                    <h4>Attendance Sheet</h4>
+                 </div>
+                  <div class="col col-md-4">
+                      <h4> Date Today: <?php echo date("M-d-Y"); ?></h4>
+                    </div>
+              </div>
                 <hr>
                 <?php if(isset($_SESSION['message'])): ?>
                          <div class="alert alert-<?=$_SESSION['msg_type']?>">
@@ -71,45 +78,68 @@
                                 ?>
                          </div>
                          <?php endif ?>
-                  <div class="row">
-                      <div class="col mb-3">
-                        <input class="au-input au-input--xl mt-2" type="text" name="search" id="search" placeholder="Search Name..." />
-                          <a href="view_attendance.php" class="btn btn-success btn-md pull-right mt-1">View Attendance</a>
-                        </div>
-                  </div>  
-                <div class="alert alert-info" role="alert">
-                      <div class="row justify-content-center">
-                        <p>Date: <?php echo date("M-d-Y");?></p>
-                     </div>
-                </div>  
-                      <div class="table-responsive-md">
+            <div class="row mt-2">
+                <div class="col col-md-3">
+                   <div class="filters m-b-45">
+                      <div class="rs-select2--dark rs-select2--md m-r-10 rs-select2--border">
+                          <select class="js-select2" name="team" id="team">
+                               <option value="">All</option>
+                                  <?php
+                                      $select_team = "SELECT * from unit_name";
+                                      $result = $conn->query($select_team);
+                                      while($row = mysqli_fetch_assoc($result)){?>
+                                    <option value="<?php echo $row['id'];  ?>"><?php echo $row['unit_name']; ?> </option>
+                                    <?php }?>
+                            </select>
+                                <div class="dropDownSelect2"></div>
+                              </div>
+                    </div>
+                  </div>
+                   <div class="col col-md-3" >
+                      <input class="au-input au-input--xl" type="text" name="search" id="search" placeholder="Search Name..." />
+                   </div>
+                   <div class="col col-md-3">
+                   </div>
+                   <div class="col col-md-3">
+                       <a href="view_attendance.php" class="btn btn-success btn-md ">View Attendance</a>
+                   </div>
+            </div>
+                      <div class="table-responsive-md" style="margin-top:-30px">
                           <form action="include/attendance_crew.php" method="POST">
                             <table class="table table-bordered" id="search_table">
                                 <thead class="thead">
                                       <tr class="table-primary">
                                         <td>No.</td>
                                         <td>Name</td>
-                                        <td>Contact</td>
+                                        <td>Team</td>
                                         <td>Action</td>
                                       </tr>
                                 </thead>
                                       <tbody>
                                               <?php
-                                                  $result = $conn->query("SELECT * FROM rescuers");
+                                                  $result = $conn->query("SELECT *, t.unit_name AS team, t.id as t_id, r.id as id FROM rescuers r LEFT JOIN unit_name t ON r.team_unit = t.id ORDER BY t.id ASC");
                                                   $serialnumber = 0;
                                                   $counter=0;
                                                   while($row = mysqli_fetch_assoc($result)){
                                                      $serialnumber++;
                                                      $fullname  = $row['firstname']." ".$row['lastname'];
+                                                     $id = $row['id'];
                                                     ?> 
                                                     <tr class="table-default">
                                                       <td><?php echo $serialnumber; ?></td>
-                                                      <td><?php echo $fullname ?></td>
-                                                      <input type="hidden" value="<?php echo $fullname; ?>" name="fullname[]" id="fullname">
-                                                      <td><?php echo $row['contact'];?></td>
-                                                      <input type="hidden" value="<?php echo $row['contact'];?>" name="contact[]" id="contact">
+                                                      <td><?php echo $fullname?></td>
+                                                      <input type="hidden" value="<?php echo $id; ?>" name="fullname[]" id="fullname">
+                                                      <td><?php echo $row['team'];?></td>
+                                                      <input type="hidden" value="<?php echo $row['t_id'];?>" name="contact[]" id="contact">
                                                       <td width="30%">
-                                                      <select name="status[<?php echo  $counter; ?>]" class="form-control">
+                                                        <?php if(isset($_SESSION['attendance'])):
+                                                          ?>
+                                                            <p class="text-success"><?php 
+                                                            echo $_SESSION['attendance'];
+                                                            ?>
+                                                            </p>
+                                                         <?php endif ?>
+                                                      <select name="status[<?php echo  $counter; ?>]" class="form-control" id="status">
                                                           <option value=""></option>
                                                           <option value="Absent">Absent</option>
                                                           <option value="Present">Present</option>
@@ -173,6 +203,24 @@
                   $('#search_table').html(data);
                 }
             });
+        });
+
+        $('#team').change(function(){
+            var id = $(this).val();
+
+          if(typeof id != 'undefined' && id != ''){
+                 $.ajax({
+              url: 'include/select_team.php',
+              method:'post',
+              data:{id:id},
+              success:function(data){
+                $('#search_table').html(data);
+              }
+            });
+          }else{
+            location.reload();
+          }
+         
         });
       });
     </script>

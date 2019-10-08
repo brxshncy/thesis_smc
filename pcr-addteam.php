@@ -118,38 +118,7 @@ include 'include/db.php';
   
                     </select>
                   </div>
-                      <!--<div class="form-group">
-                              <label>Assign Transport Officer</label>
-                             <select name ="transport_officer" id="transport_officer" class="form-control">
-                                <option value=""></option>
-                                <?php
-                                  $qry1 = "SELECT * FROM  rescuers";
-                                  $result1 = $conn->query($qry1) or trigger_error(mysqli_error($conn)." ".($qry1));
-                                   while($row = $result1->fetch_assoc()){
-                                          $id = $row['id'];
-                                          $name = $row['firstname']." ".$row['lastname'];
-                                          $username = $row['username'];
-                                          $role = $row['id'];
-                                          echo '<option value="'.$id.'">' .$name. '</option>';
-                                        }
-                                     ?>
-                             </select>
-                      </div>
-                      <div class="form-group">
-                               <label>Assign Treatment Officer</label>
-                                <select name ="treatment_officer" id="treatment_officer" class="form-control">
-                                <option value=""></option>
-                                <?php
-                                  $qry1 = "SELECT * FROM  rescuers";
-                                  $result1 = $conn->query($qry1) or trigger_error(mysqli_error($conn)." ".($qry1));
-                                 while($row = $result1->fetch_assoc()){
-                                          $name = $row['firstname']." ".$row['lastname'];
-                                          $id = $row['id'];
-                                          echo '<option value="'.$id.'">' .$name. '</option>';
-                                        }
-                                     ?>
-                             </select>
-                     </div> -->
+                    
                                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                   <input type="submit" name="upload" id="upload" value="Upload" class="btn btn-primary">
                                   
@@ -185,7 +154,7 @@ include 'include/db.php';
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="scrollmodalLabel">Add Team Crew</h5>
+              <h5 class="modal-title" id="scrollmodalLabel">Add Team Members</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -198,11 +167,11 @@ include 'include/db.php';
                                     <select class="form-control" id="members" name="members">
                                       <option value=""></option>
                                     <?php
-                                        $members = $conn->query("SELECT * FROM rescuers");
-                                        if(mysqli_num_rows($members)>0){
+                                        $members = $conn->query("SELECT * FROM rescuers WHERE team_unit = '' OR team_unit = NULL ");
+                                        if($members->num_rows > 0){
                                            while($row = $members->fetch_assoc()){
                                           $name = $row['firstname']." ".$row['lastname'];
-                                         echo !$row['team_unit']? '<option value="'.$row['id'].'">' .$name. '</option>' : '';
+                                            echo '<option value="'.$row['id'].'">'.$name.'</option>';
                                         }
                                         }else{
                                           echo '<option>No members available</option>';
@@ -315,32 +284,12 @@ include 'include/db.php';
 
 
 <?php                                    
-$q = "SELECT ";
-$q .= "t.id,";
-$q .= "t.unit_name,";
 
-$q .= "(SELECT DISTINCT CONCAT(sub_r.firstname, ' ', sub_r.lastname) as name ";
-$q .= "FROM teams sub_tm";
-$q .= " LEFT JOIN rescuers sub_r ON sub_r.id = sub_tm.rescuers_id";
-$q .= " WHERE";
-$q .= "   sub_tm.role = 'Treatment Officer'";
-$q .= "   AND t.id = sub_tm.team_id) as treatment_officer,"; //<-- sudo column name is treatment officer
-
-$q .= "(SELECT DISTINCT CONCAT(sub_r.firstname, ' ', sub_r.lastname) as name ";
-$q .= "FROM teams sub_tm";
-$q .= " LEFT JOIN rescuers sub_r ON sub_r.id = sub_tm.rescuers_id" ;
-$q .= " WHERE";
-$q .= "   sub_tm.role = 'Transport Officer'";
-$q .= "   AND t.id = sub_tm.team_id) as transport_officer,"; //<-- sudo column name is transport officer
-
-$q .= "t.vehicle_name ";
-$q .= "FROM";
-$q .= " unit_name as t";
+$q = "SELECT t.id,t.unit_name,(SELECT DISTINCT CONCAT(sub_r.firstname, ' ', sub_r.lastname) as name FROM teams sub_tm LEFT JOIN rescuers sub_r ON sub_r.id = sub_tm.rescuers_id WHERE sub_tm.role = 'Treatment Officer' AND t.id = sub_tm.team_id) as treatment_officer,(SELECT DISTINCT CONCAT(sub_r.firstname, ' ', sub_r.lastname) as name FROM teams sub_tm LEFT JOIN rescuers sub_r ON sub_r.id = sub_tm.rescuers_id WHERE sub_tm.role = 'Transport Officer' AND t.id = sub_tm.team_id) as transport_officer, (SELECT COUNT(role) FROM teams sub_tm WHERE sub_tm.role = 'Member' AND t.id = sub_tm.team_id) AS members, t.vehicle_name FROM unit_name as t";
 
 
 
-
- $result = $conn->query($q);
+$result = $conn->query($q);
 $counter = 0;
 ?>
            
@@ -351,9 +300,10 @@ $counter = 0;
           <tr class="table-primary" style="border-color:black;">
               <th>No.</th>
               <th>Team</th>
-              <th >Transport Officer</th>
-              <th>Treatment Officer</th>
-              <th >Vehicle</th>                               
+              <th >Treatment Officer</th>
+              <th>Transport Officer</th>
+              <th >Vehicle</th>
+              <th>Members</th>                             
               <th>Action</th>
           </tr>
        </thead>
@@ -368,6 +318,7 @@ $counter = 0;
     <td><?php echo (isset($row->treatment_officer) && !empty($row->treatment_officer)) ? $row->treatment_officer : 'No assigned'; ?></td>
     <td><?php echo (isset($row->transport_officer) && !empty($row->transport_officer)) ? $row->transport_officer : 'No assigned'; ?></td>
     <td><?php echo $row->vehicle_name;?></td>
+    <td><?php echo (isset($row->members) && !empty($row->members)) ? $row->members : 'No Members'; ?></td>
     <td width="">
         <a href="view_member.php?view=<?php echo $row->id;?>">
          <button class="item" style="color:green;" data-toggle="modal" data-target="#" title="View Unit Members" id="add"> <i class="fa fa-users"></i></button>

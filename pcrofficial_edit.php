@@ -64,7 +64,8 @@
                     $id = $_GET['view'];
                     $qry = "SELECT * FROM pcr_official WHERE id = '$id'";
                     $result = $conn->query($qry);
-                    while($row = mysqli_fetch_assoc($result)){?>
+                   
+                    while($row = mysqli_fetch_assoc($result)){ ?>
 <div class="col">
   <div class="card">
     <div class="card-header bg-light"><h3 align="center" class="p-4">Pre Hospital Patient Care Form</h3></div>
@@ -538,15 +539,15 @@
       <div class="card-header"><h4 align="center" class="p-1">Rescuer Info</h4></div>
     <div class="card-body">
   <div class="row form-group">
-                                     <div class="col col-md-4">
+                                     <div class="col col-md-3">
                                         <label>Dispatched Unit</label>
-                                         <select name="dispatched_unit" class="form-control-lg form-control" id="dispatched_unit">
+                                         <select name="" class="form-control" id="team">
                                                 <option value=""></option>
                                             <?php
                                                 $dispatched_unit = "SELECT * FROM unit_name";
                                                 $query = $conn->query($dispatched_unit);
                                                 while($row1 = mysqli_fetch_assoc($query)){?>
-                                                    <option value = "<?php echo $row1['unit_name'];?>" 
+                                                    <option value = "<?php echo $row1['id'];?>" 
                                                         <?php echo $row['dispatched_unit'] == '$row1["unit_name"]' ? 'selected': '';?> >
                                                         <?php echo $row1['unit_name'];?>
                                                     </option>
@@ -555,11 +556,15 @@
                                             ?>
                                         </select>
                                     </div>
-                                    <div class="col col-md-4">
+                                    <div class="col col-md-3">
+                                        <label>Dispatched Unit</label>
+                                        <input type="text" class="form-control" value ="<?php echo $row['dispatched_unit'];?>" name="dispatched_unit" id="dispatched_unit">
+                                    </div>
+                                    <div class="col col-md-3">
                                         <label>Treatment Officer</label>
                                         <input type="text" class="form-control" value ="<?php echo $row['treatment_officer'];?>" name="treatment_officer" id="treatment_officer">
                                     </div>
-                                    <div class="col col-md-4">
+                                    <div class="col col-md-3">
                                         <label>Trasnport Officer</label>
                                         <input type="text" class="form-control" value = "<?php echo $row['transport_officer'];?>" name="transport_officer" id="transport_officer">
                                     </div>
@@ -567,7 +572,7 @@
                                 <div class="row form-group">
                                     <div class="col col-md-4">
                                         <label>Destination Determination</label>
-                                        <select name="desti_deter" class="form-control-lg form-control">
+                                        <select name="desti_deter" class=" form-control">
                                             <option value=""></option>
                                             <option value="Closest Facility" <?php echo $row['desti_deter'] == 'Closest Facility' ? 'selected': '';?> >Closest Facility</option>
                                             <option value="Patient's Choice" <?php echo $row['desti_deter'] == "Patient's Choice" ? 'selected': '';?>>Patient's Choice</option>
@@ -579,7 +584,7 @@
                                     </div>
                                     <div class="col col-md-4">
                                         <label>Responsode mode</label>
-                                        <select name="response_mode" class="form-control-lg form-control">
+                                        <select name="response_mode" class=" form-control">
                                             <option value=""></option>
                                             <option value="No Lights and Siren" <?php echo $row['response_mode'] == 'No Lights and Siren'? 'selected': '';?>>No Lights and Siren</option>
                                             <option value="Lights Only" <?php echo $row['response_mode']== ' Lights Only'? 'selected': '';?>>Lights Only</option>
@@ -588,7 +593,7 @@
                                     </div>
                                     <div class="col col-md-4">
                                         <label>Transport Mode</label>
-                                        <select name="transport_mode" class="form-control-lg form-control">
+                                        <select name="transport_mode" class=" form-control">
                                             <option value=""></option>
                                             <option value="No Lights and Siren" <?php echo $row['transport_mode'] == 'No Lights and Siren'? 'selected': '';?>>No Lights and Siren</option>
                                             <option value="Lights Only" <?php echo $row['transport_mode'] == 'Lights Only'? 'selected': '';?>>Lights Only"</option>
@@ -732,6 +737,32 @@
                    var total = eye + verbal + motor;
                    $('#total_input').val(total);
                });
+                $('#team').change(function(){
+                    var id = $(this).val();
+                    $.ajax({
+                        url: 'pcrofficial_editpage.php',
+                        method: 'POST',
+                        dataType: 'JSON',
+                        data:{id:id},
+                        success:function(data){
+                            if(typeof data.unit_name !== "undefined" && data.unit_name){
+                                    $('#dispatched_unit').val(data.unit_name);
+                                } else {
+                                     $('#dispatched_unit').val('No Data');
+                                }
+                            if(typeof data.treatment_officer !== "undefined" && data.treatment_officer){
+                                    $('#treatment_officer').val(data.treatment_officer);
+                                } else {
+                                     $('#treatment_officer').val('No Data');
+                                }
+                            if(typeof data.transport_officer !== "undefined" && data.transport_officer){
+                                $('#transport_officer').val(data.transport_officer);
+                            }else{
+                                $('#transport_officer').val('No Data');
+                            }
+                        }
+                    });
+                });
 
 
 

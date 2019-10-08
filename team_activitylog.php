@@ -110,7 +110,8 @@ session_start();
                             <th>Date of Incident</th>
                             <th>Time of Incident</th>
                             <th>Incident</th>
-                            <th>Status</th>
+                            <th>Patient Status</th>
+
                             
 
                         </tr>
@@ -119,21 +120,21 @@ session_start();
                 <?php 
                     if(isset($_GET['log'])){
                         $id = $_GET['log'];
-                        $qry = "SELECT p. *, CONCAT(p.firstname,' ',p.lastname) as name,p.date_i AS date_i,p.time_i as time_i,p.reason as incident,p.impression as impression, p.dispatched_unit as team FROM pcr p LEFT JOIN unit_name un ON un.id = p.dispatched_unit WHERE p.team = '$id'";
+                        $qry = "SELECT CONCAT(p.firstname,' ',p.lastname) AS name, p.date_i as date_i, p.time_i as time_i, p.impression as impression, p.reason as status FROM unit_name un LEFT JOIN pcr_official p ON un.id = p.team_id WHERE p.team_id = '$id'";
                         $result = $conn->query($qry) or trigger_error(mysqli_error($conn)." ".$qry);
                         $counter = 0;
-                        if(mysqli_num_rows($result)){
+                        if(mysqli_num_rows($result)>0){
                         while($row = $result->fetch_object()){
-                                 $counter++; 
-                                 $date = date("M d 20y",strtotime($row->date_i));
+                                 $counter++;        
                          ?>
-                        <td><?php echo $counter; ?></td>
-                        <td><?php echo $row->name ?> </td>
-                        <td><?php echo $date ?></td>
-                        <td><?php echo $row->time_i?></td>
-                        <td><?php echo $row->incident?></td>
-                        <td><?php echo $row->impression ?></td>
-
+                         <tr>
+                                <td><?php echo $counter; ?></td>
+                                <td><?php echo (isset($row->name)) && !empty($row->name) ? $row->name : 'No data'; ?> </td>
+                                <td><?php echo (isset($row->date_i)) && !empty($row->date_i) && $row->date_i == '0000-00-00 '? $row->date_i : 'No data';?></td>
+                                <td><?php echo (isset($row->time_i)) && !empty($row->time_i) ? $row->time_i : 'No data'?></td>
+                                <td><?php echo (isset($row->status)) && !empty($row->status) ? $row->status : 'No data' ?></td>
+                                <td><?php echo (isset($row->impression)) && !empty($row->impression) ? $row->impression : 'No data' ?></td>
+                        </tr>
                    <?php }   }else{
                      echo "<td colspan='6'>No recent activity Logs</td>";
                    }

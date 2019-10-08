@@ -25,6 +25,12 @@
     <script src="js/main.js"></script>
     <script>
         $(document).ready(function(){
+            $("#quantity").on("keypress keyup blur",function (event) {    
+           $(this).val($(this).val().replace(/[^\d].+/, ""));
+            if ((event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        })
             $(document).on('click','.edit_button',function(){
                 var id = $(this).attr('id');
 
@@ -39,6 +45,24 @@
                 });
                 
             })
+            $(document).on('click','.del_button',function(){
+                $('#delete_modal').modal('show');
+            });
+
+            $('#delete_item').click(function(){
+              var del_id =  $('.del_button').attr('id');
+              
+              $.ajax({
+                url:'include/delete_items.php',
+                method:'POST',
+                data:{del_id:del_id},
+                success:function(data){
+                    location.reload();
+                    $('#delete_modal').modal('hide');
+                }
+              });
+            })
+          
         });
     </script>
   

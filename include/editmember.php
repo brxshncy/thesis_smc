@@ -18,7 +18,7 @@ global $conn;
         <div class="col">
             <div class="form-group">
                     <label>Team</label>
-                        <select name="team_unit" id="team_unit" class="form-control">
+                        <select name="team_unit" id="team_unit" class="form-control" required="">
                             <option value="">Select Team</option>
                             <?php
                                 $select = "SELECT * FROM unit_name";
@@ -39,32 +39,16 @@ global $conn;
                     <label>User Name</label>
                     <input type="text" class="form-control" id="username" name="username" value="<?php echo $username; ?>" readonly>
              </div>
-           <!-- <div class="form-group">
-                    <label>Last Name</label>
-                    <input type="text" class="form-control" id="lastname" name="lastname" value="<?php echo $lastname; ?>" readonly="">
+              <div class="form-group">
+                    <label>Role</label>
+                    <select name="role" class="form-control">
+                        <option value=""></option>
+                        <option value="Transport Officer">Transport Officer</option>
+                        <option value="Treatment Officer">Treatment Officer</option>
+                        <option value="Member"> Member</option>
+                    </select>
              </div>
-             <div class="form-group">
-                    <label>User Name</label>
-                    <input type="text" class="form-control" id="username" name="username" value="<?php echo $username; ?>" readonly>
-             </div>
-             <div class="form-group">
-                    <label>Contact Number</label>
-                    <input type="text" class="form-control" id="contact" name="contact" value="<?php echo $contact; ?>" readonly>
-             </div>
-             <div class="form-group">
-                    <label>Gender</label>
-                    <input type="text" value="<?php echo $gender; ?>" name="gender" id="contact" class="form-control" readonly> 
-             </div>
-            
-             <div class="form-group">
-                    <label>Address</label>
-                    <input type="text" class="form-control" id="address" name="address"value="<?php echo $address; ?>" readonly>
-             </div>*/
-                              <div class="form-group">
-                                    <label for="exampleFormControlFile1">Profile Picture</label>
-                                    <input type="file" class="form-control-file" id="profile_pic" name="profile_pic">
-                                 </div>                                     
-                  </div> -->
+       
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         <input type="submit" class="btn btn-primary" id="update" name="update" value="Edit">

@@ -39,13 +39,12 @@ $output = '';
                                                 <i class='fa fa-eye'></i>
                                              </button>
                                         </a> ||
-                                         <button class='item edit_button' style='color:blue;' data-toggle='modal'  data-placement='top' id=".$row['id']." title='Update Details'>
+                                           <a href='pcrofficial_edit.php?view=<?php echo $row['id'];?>'>
+                                            <button class='item' style='color:blue;' data-toggle='modal'  data-placement='top' id='<?php echo $row['id']; ?>'' title='Update Details'>
                                                  <i class='fa fa-edit (alias)'></i>
-                                            </button> ||
-                                           <a href='include/delete.php?delete=".$row['id']."'> 
-                                             <button class='item' style='color:red;' data-toggle='tooltip' data-placement='top'title='Delete'>
+                                            </button> </a>||
+                                             <button class='item del_btn 'style='color:red;' data-toggle='modal' data-placement='top' title='Delete' id='<?php echo $row['id']; ?>'>
                                                  <i class='zmdi zmdi-delete'></i></button>
-                                        </a> ||
                                         
                                             
                                     

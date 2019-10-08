@@ -344,10 +344,14 @@
 							</tr>
 							<tr>
 								<td colspan="2" class="bg-light" align="center">
-									<button type="button"  class="btn btn-primary btn-lg">
-                                           		<i class="fa fa-print"></i>&nbsp; Print This
+									<button type="button"  class="btn btn-success">
+                                           		<i class="fa fa-print"></i>&nbsp; Print 
                                     </button>
+                                   <a href="pcrofficial_edit.php?view=<?php echo $row['id'];?>">  <button type="button"  class="btn btn-info">
+                                           		<i class="fa fa-edit (alias)"></i>&nbsp; Edit
+                                    </button></a>
                                 </td>
+                          
                                
 							</tr>
 							<?php

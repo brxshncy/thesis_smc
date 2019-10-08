@@ -621,15 +621,15 @@ include 'include/db.php';
 
             <div class="panel-body">
                 <div class="row form-group">
-                                     <div class="col col-md-4">
+                                     <div class="col col-md-3">
                                         <label>Dispatched Unit</label>
-                                         <select name="dispatched_unit" class="form-control-lg form-control" id="dispatched_unit">
+                                         <select name="" class="form-control-lg form-control" id="team">
                                                 <option value=""></option>
                                             <?php
                                                 $dispatched_unit = "SELECT * FROM unit_name";
                                                 $query = $conn->query($dispatched_unit);
                                                 while($row1 = mysqli_fetch_assoc($query)){?>
-                                                    <option value = "<?php echo $row1['unit_name'];?>" 
+                                                    <option value = "<?php echo $row1['id'];?>" 
                                                         <?php echo $row['dispatched_unit'] == '$row1["unit_name"]' ? 'selected': '';?> >
                                                         <?php echo $row1['unit_name'];?>
                                                     </option>
@@ -638,13 +638,17 @@ include 'include/db.php';
                                             ?>
                                         </select>
                                     </div>
-                                    <div class="col col-md-4">
+                                    <div class="col col-md-3">
                                         <label>Treatment Officer</label>
-                                        <input type="text" class="form-control" value ="<?php echo $row['treatment_officer'];?>" name="treatment_officer" id="treatment_officer">
+                                        <input type="text" class="form-control" value ="" name="dispatched_unit" id="dispatched_unit" readonly="">
                                     </div>
-                                    <div class="col col-md-4">
+                                    <div class="col col-md-3">
+                                        <label>Treatment Officer</label>
+                                        <input type="text" class="form-control" value ="" name="treatment_officer" id="treatment_officer" readonly="">
+                                    </div>
+                                    <div class="col col-md-3">
                                         <label>Trasnport Officer</label>
-                                        <input type="text" class="form-control" value = "<?php echo $row['transport_officer'];?>" name="transport_officer" id="transport_officer">
+                                        <input type="text" class="form-control" value = "" name="transport_officer" id="transport_officer" readonly="">
                                     </div>
                                 </div>
                                 <div class="row form-group">
@@ -864,6 +868,34 @@ include 'include/db.php';
                    var total = eye + verbal + motor;
                    $('#total_input').val(total);
                });
+
+                $('#team').change(function(){
+                    var id = $(this).val();
+
+                    $.ajax({
+                        url: 'edit_teaminfo.php',
+                        method: 'POST',
+                        dataType: 'JSON',
+                        data:{id:id},
+                        success:function(data){
+                            if(typeof data.unit_name !== "undefined" && data.unit_name){
+                                    $('#dispatched_unit').val(data.unit_name);
+                                } else {
+                                     $('#dispatched_unit').val('No Data');
+                                }
+                            if(typeof data.treatment_officer !== "undefined" && data.treatment_officer){
+                                    $('#treatment_officer').val(data.treatment_officer);
+                                } else {
+                                     $('#treatment_officer').val('No Data');
+                                }
+                            if(typeof data.transport_officer !== "undefined" && data.transport_officer){
+                                $('#transport_officer').val(data.transport_officer);
+                            }else{
+                                $('#transport_officer').val('No Data');
+                            }
+                        }
+                    });
+                });
 
 
 
