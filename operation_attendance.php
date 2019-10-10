@@ -95,11 +95,10 @@
                               </div>
                     </div>
                   </div>
-                   <div class="col col-md-3" >
-                      <input class="au-input au-input--xl" type="text" name="search" id="search" placeholder="Search Name..." />
+                   <div class="col col-md-6" >
+                      <input class="form-control" type="text" name="search" id="search" placeholder="Search Name..." />
                    </div>
-                   <div class="col col-md-3">
-                   </div>
+                   
                    <div class="col col-md-3">
                        <a href="view_attendance.php" class="btn btn-success btn-md ">View Attendance</a>
                    </div>
@@ -129,7 +128,7 @@
                                                       <td><?php echo $serialnumber; ?></td>
                                                       <td><?php echo $fullname?></td>
                                                       <input type="hidden" value="<?php echo $id; ?>" name="fullname[]" id="fullname">
-                                                      <td><?php echo $row['team'];?></td>
+                                                      <td><?php echo (isset($row['team']) && !empty($row['team'])) ? $row['team'] : 'No team' ?></td>
                                                       <input type="hidden" value="<?php echo $row['t_id'];?>" name="contact[]" id="contact">
                                                       <td width="30%">
                                                         <?php if(isset($_SESSION['attendance'])):

@@ -67,6 +67,8 @@ session_start();
                                      <?php
                                        $qry = "SELECT * FROM items";
                                        $result = $conn->query($qry);
+                                       $row_data = mysqli_num_rows($result);
+                                       if($row_data > 0){
                                        while($row = mysqli_fetch_assoc($result)){
                                     ?>
                                     <tr>
@@ -75,14 +77,17 @@ session_start();
                                       <td width=""><?php echo $row['item_description']; ?></td>
                                       <td width=""><?php echo $row['quantity']; ?></td>
                                       <td width=""><?php echo $row['unit_measure']; ?></td>
-                                      <td width="">
+                                      <td width="" style="text-align:center;">
                                       <button class="item edit_button" style="color:blue;" data-toggle="tooltip" data-placement="top" title="Edit" id="<?php echo $row['id'];?>">
                                         <i class="fas fa-edit (alias) "></i></button> |
                                          <button class="item del_button" style="color:blue;" data-toggle="tooltip" data-placement="top" title="Delete" id="<?php echo $row['id'];?>">
                                         <i class="zmdi zmdi-delete text-danger"></i> 
                                       </td>
                                      </tr>
-                                                    <?php }?>
+                                                    <?php }}else{
+                                                            echo '<td colspan="5">No item available</td>';
+                                                          }
+                                                      ?>
                                   </tbody>
           										</table>
           									</div>
@@ -107,10 +112,6 @@ session_start();
                         </button>
                     </div>
                         <div class="modal-body">
-                                <div class="form-group">
-                                    <label class="text-danger">*Item Code</label>
-                                    <input type="text" name="item_code" id="item_code" class="form-control" readonly="">
-                                </div>
                                 <div class="form-group">
                                     <label class="text-danger">*Item Name</label>
                                     <input type="text" name="item_name" id="item_name" class="form-control">

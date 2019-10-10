@@ -205,9 +205,9 @@
                                     <option value=""></option>
                                     <option value="Medical" <?php echo $row['nature'] == 'Medical'? 'selected' : ''; ?>>Medical</option>
                                     <option value="Trauma" <?php echo $row['nature'] == 'Trauma'? 'selected' : ''; ?>>Trauma</option>
-                                    <option value="Fire Response" <?php echo $row['nature'] == '>Fire Response'? 'selected' : ''; ?>>Fire Response</option>
-                                    <option value="V A"  <?php echo $row['nature'] == '>V A<'? 'selected' : ''; ?>>V A</option>
-                                    <option value="Activity Event"  <?php echo $row['nature'] == '>Activity Event'? 'selected' : ''; ?>>Activity Event</option>
+                                    <option value="Fire Response" <?php echo $row['nature'] == 'Fire Response'? 'selected' : ''; ?>>Fire Response</option>
+                                    <option value="V A"  <?php echo $row['nature'] == 'V A'? 'selected' : ''; ?>>V A</option>
+                                    <option value="Activity Event"  <?php echo $row['nature'] == 'Activity Event'? 'selected' : ''; ?>>Activity Event</option>
                                 </select>
                         </div>
                         <div class="col col-md-6">
@@ -220,7 +220,7 @@
                                     <option value="Unresponsive" <?php echo $row['neuro'] == 'Unresponsive'? 'selected' : ''; ?>> Unresponsive</option>
                                 </select>
                         </div>
-                </div>
+                </div>  
 
                 <div class="form-row">
                         <div class="form-group col-md-4">
@@ -289,9 +289,9 @@
                                     <option value=""> </option>
                                     <option value="Normal" <?php echo $row['pulse'] == 'Normal'? 'selected' : ''; ?>>Normal</option>
                                     <option value="Strong" <?php echo $row['pulse'] == 'Strong'? 'selected' : ''; ?>>Strong</option>
-                                    <option value="Weak" <?php echo $row['pulse'] == 'Weak'? 'selected' : ''; ?>>Weak</option>
-                                    <option value="Irregular" <?php echo $row['pulse'] == 'Irregular'? 'selected' : ''; ?>>Irregular</option>
-                                    <option value="Regular" <?php echo $row['pulse'] == 'Regular'? 'selected' : ''; ?>>Regular</option>
+                                    <option value="Weak" <?php echo $row['pulse'] == 'Weak' ? 'selected' : ''; ?>>Weak</option>
+                                    <option value="Irregular" <?php echo $row['pulse'] == 'Irregular' ? 'selected' : ''; ?>>Irregular</option>
+                                    <option value="Regular" <?php echo $row['pulse'] == 'Regular' ? 'selected' : ''; ?>>Regular</option>
                                 </select>
                         </div>
                  </div>
@@ -514,7 +514,7 @@
                                                     <option value="Defibrillation"  <?php echo $row['treatment'] == 'Defibrillation'? 'selected': '';?>>Defibrillation</option>
                                                     <option value="Extrication"  <?php echo $row['treatment'] == 'Extrication'? 'selected': '';?>>Extrication</option>
                                                     <option value="Rescue Breathing" <?php echo $row['treatment'] == 'Rescue Breathing'? 'selected': '';?>>Rescue Breathing</option>
-                                                    <option value="Nebulization" <?php echo $row['treatment'] == 'Nebulization"'? 'selected': '';?>>Nebulization</option>
+                                                    <option value="Nebulization" <?php echo $row['treatment'] == 'Nebulization'? 'selected': '';?>>Nebulization</option>
                                                     <option value="Oxygen" <?php echo $row['treatment'] == 'Oxygen"'? 'selected': '';?>>Oxygen</option>
                                                     <option value="Spine Immobilization" <?php echo $row['treatment'] == 'Spine Immobilization'? 'selected': '';?>>Spine Immobilization</option>
                                                     <option value="Suctioning"  <?php echo $row['treatment'] == 'Suctioning'? 'selected': '';?>>Suctioning</option>
@@ -587,7 +587,7 @@
                                         <select name="response_mode" class=" form-control">
                                             <option value=""></option>
                                             <option value="No Lights and Siren" <?php echo $row['response_mode'] == 'No Lights and Siren'? 'selected': '';?>>No Lights and Siren</option>
-                                            <option value="Lights Only" <?php echo $row['response_mode']== ' Lights Only'? 'selected': '';?>>Lights Only</option>
+                                            <option value="Lights Only" <?php echo $row['response_mode']== 'Lights Only'? 'selected': '';?>>Lights Only</option>
                                             <option value="Lights and Siren" <?php echo $row['response_mode'] == 'Lights and Siren'? 'selected': '';?>>Lights and Siren</option>
                                         </select>
                                     </div>
@@ -596,7 +596,7 @@
                                         <select name="transport_mode" class=" form-control">
                                             <option value=""></option>
                                             <option value="No Lights and Siren" <?php echo $row['transport_mode'] == 'No Lights and Siren'? 'selected': '';?>>No Lights and Siren</option>
-                                            <option value="Lights Only" <?php echo $row['transport_mode'] == 'Lights Only'? 'selected': '';?>>Lights Only"</option>
+                                            <option value="Lights Only" <?php echo $row['transport_mode'] == 'Lights Only'? 'selected': '';?>>Lights Only</option>
                                             <option value="Lights and Siren" <?php echo $row['transport_mode'] == ' Lights and Siren'? 'selected': '';?>>Lights and Siren</option>
                                             <option value="Upgraded to Light and Siren" <?php echo $row['transport_mode'] == 'Upgraded to Light and Siren'? 'selected': '';?>>Upgraded to Light and Siren</option>
                                         </select>

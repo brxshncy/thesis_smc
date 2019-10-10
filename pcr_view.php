@@ -319,7 +319,7 @@
 								<td width="70%" class="bg-light"><?php echo $row['treatment_officer']; ?></td>
 							</tr>
 							<tr class="table-active">
-								<td width="30%" class="bg-light"><DATA></DATA>ispatched Unit</td>
+								<td width="30%" class="bg-light">Dispatched Unit</td>
 								<td width="70%" class="bg-light"><?php echo $row['dispatched_unit']; ?></td>
 							</tr>
 							<tr class="table-active">

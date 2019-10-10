@@ -125,7 +125,7 @@ session_start();
                                                     <p>Action: <a></a> <a href=""></a>
                                                         <button class="item edit_button"  style="color:blue;" data-toggle="modal"  data-placement="top" id="<?php echo $row->id; ?>" title="Edit">
                                                              <i class="fa fa-edit"></i>
-                                                        </button> || <a href="include/delete_member.php?delete=<?php echo $row->id; ?>" style="color:red;" title="Delete">  <i class="fa fa-scissors"></i></a></p> 
+                                                        </button> || <a href="include/delete_member.php?delete=<?php echo $row->id; ?>" style="color:red;" title="Remove Member">  <i class="fa fa-scissors"></i></a></p> 
 
                                                         <script type="text/javascript">
                                                           document.getElementById('no-members').style.display = 'none';

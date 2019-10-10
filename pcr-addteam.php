@@ -167,11 +167,11 @@ include 'include/db.php';
                                     <select class="form-control" id="members" name="members">
                                       <option value=""></option>
                                     <?php
-                                        $members = $conn->query("SELECT * FROM rescuers WHERE team_unit = '' OR team_unit = NULL ");
+                                        $members = $conn->query("SELECT *, un.id AS un_id, r.id as r_id FROM rescuers r LEFT JOIN unit_name un ON un.id =r.team_unit  WHERE r.team_unit NOT IN (SELECT id FROM unit_name) OR  team_unit = '' OR team_unit = NULL ");
                                         if($members->num_rows > 0){
                                            while($row = $members->fetch_assoc()){
                                           $name = $row['firstname']." ".$row['lastname'];
-                                            echo '<option value="'.$row['id'].'">'.$name.'</option>';
+                                            echo '<option value="'.$row['r_id'].'">'.$name.'</option>';
                                         }
                                         }else{
                                           echo '<option>No members available</option>';
@@ -319,7 +319,7 @@ $counter = 0;
     <td><?php echo (isset($row->transport_officer) && !empty($row->transport_officer)) ? $row->transport_officer : 'No assigned'; ?></td>
     <td><?php echo $row->vehicle_name;?></td>
     <td><?php echo (isset($row->members) && !empty($row->members)) ? $row->members : 'No Members'; ?></td>
-    <td width="">
+    <td width="" style="text-align:center;">
         <a href="view_member.php?view=<?php echo $row->id;?>">
          <button class="item" style="color:green;" data-toggle="modal" data-target="#" title="View Unit Members" id="add"> <i class="fa fa-users"></i></button>
         </a> |
@@ -327,7 +327,7 @@ $counter = 0;
              <i class="fa fa-edit"></i>
         </button>|
         <a href="include/delete_team.php?delete=<?php echo $row->id; ?>"> 
-          <button class="item" style="color:red;" data-toggle="tooltip" title="Delete Record" id="delete">
+          <button class="item" style="color:red;" data-toggle="tooltip" title="Delete Team" id="delete">
           <i class="zmdi zmdi-delete"></i>
         </button></a> |
         <a href="team_activitylog.php?log=<?php echo $row->id;?>">
@@ -338,12 +338,8 @@ $counter = 0;
   </tr>  
                                     <?php }  ?> 
                                     <?php } else { ?>
-                                      <td>No data</td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
-                                      <td></td>
+                                      <td colspan="7">No data</td>
+                                      
                                       <?php } ?>           
                              </tbody>
                     </table>

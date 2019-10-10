@@ -9,7 +9,6 @@ session_start();
 		$result = $conn->query($qry);
 		while($row = mysqli_fetch_array($result)){
 			$id1 = $row['id'];
-			$item_code = $row['item_code'];
 			$item_name = $row['item_name'];
 			$item_description = $row['item_description'];
 			$quantity = $row['quantity'];
@@ -23,10 +22,6 @@ session_start();
 ?>
 <form action="include/update_items.php" method="POST">
 		<input type="hidden" name="id" value="<?php echo $id1; ?>">
-		<div class="form-group">
-            <label class="text-danger">*Item Code</label>
-            <input type="text" name="item_code" id="item_code" value="<?php echo $item_code; ?>" class="form-control">
-        </div>
         <div class="form-group">
              <label class="text-danger">*Item Name</label>
              <input type="text" name="item_name" id="item_name" value="<?php echo $item_name; ?>" class="form-control">

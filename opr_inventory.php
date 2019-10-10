@@ -93,6 +93,8 @@
                                 <?php 
                                     $display_item = "SELECT * FROM items";
                                     $result = $conn->query($display_item);
+                                    $row_data = mysqli_num_rows($result);
+                                    if($row_data>0){
                                     while($row = mysqli_fetch_assoc($result)){ ?>
                                     <tr>
                                         
@@ -101,7 +103,9 @@
                                         <td><?php echo $row['quantity'] ?></td>
                                         <td><?php echo $row['unit_measure'] ?></td>
                                     </tr>
-                                <?php }
+                                <?php }}else{
+                                    echo '<td colspan="4">No Item available</td>';
+                                }
                                 ?>
                             </tbody>
                         </table>
