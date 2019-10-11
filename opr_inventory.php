@@ -1,6 +1,10 @@
   <?php 
   session_start();
   include 'include/db.php';
+  if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'operation'){
+    $_SESSION['logistics_msg'] = "You must logged in as Operation Admin First";
+    header("location:icdrrmo_login.php");
+  }
   ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,6 +38,11 @@
     <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
     <link href="vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
 
+       <!-- Pagination-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>
+   
+
+
     <!-- Main CSS-->
     <link href="css/theme.css" rel="stylesheet" media="all">
 
@@ -56,37 +65,44 @@
                 <div class="col">
                   <h3>Inventory</h3>
                 </div>
-            </div>
-                <hr>
-                <div class="row mt-2">
-                    <div class="col col-md-6">
-                        <input tye="text" class="form-control" id="search" placeholder="Search for available items">
-                    </div>
-                    <div class="col col-md-6">
-                        <button type="button" class="btn btn-success btn-xs" id="add" data-toggle="modal" data-target="#add_item">
+                 <div class="col col-md-6">
+                        <button type="button" class="btn btn-success btn-xs pull-right" id="add" data-toggle="modal" data-target="#add_item">
                           <i class="fa fa-envelope mr-1"></i>  Request Item
                         </button>
                     </div>
+            </div>
+                <hr>
+                <div class="row mt-2">
+                   
                 <?php 
-                            if(isset($_SESSION['succes_request'])):?>
-                                    <div class="col mt-3">
-                                <div class="alert alert-success">
-                                    <?php echo $_SESSION['succes_request']; 
-                                            unset($_SESSION['succes_request']);
-                                        ?>
-                                    </div>
-                                </div>
-                    <?php endif ?>
-
+                    if(isset($_SESSION['succes_request'])):?>
+                        <div class="col mt-3">
+                            <div class="alert alert-success">
+                                <?php echo $_SESSION['succes_request']; 
+                                     unset($_SESSION['succes_request']);
+                                ?>
+                            </div>
+                        </div>
+                <?php endif ?>
+                <?php
+                    if(isset($_SESSION['insufficient'])):?>
+                        <div class="col mt-3">
+                            <div class="alert alert-danger">
+                                <?php echo $_SESSION['insufficient'];
+                                      unset($_SESSION['insufficient']);
+                                ?>
+                            </div>
+                        </div>
+                <?php endif ?>
                     <div class="col-sm-12 table-responsive mt-3">
                         <table id="item-list" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                        
-                                        <th>Item Name</th>
-                                        <th>Item Description</th>
-                                        <th>Quantity</th>
-                                        <th>Unit Measure</th>
+                                        <th style="text-align:center;">Item Code</th>
+                                        <th style="text-align:center;">Item Name</th>
+                                        <th style="text-align:center;">Item Description</th>
+                                        <th style="text-align:center;">Quantity</th>
+                                        <th style="text-align:center;">Unit Measure</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -94,14 +110,15 @@
                                     $display_item = "SELECT * FROM items";
                                     $result = $conn->query($display_item);
                                     $row_data = mysqli_num_rows($result);
+                                    $code = "ITM";
                                     if($row_data>0){
                                     while($row = mysqli_fetch_assoc($result)){ ?>
                                     <tr>
-                                        
-                                        <td><?php echo isset($row['item_name']) && !empty($row['item_name']) ? $row['item_name'] : 'No Input' ?></td>
-                                        <td><?php echo isset($row['item_description']) && !empty($row['item_description']) ? $row['item_description'] : 'No Input' ?></td>
-                                        <td><?php echo $row['quantity'] ?></td>
-                                        <td><?php echo $row['unit_measure'] ?></td>
+                                        <td style="text-align:center;"><?php echo $code.''.$row['id']?></td>
+                                        <td style="text-align:center;"><?php echo isset($row['item_name']) && !empty($row['item_name']) ? $row['item_name'] : 'No Input' ?></td>
+                                        <td style="text-align:center;"><?php echo isset($row['item_description']) && !empty($row['item_description']) ? $row['item_description'] : 'No Input' ?></td>
+                                        <td style="text-align:center;"><?php echo $row['quantity'] ?></td>
+                                        <td style="text-align:center;"><?php echo $row['unit_measure'] ?></td>
                                     </tr>
                                 <?php }}else{
                                     echo '<td colspan="4">No Item available</td>';
@@ -131,16 +148,27 @@
                             <div class="row mt-2">
                                 <div class="col col-md-6">
                                     <div class="form-group">
+                                        <?php
+                                             $admin = $_SESSION['username_admin'];
+                                            $sender = "SELECT * FROM admin_login WHERE username = '$admin'";
+                                            $result_sender = $conn->query($sender);
+                                            $fetch_sender = mysqli_fetch_assoc($result_sender);
+                                            $id = $fetch_sender['id'];
+                                        ?>
+                                    <input type="hidden" value="<?php echo $id;?>" name="sender">
                                     <label class="text-danger">*Select Item</label>
                                         <select name="item" class="form-control" id="item">
                                             <option value=""></option>
                                         <?php 
                                             $select_item = "SELECT * From items";
+                                           
+                                            
                                             $result = $conn->query($select_item);
                                             $data_row = mysqli_num_rows($result);
 
                                             while($row = mysqli_fetch_assoc($result)){
                                                 ?>
+
                                             <option value="<?php echo $row['id']?>"><?php echo $row['item_name']; ?></option>
                                         <?php } ?>
                                     </select>
@@ -232,13 +260,16 @@
     <script src="vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="vendor/select2/select2.min.js">
     </script>
+     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
 
     <script>
         $(document).ready(function(){
-            $('#show_info').hide();
+        $('table').DataTable();
+        $('#show_info').hide();
            $('#item').change(function(){
                 var id = $(this).val();
             if(!id == '' || !id == 'undefine'){

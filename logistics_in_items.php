@@ -1,6 +1,11 @@
 <?php 
 include 'include/db.php';  
 session_start();
+if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'logistics'){
+    $_SESSION['logistics_msg'] = "You must logged in as Logistics Admin First";
+    header("location:icdrrmo_login.php");
+  }
+?>
 ?>
 <?php include 'logistics/header.php';?>
 
@@ -36,7 +41,7 @@ session_start();
           								
           								<div class="row">
           									<div class="col-md-6">
-          										<input type="text" class="form-control" placeholder="Search">
+          										
           									</div>
 
                             <?php if(isset($_POST['del_items'])):?>

@@ -2,6 +2,10 @@
 <?php
  include 'include/db.php';
  session_start();
+ if(!isset($_SESSION['confirm_username'])){
+                $_SESSION['msg'] = "You must log in first to view this page!";
+                header("location:rescuer_login.php");
+            }
 ?>
 <!DOCTYPE html>
 <html lang="en">

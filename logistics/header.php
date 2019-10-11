@@ -31,6 +31,9 @@
     <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
     <link href="vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
 
+     <!-- Pagination-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>
+
     <!-- Main CSS-->
     <link href="css/theme.css" rel="stylesheet" media="all">
 

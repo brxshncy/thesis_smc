@@ -1,6 +1,11 @@
 <?php 
 include 'include/db.php';  
 session_start();
+if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'logistics'){
+    $_SESSION['logistics_msg'] = "You must logged in as Logistics Admin First";
+    header("location:icdrrmo_login.php");
+  }
+?>
 ?>
 <?php include 'logistics/header.php';?>
 
@@ -159,6 +164,7 @@ session_start();
             $('#select_item').change(function(){
               var id = $(this).val();
 
+              alert(id);
               if(id != ""){
                  $.ajax({
                       url: "include/items_info.php",
@@ -173,11 +179,9 @@ session_start();
                           $('#quantity').val(data.quantity);
                           $('#unit_measure').val(data.unit_measure);
                       }
-
                  });
               }
               else{
-                
                 $('#show_info').css("display","none");
               }
             })

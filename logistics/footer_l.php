@@ -20,11 +20,14 @@
     <script src="vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="vendor/select2/select2.min.js">
     </script>
+      <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
     <script>
         $(document).ready(function(){
+            $('table').DataTable();
             $("#quantity").on("keypress keyup blur",function (event) {    
            $(this).val($(this).val().replace(/[^\d].+/, ""));
             if ((event.which < 48 || event.which > 57)) {
@@ -62,6 +65,23 @@
                 }
               });
             })
+
+            $('.request').click(function(){
+                var request = $(this).attr('id');
+              
+                $.ajax({
+                    url:'include/request_item_modal.php',
+                    method:'post',
+                    data:{request:request},
+                    success:function(data){
+                        $('#request_items').html(data);
+                        $('#request').modal('show');
+                    }
+                });
+               
+
+            });
+              
           
         });
     </script>
