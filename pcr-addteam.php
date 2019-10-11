@@ -285,10 +285,23 @@ include 'include/db.php';
 
 <?php                                    
 
-$q = "SELECT t.id,t.unit_name,(SELECT DISTINCT CONCAT(sub_r.firstname, ' ', sub_r.lastname) as name FROM teams sub_tm LEFT JOIN rescuers sub_r ON sub_r.id = sub_tm.rescuers_id WHERE sub_tm.role = 'Treatment Officer' AND t.id = sub_tm.team_id) as treatment_officer,(SELECT DISTINCT CONCAT(sub_r.firstname, ' ', sub_r.lastname) as name FROM teams sub_tm LEFT JOIN rescuers sub_r ON sub_r.id = sub_tm.rescuers_id WHERE sub_tm.role = 'Transport Officer' AND t.id = sub_tm.team_id) as transport_officer, (SELECT COUNT(role) FROM teams sub_tm WHERE sub_tm.role = 'Member' AND t.id = sub_tm.team_id) AS members, t.vehicle_name FROM unit_name as t";
+$q = 
+    "SELECT t.id,t.unit_name,
+
+    (SELECT DISTINCT CONCAT(sub_r.firstname, ' ', sub_r.lastname) AS name FROM teams sub_tm 
+
+    LEFT JOIN rescuers sub_r ON sub_r.id = sub_tm.rescuers_id WHERE sub_tm.role = 'Treatment Officer' AND t.id = sub_tm.team_id) AS treatment_officer,
+
+    (SELECT DISTINCT CONCAT(sub_r.firstname, ' ', sub_r.lastname) AS name FROM teams sub_tm 
+
+    LEFT JOIN rescuers sub_r ON sub_r.id = sub_tm.rescuers_id WHERE sub_tm.role = 'Transport Officer' AND t.id = sub_tm.team_id) AS transport_officer, 
+
+    (SELECT COUNT(role) FROM teams sub_tm WHERE sub_tm.role = 'Member' AND t.id = sub_tm.team_id) AS members, 
+    t.vehicle_name FROM unit_name as t";
 
 
 
+    
 $result = $conn->query($q);
 $counter = 0;
 ?>
