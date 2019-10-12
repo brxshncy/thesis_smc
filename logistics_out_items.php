@@ -163,8 +163,6 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'logistics'
         $(document).ready(function(){
             $('#select_item').change(function(){
               var id = $(this).val();
-
-              alert(id);
               if(id != ""){
                  $.ajax({
                       url: "include/items_info.php",

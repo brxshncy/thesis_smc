@@ -299,14 +299,9 @@ $q =
     (SELECT COUNT(role) FROM teams sub_tm WHERE sub_tm.role = 'Member' AND t.id = sub_tm.team_id) AS members, 
     t.vehicle_name FROM unit_name as t";
 
-
-
-    
 $result = $conn->query($q);
 $counter = 0;
 ?>
-           
-
 <div class="table-responsive-md">  
     <table class="table table-bordered">
        <thead class="thead">

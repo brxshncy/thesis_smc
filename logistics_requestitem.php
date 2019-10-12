@@ -14,7 +14,15 @@ session_start();
             </div>
           </div>
             <hr>
+              <?php
+                    if(isset($_SESSION['item_accept'])):?>
+                    <div class="alert alert-success">
+                        <?php echo $_SESSION['item_accept'];
+                              unset($_SESSION['item_accept']);
 
+                        ?>
+                    </div>
+            <?php endif  ?>
                 <div class="row mt-2">
                   <div class="col-sm-12 table-responsive mt-3">
                     <table id="item-list" class="table table-bordered table-striped">
@@ -51,7 +59,7 @@ session_start();
                                   </tr>
                               <?php     }
                                   }else{
-                                      echo '<td colspan="4> No Pending Request</td>';
+                                      echo '<td colspan="4"> No Pending Request</td>';
                                   }
                               ?>
                           </tbody>
