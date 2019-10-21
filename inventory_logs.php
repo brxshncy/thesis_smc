@@ -19,6 +19,7 @@ session_start();
                     <table id="item-list" class="table table-bordered table-striped">
                         <thead>
                             <tr>
+                                <th>No.</th>
                                 <th style="text-align:center;">Logs</th>
                             </tr>
                         </thead>
@@ -26,6 +27,7 @@ session_start();
                             <?php
                                 $logs = "SELECT *, s.admin_type AS senderr, ia.id AS id FROM item_accept_request ia LEFT JOIN admin_login s ON ia.sender = s.id";
                                 $result = mysqli_query($conn,$logs);
+                                $counter = 1;
                                 while($row = mysqli_fetch_assoc($result)){
                                     $id = $row['id'];
                                     $sender = $row['senderr'];
@@ -36,14 +38,15 @@ session_start();
                                     $time_accept = date('H:i A',strtotime($time));
                                 ?>
                             <tr>
+                                <td style="text-align:center;"><?php echo $counter;?></td>
                                 <td style="text-align:center;">
                                     <?php echo 
-                                "You accepted a <button type='button' class='item font-weight-bold text-success request' id=".$id.">Request</button> from".
+                                "You accepted a <button type='button' title='View' data-placement='top' class='item font-weight-bold text-success request' id=".$id.">Request</button> from".
                                 " <span class='text-success font-italic '>".$sender_i."</span> "."on <span class='text-success '>".$date_accept."</span> at<span class= 'text-success '> ".$time_accept?>
                                     
                                 </td>
                             </tr>   
-                            <?php }
+                            <?php $counter++; }
                             ?>
                         </tbody>
                     </table>

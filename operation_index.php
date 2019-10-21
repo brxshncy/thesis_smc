@@ -1,4 +1,5 @@
 <?php 
+require ('include/db.php');
   session_start();
   ?>
 <!DOCTYPE html>
@@ -13,7 +14,7 @@
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>Patient Care Records</title>
+    <title>Operation Dashboard</title>
 
     <!-- Fontfaces CSS-->
     <link href="css/font-face.css" rel="stylesheet" media="all">
@@ -58,11 +59,43 @@
 <div class="main-content">
     <div class="section__content section__content--p30">
         <div class="container-fluid">
-          
-            
-                            </div>
-                        </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="overview-wrap">
+                         <h2 class="title-1">overview</h2>
                     </div>
+                </div>
+            </div>
+             <div class="row m-t-25">
+                <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c1">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                <div class="icon">
+                                    <i class="far fa-flag"></i>
+                                </div>
+                                            <div class="text">
+                                            <?php
+                                                $teams = "SELECT COUNT(id)  AS team FROM unit_name";
+                                                $result = $conn->query($teams);
+                                                $count_team = mysqli_num_rows($result);
+                                                $row = mysqli_fetch_assoc($result);
+                                                $team = $row['team'];
+                                                
+                                            ?>
+                                                <h2><?php echo $team; ?></h2>
+                                                <span><?php echo 'Team' . (($team > 1) ? 's' : '');?></span>
+                                            </div>
+                                        </div>
+                                        <div class="overview-chart">
+                                            <canvas id="widgetChart1"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                </div>
+            </div>
+    </div>
+</div>
                  
             <?php include 'footer.php';?>
 

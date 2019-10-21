@@ -100,7 +100,7 @@
                    </div>
                    
                    <div class="col col-md-3">
-                       <a href="view_attendance.php" class="btn btn-success btn-md ">View Attendance</a>
+                       <a href="view_attendance.php" class="btn btn-success btn-md ">Attendance Reports</a>
                    </div>
             </div>
                       <div class="table-responsive-md" style="margin-top:-30px">
@@ -116,7 +116,15 @@
                                 </thead>
                                       <tbody>
                                               <?php
-                                                  $result = $conn->query("SELECT *, t.unit_name AS team, t.id as t_id, r.id as id FROM rescuers r LEFT JOIN unit_name t ON r.team_unit = t.id ORDER BY t.id ASC");
+                                                  $date_today = date("Y-m-d");
+                                                  
+                                                  
+                                                  $sub_query  = "(SELECT DISTINCT COUNT(id) FROM unit_attendance WHERE rescuer_id = r.id AND date = '$date_today') as attendance_checked"; 
+                                                  $sub_query .= ", (SELECT DISTINCT status FROM unit_attendance WHERE rescuer_id= r.id AND date = '$date_today') as attendance_status";
+                                                  $query = "SELECT *, t.unit_name AS team, t.id as t_id, r.id as id, $sub_query FROM rescuers r LEFT JOIN unit_name t ON r.team_unit = t.id ORDER BY t.id ASC";
+
+                                                  $result = $conn->query($query);
+
                                                   $serialnumber = 0;
                                                   $counter=0;
                                                   while($row = mysqli_fetch_assoc($result)){
@@ -127,23 +135,21 @@
                                                     <tr class="table-default">
                                                       <td><?php echo $serialnumber; ?></td>
                                                       <td><?php echo $fullname?></td>
+
                                                       <input type="hidden" value="<?php echo $id; ?>" name="fullname[]" id="fullname">
                                                       <td><?php echo (isset($row['team']) && !empty($row['team'])) ? $row['team'] : 'No team' ?></td>
-                                                      <input type="hidden" value="<?php echo $row['t_id'];?>" name="contact[]" id="contact">
+                                                      <input type="hidden" value="<?php echo $row['t_id'];?>" name="team[]" id="team">
                                                       <td width="30%">
-                                                        <?php if(isset($_SESSION['attendance'])):
-                                                          ?>
-                                                            <p class="text-success"><?php 
-                                                            echo $_SESSION['attendance'];
-                                                            ?>
-                                                            </p>
-                                                         <?php endif ?>
+                                                      <?php if(!$row["attendance_checked"]) { ?>
                                                       <select name="status[<?php echo  $counter; ?>]" class="form-control" id="status">
                                                           <option value=""></option>
                                                           <option value="Absent">Absent</option>
                                                           <option value="Present">Present</option>
                                                           <option value="Late">Late</option>
                                                       </select>
+                                                      <?php } else { ?>
+                                                          <span class="text-success">Attendanced Checked : <?php echo ucfirst($row["attendance_status"]); ?></span>
+                                                      <?php } ?>
                                                       </td>
                                                     </tr>
                                                   <?php 

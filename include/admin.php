@@ -5,8 +5,9 @@ $msg ='';
 	if(isset($_POST['login'])){
 		$username = $_POST['username'];
 		$password = $_POST['password'];
-
-		$sql = "SELECT * FROM admin_login WHERE username = '$username' AND password = '$password' ";
+		$admin_type = $_POST['admin_type'];
+		
+		$sql = "SELECT * FROM admin_login WHERE username = '$username' AND password = '$password' AND admin_type = '$admin_type' ";
 		$result = mysqli_query($conn,$sql);
 		if(mysqli_num_rows($result)==1){
 			$qry = mysqli_fetch_array($result);

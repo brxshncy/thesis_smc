@@ -5,24 +5,27 @@ include 'db.php';
 if(isset($_POST['submit'])){
 	foreach($_POST['status'] as $id=>$status){
 		$name = $_POST['fullname'][$id];
-		$contact = $_POST['contact'][$id];
-		$date = date("Y-m-d H:i:s");
-		$insert = "INSERT INTO unit_attendance (rescuer_id,date,team_id,status) VALUES ('$name','$date','$contact','$status')";
+		$team = $_POST['team'][$id];
+		$date = date("Y-m-d");
+
+		$insert = "INSERT INTO unit_attendance (name,team_id,date,status) VALUES ('$name','$team','$date','$status')";
 		$result = mysqli_query($conn,$insert) or trigger_error(mysqli_error($conn)." ".$insert);
-	}
 		
 
-		$_SESSION['message'] = "Attendance Noted!";
-		$_SESSION['msg_type'] = "success";
-
+	}
+		
+		$_SESSION['message'] = "There is an error";
+		$_SESSION['msg_type'] = "error";
+		$_session['attendance'] = "Attendance Error";
 
 		if($result){
-			header("Location:../operation_attendance.php");
-			$_SESSION['message'] = "Attendance Noted!";
-		$_SESSION['msg_type'] = "success";
-		$_SESSION['attendance'] = "Attendance Noted";
+			$_SESSION['message'] = "Attendance Noted";
+			$_SESSION['msg_type'] = "success";
+			$_SESSION['attendance'] = "Attendance Noted!";
 		}
-	
+
+		header("Location:../operation_attendance.php");
+		exit();
 
 }
 	

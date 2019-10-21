@@ -88,7 +88,7 @@
                                                     <tr class="table-default">
                                                       <td><?php echo $serialnumber; ?></td>
                                                       <td><?php echo $row['name'];?></td>
-                                                      <td><?php echo $row['team'];?></td>
+                                                      <td><?php echo (isset($row['team']) && !empty($row['team'])) ? $row['team']: 'No Team';?></td>
                                                       <td width="30%">
                                                         <?php
                                                           if($row['status'] === "Present"){

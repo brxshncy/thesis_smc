@@ -37,24 +37,22 @@
 
 <body class="animsition">
     <div class="page-wrapper">
-              <!-- HEADER MOBILE-->
         <?php include 'header-mobile.php'; ?>
-        <!-- END HEADER MOBILE-->
         
-        <!-- MENU SIDEBAR-->
+        
+   
         <?php include 'menu-sidebar.php';?>
-        <!-- END MENU SIDEBAR-->
+     
 
-        <!-- PAGE CONTAINER-->
+     
         <div class="page-container">
-        <!--END OF PAGE CONTAINER-->
+      
 
-        <!-- HEADER DESKTOP-->
+      
         <?php include 'header-php.php' ?>
-        <!-- END OF HEADER DESKTOP-->
 
-            <!-- MAIN CONTENT-->
-<div class="main-content">
+     <!-- MAIN CONTENT-->
+<div class="main-content" id="main-content">
     <div class="section__content section__content--p30">
           <div class="container-fluid">
                 <?php
@@ -344,7 +342,7 @@
 							</tr>
 							<tr>
 								<td colspan="2" class="bg-light" align="center">
-									<button type="button"  class="btn btn-success">
+									<button type="button"  class="btn btn-success" id="print">
                                            		<i class="fa fa-print"></i>&nbsp; Print 
                                     </button>
                                    <a href="pcrofficial_edit.php?view=<?php echo $row['id'];?>">  <button type="button"  class="btn btn-info">
@@ -370,7 +368,9 @@
 
 
                  <!--==================================== FOOTER ============================================================== -->
+                 <div id="footer">
                         <?php include 'footer.php'?>
+                  </div>
                  <!--==================================== FOOTER ============================================================== -->
               
         
@@ -400,6 +400,17 @@
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
+    <script>
+    	$(document).ready(function(){
+
+    		$('#print').click(function(){
+    			$('#footer').hide();
+    			window.print('#main-content');
+    			$('#footer').show();
+
+    		})
+    	});
+    </script>
 
 </body>
 

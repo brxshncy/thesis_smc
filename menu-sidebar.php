@@ -10,6 +10,11 @@
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
                         <li>
+                            <a href="operation_index.php">
+                                <i class="fas fa-tasks"></i>
+                                Dashboard
+                            </a>
+                        <li>
                             <a href="pcr-list.php">
                                 <i class="fas fa-wheelchair"></i>
                                 Patient Care Reports
@@ -42,11 +47,6 @@
                             <i class="fas fa-clipboard"></i>Rescuer Attendance
                         </a>
                         </li>
-
-                         <li>
-                            <a href="operation_logbook.php">
-                                <i class="fas fa-user-md"></i>Rescuer Activity Log </a>
-                        </li>
                          <li>
                             <a href="opr_inventory.php">
                                 <i class="fas fa-list-ol"></i>Inventory</a>
@@ -66,12 +66,6 @@
                                          }
                                     ?>
                             </a>
-                        </li>
-
-                        <li>
-                            <a href="operation_chart.php">
-                            <i class="fas  fa-bar-chart-o"></i>Chart
-                        </a>
                         </li>
                     </ul>
                 </nav>

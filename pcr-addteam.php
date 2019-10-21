@@ -171,7 +171,7 @@ include 'include/db.php';
                                         if($members->num_rows > 0){
                                            while($row = $members->fetch_assoc()){
                                           $name = $row['firstname']." ".$row['lastname'];
-                                            echo '<option value="'.$row['r_id'].'">'.$name.'</option>';
+                                            echo '<option value="'.$row['r_id'].'">'.$name.'</option>'; 
                                         }
                                         }else{
                                           echo '<option>No members available</option>';
@@ -218,7 +218,7 @@ include 'include/db.php';
                                     <select class="form-control col-md-6" id="role" name="role">
                                     <option value=""></option>
                                     <option value="Treatment Officer">Treatment Officer</option>
-                                    <option value="Treatment Officer">Treatment Officer</option>
+                                    <option value="Transport Officer">Transport Officer</option>
                                     <option value="Member">Member</option>
                                     </select>
                               </div>
