@@ -20,7 +20,7 @@ $msg ='';
 
 			}
 			else if($_SESSION['admin_type']=="communication"){
-				echo "communication";
+				header("Location:../communication_index.php");
 			}
 			else if($_SESSION['admin_type']=="training"){
 				echo "training";

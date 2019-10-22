@@ -60,6 +60,13 @@ $msg = '';
                                          ?>
                                     </div>
                                 <?php endif ?>
+                                <?php if(isset($_SESSION['comm_msg'])): ?>
+                                    <div class="alert-alertdanger">
+                                        <?php echo $_SESSION['comm_msg'];
+                                              unset($_SESSION['comm_msg']);
+                                        ?>
+                                    </div>
+                                <?php endif ?>
                                 <div class="form-group">
                                     <label>User Name</label>
                                     <input class="au-input au-input--full" type="text" name="username" id="username" placeholder="">
