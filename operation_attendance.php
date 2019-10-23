@@ -100,7 +100,7 @@
                    </div>
                    
                    <div class="col col-md-3">
-                       <a href="view_attendance.php" class="btn btn-success btn-md ">Attendance Reports</a>
+                       <a href="view_attendance.php" class="btn btn-success btn-md ">Attendance Report </a>
                    </div>
             </div>
                       <div class="table-responsive-md" style="margin-top:-30px">
@@ -148,7 +148,19 @@
                                                           <option value="Late">Late</option>
                                                       </select>
                                                       <?php } else { ?>
-                                                          <span class="text-success">Attendanced Checked : <?php echo ucfirst($row["attendance_status"]); ?></span>
+                                                          <span class="font-weight-bold">
+                                                            Attendanced Checked : <?php
+                                                                if($row['attendance_status'] === 'Present'){
+                                                                    echo "<p class='font-weight-bold text-success'> $row[attendance_status] </p>"; 
+                                                                }
+                                                                else if($row['attendance_status'] ==='Late'){
+                                                                    echo "<p class='font-weight-bold text-warning'> $row[attendance_status] </p>";
+                                                                }
+                                                                else if($row['attendance_status'] === 'Absent'){
+                                                                    echo "<p class='font-weight-bold text-danger'> $row[attendance_status] </p>";
+                                                                }
+                                                            ?> 
+                                                            </span>
                                                       <?php } ?>
                                                       </td>
                                                     </tr>

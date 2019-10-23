@@ -8,7 +8,7 @@ if(isset($_POST['submit'])){
 		$team = $_POST['team'][$id];
 		$date = date("Y-m-d");
 
-		$insert = "INSERT INTO unit_attendance (name,team_id,date,status) VALUES ('$name','$team','$date','$status')";
+		$insert = "INSERT INTO unit_attendance (rescuer_id,team_id,date,status) VALUES ('$name','$team','$date','$status')";
 		$result = mysqli_query($conn,$insert) or trigger_error(mysqli_error($conn)." ".$insert);
 		
 
@@ -22,10 +22,10 @@ if(isset($_POST['submit'])){
 			$_SESSION['message'] = "Attendance Noted";
 			$_SESSION['msg_type'] = "success";
 			$_SESSION['attendance'] = "Attendance Noted!";
+			header("Location:../operation_attendance.php");
+			exit();
 		}
 
-		header("Location:../operation_attendance.php");
-		exit();
 
 }
 	
