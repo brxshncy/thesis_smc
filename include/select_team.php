@@ -40,35 +40,36 @@ $output .= "<input type='hidden' value=".$id." name='fullname[]' id='fullname'>"
 $output .= "<td>".$row['team']."</td>";
 $output .= "<input type='hidden' value=".$row['team_id']." name='contact[]' id='contact'>";
 $output .= "<td width='30%'>";
-$output .= ".!$row['attendance_checked']." ?;
-$output .= <select name='status[$counter]' class='form-contro'l id='status'>
-$output .= <option value=''></option>
-$output .= <option value='Absent'>Absent</option>
-$output .= <option value='Present'>Present</option>
-$output .= <option value='Late'>Late</option>
-$output .= </select> '
-$output .=<span class='font-weight-bold'>
-$output .=Attendanced Checked : 
-$output .=if(".$row['attendance_status']." === 'Present'){
-$output .=echo '<p class='font-weight-bold text-success'> ".$row['attendance_status']." </p>'; 
-$output .=}
-$output .=else if(".$row['attendance_status']." ==='Late'){
-$output .=echo '<p class='font-weight-bold text-warning'> ".$row['attendance_status']."</p>';
-$output .=}
-$output .=else if(".$row['attendance_status']." === 'Absent'){
-$output .=echo '<p class='font-weight-bold text-danger'> ".$row['attendance_status']." </p>';                                                                   
-$output .=</span>           
-$output .=</td>
-$output .=</tr>
-
-
-                   	";
-                   	 $counter++;
-                   }
-                  
-                   $output .= "</tbody>";
-                   echo $output;
-	}else{
+if(!$row['attendance_checked']){
+  $output .= "<select name='status[$counter]' class='form-contro'l id='status'>";
+  $output .= "<option value=''></option>";
+  $output .= "<option value='Absent'>Absent</option>";
+  $output .= "<option value='Present'>Present</option>";
+  $output .= "<option value='Late'>Late</option>";
+  $output .="</select>";
+}
+else{
+$output .= "<span class='font-weight-bold'>";
+$output .= "Attendanced Checked";
+if($row['attendance_status'] === 'Present'){
+$output .= "<p class='font-weight-bold text-success'> ".$row['attendance_status']."</p>";
+}
+else if($row['attendance_status'] ==='Late'){
+$output .="<p class='font-weight-bold text-warning'>".$row['attendance_status']. "</p>";
+}
+else if($row['attendance_status'] === 'Absent'){
+$output .= "<p class='font-weight-bold text-danger'> ".$row['attendance_status']. "</p>";
+}                                                           
+$output .="</span>";    
+$output .="</td>";
+$output .="</tr>";
+$counter++;
+}
+$output .= "</tbody>";
+echo $output;
+}
+}
+else{
 		echo "No data found";
 	}
 ?>

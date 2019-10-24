@@ -36,9 +36,7 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'logistics'
           												unset($_SESSION['update']);
           											?>
           										</div>
-
           									<?php endif?>
-          								
           								<div class="row">
           									<div class="col-md-6">
           										
@@ -105,7 +103,7 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'logistics'
 
 
 
-                             <!-- Modal -->
+<!-- Modal -->
 <div class="modal fade" id="add_item">
     <div class="modal-dialog modal-lg">
         <form action="include/items.php" method="post">
