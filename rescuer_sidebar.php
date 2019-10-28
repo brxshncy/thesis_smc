@@ -31,6 +31,10 @@ $username = $_SESSION['confirm_username'];
                             <i class="fas  fa-archive"></i>Request Locator Slip
                         </a>
                         </li>
+                         <li>
+                            <a href="rescuer_inventory.php">
+                                <i class="fas fa-list-ol"></i>Inventory</a>
+                        </li>
                         <li>
                            <a href="">
                                 <i class="fa fa-bell"></i>
@@ -45,6 +49,11 @@ $username = $_SESSION['confirm_username'];
                                  <span class="badge badge-danger"><?php echo $count_status; ?></span>
                             <?php } ?> 
                         </a>
+                        </li>
+                        <li>
+                            <a href="rescuer_logs.php">
+                                <i class="fas  fa-book"></i> Logs
+                            </a>
                         </li>
                         <li>
                            <a href="rescuer_profile.php">

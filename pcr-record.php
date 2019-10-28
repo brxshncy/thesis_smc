@@ -23,6 +23,8 @@
 
     <!-- Bootstrap CSS-->
     <link href="vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+          <!-- Pagination-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>
 
     <!-- Vendor CSS-->
     <link href="vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
@@ -128,7 +130,7 @@
                                 <?php
                                     echo $_SESSION['message'];
                                     unset($_SESSION['message']);
-                                ?>
+                                ?>  
                          </div>
 
                          <?php endif ?>
@@ -217,7 +219,10 @@
     <script src="vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
     <script src="vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="vendor/select2/select2.min.js">
+
     </script>
+     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
@@ -225,6 +230,7 @@
       $('#alert').hide();
         // EDIT 
         $(document).ready(function(){
+          $('table').DataTable();
                 $(document).on('click','.edit_button',function(){
                         var edit_id = $(this).attr('id');
 
@@ -243,15 +249,10 @@
         //DELETE VIEW
         $(document).ready(function(){
           $(document).on('click','.del_btn',function(){
-                    $('#del_modal').modal('show');
-                 
-          });
-        });
-
-         //DELETE 
-        $(document).ready(function(){
-          $(document).on('click','#delete',function(){
-               var del_id = $('.del_btn').attr('id');
+            var del_id = $(this).attr('id');
+            console.log(del_id);
+             $('#del_modal').modal('show');
+              $('#delete').click(function(){
                 $.ajax({
                   url:"include/delete.php",
                   type: "post",
@@ -261,8 +262,12 @@
                     $('#del_modal').modal('hide');
                   }
                 })
+              })
+                 
           });
         });
+
+      
 
 
        $(document).ready(function(){

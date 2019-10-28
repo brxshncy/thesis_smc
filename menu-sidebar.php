@@ -67,6 +67,11 @@
                                     ?>
                             </a>
                         </li>
+                        <li>
+                           <a href="operation_logout.php">
+                           <i class="fas fa-sign-out-alt"></i></i>Log Out
+                        </a>
+                        </li>
                     </ul>
                 </nav>
             </div>

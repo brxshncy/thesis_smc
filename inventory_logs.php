@@ -19,7 +19,7 @@ session_start();
                     <table id="item-list" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>No.</th>
+                                <th style="text-align:center;">No.</th>
                                 <th style="text-align:center;">Logs</th>
                             </tr>
                         </thead>

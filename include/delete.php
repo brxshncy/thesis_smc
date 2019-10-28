@@ -6,8 +6,9 @@ require "db.php";
 
 //IF DELETE IS CLIKED
 if(isset($_POST['del_id'])){
-			$id = $_POST['del_id']; 
-			$delete = "DELETE FROM pcr_official WHERE id = '$id'";
+			$id = $_POST['del_id'];
+			var_dump($id); 
+			$delete = "DELETE FROM pcr_official WHERE id = '$id' ";
 			
 			//SESSION MESSAGE
 			if(mysqli_query($conn,$delete)){

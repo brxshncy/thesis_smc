@@ -42,14 +42,39 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'communicat
           		<table id="item_list" class="table table-bordered table-striped">
 	          		<thead>
 	          		  <tr>	
-		          		<th>Name of Caller</th>
-		          		<th>Reason for Calling</th>
-		          		<th>Number of Caller</th>
-		          		<th>Action</th>
+                  <th>No.</th>
+		          		<th class="text-center">Name of Caller</th>
+		          		<th class="text-center">Reason for Calling</th>
+		          		<th class="text-center">Number of Caller</th>
+		          		<th class="text-center">Action</th>
 	          		</tr>
 	          		</thead>
 	                <tbody>
-	                                    
+	                 <?php
+                    $call_logs = "SELECT * FROM call_logs";
+                    $result = $conn->query($call_logs);
+                    $counter = 0;
+                    while($row=mysqli_fetch_assoc($result)){?>
+                      <tr>
+                        <td class="text-center"><?php echo $counter; ?></td>
+                        <td class="text-center"><?php echo $row['name'] ?></td>
+                        <td class="text-center"><?php echo $row['reason_call'] ?></td>
+                        <td class="text-center"><?php echo $row['number_caller'] ?></td>
+                        <td class="text-center">
+                            <button class="item" style="color:green;" data-toggle="tooltip" data-placement="top" title="View Full Details">
+                                <i class="fa fa-eye"></i>
+                            </button> ||
+                            <button class="item" style="color:blue;"data-toggle="modal"  data-placement="top" id="<?php echo $row['id']; ?>" title="Update Details">
+                                <i class="fa fa-edit (alias)"></i>
+                            </button> ||
+                             <button class="item del_btn" style="color:red;" data-toggle="modal" data-placement="top" title="Delete" id="<?php echo $row['id']; ?>">
+                                <i class="zmdi zmdi-delete"></i>
+                            </button>
+                        </td>
+                      </tr>
+
+                   <?php $counter ++;}
+                   ?>              
 	                </tbody>
           		</table>
           		</div>
@@ -84,7 +109,7 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'communicat
                                 <div class="row form-group">
                                     <div class="col col-md-6">
                                         <label>*Number of Caller</label>
-                                        <input type="text" name="number_caller" id="number_caller" class="form-control">
+                                        <input type="number" name="number_caller" id="number_caller" class="form-control">
                                     </div>
                                     <div class="col col-md-6">
                                         <label>*Date of Call</label>

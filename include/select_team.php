@@ -41,7 +41,7 @@ $output .= "<td>".$row['team']."</td>";
 $output .= "<input type='hidden' value=".$row['team_id']." name='contact[]' id='contact'>";
 $output .= "<td width='30%'>";
 if(!$row['attendance_checked']){
-  $output .= "<select name='status[$counter]' class='form-contro'l id='status'>";
+  $output .= "<select name='status[$counter]' class='form-control id='status'>";
   $output .= "<option value=''></option>";
   $output .= "<option value='Absent'>Absent</option>";
   $output .= "<option value='Present'>Present</option>";
@@ -65,9 +65,9 @@ $output .="</td>";
 $output .="</tr>";
 $counter++;
 }
+}
 $output .= "</tbody>";
 echo $output;
-}
 }
 else{
 		echo "No data found";

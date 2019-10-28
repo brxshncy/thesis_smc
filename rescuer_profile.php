@@ -71,53 +71,42 @@ include 'include/db.php';
 
  <!-- MAIN CONTENT-->
 <div class="main-content">
-    <div class="section__content section__content--p30">
-        <div class="container-fluid">
-          	<?php
-          		if(isset($_SESSION['confirm_username'])){
-          			$username = $_SESSION['confirm_username'];
-          			$info = "SELECT * FROM rescuers WHERE username = '$username' ";
-          			$query = $conn->query($info);
-          			$fetch = mysqli_fetch_assoc($query);
-          		}
-          	?>		
-          		<table class="table table-bordered">
-          			<tr class="table-light">
-								<th colspan = 2><h2 class="text-dar" align="center">Your Profile</h2></th>
-					</tr>
-					<tr class="table-active">
-								<td width="30%" class="bg-light">Full Name</th>
-								<td width="70%" class="bg-light"><?php echo $fetch['firstname'];?> <?php echo " ";?> <?php echo $fetch['lastname'];?></td>
-						</tr>
-						<tr class="table-active">
-								<td width="30%" class="bg-light">Address</th>
-								<td width="70%" class="bg-light"><?php echo $fetch['address'];?></td>
-						</tr>
-						<tr class="table-active">
-								<td width="30%" class="bg-light">Gender</th>
-								<td width="70%" class="bg-light"><?php echo $fetch['gender'];?> <?php echo " ";?></td>
-						</tr>
-						<tr class="table-active">
-								<td width="30%" class="bg-light">Contact</th>
-								<td width="70%" class="bg-light"><?php echo $fetch['contact'];?></td>
-						</tr>
-						<tr class="table-active">
-								<td width="30%" class="bg-light">Username</th>
-								<td width="70%" class="bg-light"><?php echo $fetch['username'];?></td>
-						</tr>
-						<tr class="table-active">
-								<td width="30%" class="bg-light">Password</th>
-								<td width="70%" class="bg-light"><?php echo $fetch['password'];?></td>
-						</tr>
-						<tr class="table-active">
-								<td colspan="2" class="bg-light"></td>
-						</tr>
-          		</table>
-
-           
+<div class="section__content section__content--p30">
+<div class="container-fluid">
+    <?php
+        if(isset($_SESSION['confirm_username'])){
+          	$username = $_SESSION['confirm_username'];
+          	$info = "SELECT * FROM rescuers WHERE username = '$username' ";
+          	$query = $conn->query($info);
+          	$fetch = mysqli_fetch_assoc($query);
+                    $name = $fetch['firstname']." ".$fetch['lastname'];
+          }
+    ?>		
+<div class="row justify-content-center">
+<div class="col-md-8">
+    <div class="card">
+        <div class="card-header">
+             <strong class="card-title mb-">Profile Card</strong>
+        </div>
+        <div class="card-body">
+            <div class="mx-auto d-block">
+                <img class="rounded-circle mx-auto d-block" src="images/<?php echo $fetch['profile_picture'] ?>" alt="Card image cap">
+                    <h5 class="text-sm-center mt-2 mb-1"><?php echo $name; ?></h5>
+                     <div class="location text-sm-center">
+                    <i class="fa fa-map-marker"></i> California, United States</div>
             </div>
-      </div>
+             <hr>
+             <table>
+                    
+             </table>                  
+        </div>
+    </div>
  </div>
+</div>
+           
+</div>
+</div>
+</div>
                  
             <?php include 'footer.php';?>
 

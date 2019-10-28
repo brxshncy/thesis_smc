@@ -4,6 +4,7 @@ require ('include/db.php');
 
 if(isset($_GET['id'])){
 	$id = $_GET['id'];
+	$notif = "1";
 	$select = "SELECT * FROM opr_item_request WHERE id = '$id' ";
 	$result = $conn->query($select);
 	$field_count = mysqli_num_rows($result);
@@ -23,13 +24,13 @@ if(isset($_GET['id'])){
 			date_default_timezone_set('Asia/Manila');
 			$date_accept  = date('Y-m-d');
 			$time_accept = date('h:i:s');
-
+			
 
 
 
 			$query = "INSERT INTO 
-			item_accept_request(`item_id`, `date`, `time`, `item_name`, `item_description`, `quantity`, `unit_measure`, `enter_quantity`, `purpose`, `sender`, `status`,date_accepted,time_accepted) 
-			VALUES ('$item_id','$date','$time','$item_name','$item_description','$quantity','$unit_measure','$enter_quantity','$purpose','$sender','$status','$date_accept','$time_accept')";
+			item_accept_request(`item_id`, `date`, `time`, `item_name`, `item_description`, `quantity`, `unit_measure`, `enter_quantity`, `purpose`, `sender`, `status`,date_accepted,time_accepted,notif) 
+			VALUES ('$item_id','$date','$time','$item_name','$item_description','$quantity','$unit_measure','$enter_quantity','$purpose','$sender','$status','$date_accept','$time_accept',$notif)";
 			$remain = $quantity - $enter_quantity;
 
 			$result_insert = $conn->query($query) or trigger_error(mysqli_error($conn)." ".$query);

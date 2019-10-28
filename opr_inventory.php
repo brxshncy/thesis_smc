@@ -55,25 +55,89 @@
     <div class="page-container">
     <?php include 'header-php.php' ?>
            
-
  <!-- MAIN CONTENT-->
 <div class="main-content">
-  <div class="section__content section__content--p30">
-    <div class="container-fluid">
-        <div class="jumbotron" style="background-color: #fff;">
-            <div class="row">
-                <div class="col">
-                  <h3>Inventory</h3>
-                </div>
-                 <div class="col col-md-6">
-                        <button type="button" class="btn btn-success btn-xs pull-right" id="add" data-toggle="modal" data-target="#add_item">
-                          <i class="fa fa-envelope mr-1"></i>  Request Item
-                        </button>
-                    </div>
+ <div class="section__content section__content--p30">
+   <div class="container-fluid">
+     <div class="jumbotron" style="background-color: #fff;">
+        <div class="row">
+              <div class="col">
+                <h3>Inventory</h3>
+              </div>    
+            <div class="col col-md-4">
+                <button type="button" title="Request" class="btn btn-success pull-right" id="add" data-toggle="modal" data-target="#add_item">
+                 <i class="fa fa-envelope"></i>  Request Item
+                </button>
+                <div class="noti__item js-item-menu pull-right">
+                   <button type="submit" id="notif"> <i class="zmdi zmdi-notifications"></i>
+                    <?php
+                        $notif = "SELECT * FROM item_accept_request WHERE notif = '1'";
+                        $result_notif = $conn->query($notif);
+                        $count_status = mysqli_num_rows($result_notif);
+                        if($count_status>0){ ?>
+                        <span class="quantity" id="count"><?php echo $count_status ?></span>
+                            <div class="notifi-dropdown js-dropdown">
+                                <div class="notifi__title">
+                                    <p>You have <?php echo $count_status ?> Notifications</p>
+                                </div>
+                                <?php while($row=mysqli_fetch_assoc($result_notif)){ 
+                                    $date_i = date("F j 20y", strtotime($row['date_accepted']));
+                                 ?>
+                                    <div class="notifi__item">
+                                        <div class="bg-c1 img-cir img-40">
+                                            <i class="zmdi zmdi-email-open"></i>
+                                        </div>
+                                        <div class="content">
+                                           <a href="op_items.php?view=<?php echo $row['id'] ?>"> 
+                                            <p>
+                                                You recieved a <?php echo $row['quantity'] ?> <?php echo $row['unit_measure']?> of <?php echo $row['item_name'] ?> 
+                                            </p>
+                                            <span class="date"><?php echo $date_i ?></span></a>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                                    <div class="notifi__footer">
+                                        <a href="#">All notifications</a>
+                                    </div>
+                            </div>
+                    <?php } else{ ?>
+                            <?php
+                                $notif_read = "SELECT * FROM item_accept_request WHERE notif= 0";
+                                $result_notif_read = $conn->query($notif_read);
+
+                            ?>
+                             <span class="quantity" id="count"></span>
+                            <div class="notifi-dropdown js-dropdown">
+                                <div class="notifi__title">
+                                    <p>You have <?php echo $count_status ?> Unread Notifications</p>
+                                </div>
+                                <?php
+                                    while($row1=mysqli_fetch_assoc($result_notif_read)) {
+                                     $date_ii = date("F j 20y,",strtotime($row1['date_accepted']));
+                                     ?>
+                                    <div class="notifi__item">
+                                        <div class="content">
+                                            <a href="javascript: void(0)" class="push_notif" id="<?php echo $row1['id']?>"> 
+                                                <p>
+                                                   
+                                                    You recieved a <?php echo $row1['quantity'] ?> <?php echo $row1['unit_measure']?> of <?php echo $row1['item_name'] ?> 
+                                                </p>
+                                                <span class="date"><?php echo $date_ii ?></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                                    <div class="notifi__footer">
+                                        <a href="#">All notifications</a>
+                                    </div>
+                            </div>
+                   <?php }?>
+            </div>
+        </form>
+            </div>
             </div>
                 <hr>
                 <div class="row mt-2">
-                   
                 <?php 
                     if(isset($_SESSION['succes_request'])):?>
                         <div class="col mt-3">
@@ -234,11 +298,27 @@
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary" name="submit">Save</button>
                         </div>
-                         </form>
-                </div>
-        </form>
+                        </form>
+        </div>
     </div>
 </div>
+<div class="modal fade" id="view_inventory">
+   <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> Request Item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                <div class="modal-body" id="view_items">
+                            
+                       
+                </div>         
+        </div>
+    </div>
+</div>
+
 
     <!-- Jquery JS-->
     <script src="vendor/jquery-3.2.1.min.js"></script>
@@ -269,6 +349,34 @@
     <script>
         $(document).ready(function(){
         $('table').DataTable();
+
+        
+        $('#notif').click(function(){
+            var id = 0;
+            $.ajax({
+                url: 'include/notif.php',
+                method: 'post',
+                data:{id,id},
+                success:function(data){
+                    $('#count').html("<p></p?");
+                }
+            })
+        })
+
+        $('.push_notif').click(function(){
+            var view = $(this).attr('id');
+            $.ajax({
+                url: 'op_items.php',
+                method: 'post',
+                data:{view:view},
+                success:function(data){
+                    $('#view_items').html(data);
+                    $('#view_inventory').modal('show');
+                }
+            })
+        })
+
+
         $('#show_info').hide();
            $('#item').change(function(){
                 var id = $(this).val();
