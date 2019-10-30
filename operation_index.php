@@ -33,6 +33,7 @@ require ('include/db.php');
     <link href="vendor/slick/slick.css" rel="stylesheet" media="all">
     <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
     <link href="vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>
 
     <!-- Main CSS-->
     <link href="css/theme.css" rel="stylesheet" media="all">
@@ -72,7 +73,7 @@ require ('include/db.php');
                         <div class="overview__inner">
                             <div class="overview-box clearfix">
                                 <div class="icon">
-                                    <i class="far fa-flag"></i>
+                                    <a href="pcr-addteam.php"><i class="far fa-flag"></i></a>
                                 </div>
                                             <div class="text">
                                             <?php
@@ -93,8 +94,137 @@ require ('include/db.php');
                                     </div>
                                 </div>
                 </div>
+                              <div class="col-sm-6 col-lg-3">
+                                <div class="overview-item overview-item--c2">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix">
+                                            <div class="icon">
+                                                <i class="zmdi zmdi-account-o"></i>
+                                            </div>
+                                            <div class="text">
+                                                <?php
+                                                    $rescuer = "SELECT COUNT(id) as rescuer FROM rescuers ";
+                                                    $result2 = $conn->query($rescuer) or trigger_error(mysqli_error($conn)." ".$rescuer);
+                                                    $count_rescuer = mysqli_num_rows($result2);
+                                                    $row2= mysqli_fetch_assoc($result2);
+                                                    $rescuer = $row2['rescuer'];
+                                                ?>
+                                                <h2><?php echo $rescuer ?></h2>
+                                                <span>Registered Rescuer</span>
+                                            </div>
+                                        </div>
+                                        <div class="overview-chart">
+                                            <canvas id="widgetChart2"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                             <div class="col-sm-6 col-lg-4">
+                                <div class="overview-item overview-item--c4">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix">
+                                            <div class="icon">
+                                                <a href="opr_inventory.php"><i class="zmdi zmdi-shopping-cart"></i></a>
+                                            </div>
+                                            <div class="text">
+                                            <?php
+                                                $item = "SELECT COUNT(id) as item from items";
+                                                $result3 = $conn->query($item) or trigger_error(mysqli_error($conn)." ".$item);
+                                                $count_item = mysqli_num_rows($result3);
+                                                $row3 = mysqli_fetch_assoc($result3);
+                                                $inventory = $row3['item'];
+                                            ?>
+                                                <h2><?php echo $inventory ?></h2>
+                                                <span>items available in inventory</span>
+                                            </div>
+                                        </div>
+                                        <div class="overview-chart">
+                                            <canvas id="widgetChart4"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                               <div class="col-sm-6 col-lg-4">
+                                <div class="overview-item overview-item--c3">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix">
+                                            <div class="icon">
+                                               <a href="pcr-record.php"> <i class="zmdi zmdi-calendar-note"></i></a>
+                                            </div>
+                                            <div class="text">
+                                                <?php 
+                                                    $pcr = "SELECT COUNT(id) as pcr FROM  pcr";
+                                                    $result1 = $conn->query($pcr) or trigger_error(mysqli_error($conn)." ".$pcr);
+                                                    $count_pcr = mysqli_num_rows($result1);
+                                                    $row1 = mysqli_fetch_assoc($result1);
+                                                    $record = $row1['pcr'];
+                                                ?>
+                                                <h2><?php echo $record ?></h2>
+                                                <span><?php echo 'You have'." ".$record." PCR pending request" . (($count_pcr > 1) ? 's' : '');?></span>
+                                            </div>
+                                        </div>
+                                        <div class="overview-chart">
+                                            <canvas id="widgetChart3"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
             </div>
+             <div class="row">
+                            <div class="col-lg-12">
+                                <h2 class="title-1 m-b-25">Patient Care Reports</h2>
+                                <div class="table-responsive table--no-card m-b-40">
+                                    <table class="table table-borderless table-striped table-earning">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">No.</th>
+                                                <th class="text-center">Full Name</th>
+                                                <th class="text-center">Date Incident</th>
+                                                <th class="text-center">Time Incident</th>
+                                                <th class="text-center">Respondents</th>
+                                                <th class="text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                           <?php
+                              $select = "SELECT *, un.unit_name AS unit_name, pcr_official.id AS id FROM pcr_official LEFT JOIN unit_name un ON un.id = pcr_official.team_id ORDER BY pcr_official.id  ASC";
+                              $counter = 0;
+                              $result = mysqli_query($conn,$select);
+                            ?>
+                            <?php
+                                while($row = mysqli_fetch_assoc($result)){
+                                  $counter++;
+                            ?>
+                            <tr>
+                                <td class="text-center"><?php echo $counter;?></td>
+                                <td class="text-center"><?php echo $row['firstname'];?><?php echo " "?><?php echo $row['middlename'];?> <?php echo " ";?><?php echo $row['lastname'];?></td>
+                                <td class="text-center"><?php echo (isset($row['date_i']) && !empty($row['date_i']) ? $row['time_i'] : 'No data')?></td>
+                                <td class="text-center"><?php echo (isset($row['time_i']) && !empty($row['date_i']) ? $row['time_i'] : 'No data') ?></td>
+                                <td class="text-center"><?php echo (isset($row['unit_name'])) && !empty($row['unit_name']) ? $row['unit_name'] : 'No data' ?></td>
+                                <td class="text-center">
+                                       <a href="pcr_view.php?view=<?php echo $row['id'];?>">
+                                            <button class="item mr-2" style="color:green;" data-toggle="tooltip" data-placement="top" title="View Full Details">
+                                                <i class="fa fa-eye"></i>
+                                             </button>
+                                        </a> 
+                                        <a href="pcrofficial_edit.php?view=<?php echo $row['id'];?>">
+                                            <button class="item mr-2" style="color:blue;"data-toggle="modal"  data-placement="top" id="<?php echo $row['id']; ?>" title="Update Details">
+                                                 <i class="fa fa-edit (alias)"></i>
+                                            </button> </a>
+                                             <button class="item del_btn" style="color:red;" data-toggle="modal" data-placement="top" title="Delete" id="<?php echo $row['id']; ?>">
+                                                 <i class="zmdi zmdi-delete"></i></button>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
     </div>
+</div>
 </div>
                  
             <?php include 'footer.php';?>
@@ -118,12 +248,17 @@ require ('include/db.php');
     <script src="vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
     <script src="vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="vendor/select2/select2.min.js">
+
     </script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
     <script>
-       
+       $(document).ready(function(){
+            $('tables').DataTable();
+       })
      
     </script>
 

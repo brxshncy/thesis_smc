@@ -29,7 +29,7 @@ $username = $_SESSION['confirm_username'];
                                             <div class="info clearfix">
                                                 <div class="image">
                                                     <a href="#">
-                                                        <img src="images/<?php echo $_SESSION['user_profile']; ?>" alt="John Doe" />
+                                                        <img src="images/<?php echo $_SESSION['user_profile']; ?>" alt="No profile" />
                                                     </a>
                                                 </div>
                                                 <div class="content">

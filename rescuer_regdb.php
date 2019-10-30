@@ -26,9 +26,7 @@ $errors = array();
 		if(move_uploaded_file($_FILES['profile_picture']['tmp_name'], $target)){
 			echo "success";
 		}
-		else{
-			array_push($errors,"Fail to upload file");
-		}
+		
 		
 
 
@@ -84,8 +82,10 @@ $errors = array();
 		if(mysqli_num_rows($login_query) == 1 ){
 					$_SESSION['confirm_username'] = $username;
 					$_SESSION['firstname'] = $data['firstname'];
+					$_SESSION['lastname'] = $data['lastname'];
 					$_SESSION['success'] = "You are now logged in!";
-					$_SESSION['fullname'] = $data['firstname']." ".$data['lastname'];
+					$_SESSION['fullname'] = $data['lastname'];
+
 					$_SESSION['user_profile'] = $data['profile_picture'];
 					header("location:rescuer_index.php");
 			}

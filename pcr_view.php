@@ -404,7 +404,9 @@
     	$(document).ready(function(){
 
     		$('#print').click(function(){
+    			$('#header').hide();
     			$('#footer').hide();
+
     			window.print('#main-content');
     			$('#footer').show();
 

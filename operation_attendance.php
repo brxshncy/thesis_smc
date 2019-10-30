@@ -24,6 +24,7 @@
 
     <!-- Bootstrap CSS-->
     <link href="vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>
 
     <!-- Vendor CSS-->
     <link href="vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
@@ -95,11 +96,11 @@
                               </div>
                     </div>
                   </div>
-                   <div class="col col-md-6" >
-                      <input class="form-control" type="text" name="search" id="search" placeholder="Search Name..." />
+                 
+                     <div class="col col-md-7" >
+                      <input class="form-control" type="hidden" name="search" id="search" placeholder="Search Name..." />
                    </div>
-                   
-                   <div class="col col-md-3">
+                   <div class="col col-md-2 pull-right">
                        <a href="view_attendance.php" class="btn btn-success btn-md ">Attendance Report </a>
                    </div>
             </div>
@@ -202,13 +203,17 @@
     <script src="vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
     <script src="vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="vendor/select2/select2.min.js">
+
     </script>
+     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
 
     <script>
       $(document).ready(function(){
+         $('table').DataTable();
         $('#search').keyup(function(){
           var search = $(this).val();
           

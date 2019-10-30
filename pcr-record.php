@@ -138,7 +138,7 @@
                     <hr> 
                     <div class="row">
                       <div class="col mb-3">
-                          <input class="au-input au-input--xl mt-2" type="text" name="search" id="search" placeholder="Search for datas &amp; records..." />
+                          <input class="au-input au-input--xl mt-2" type="hidden" name="search" id="search" placeholder="Search for datas &amp; records..." />
                          </div>
                     </div>
                               
@@ -167,19 +167,19 @@
                             <tr>
                                 <td class=""><?php echo $counter;?></td>
                                 <td><?php echo $row['firstname'];?><?php echo " "?><?php echo $row['middlename'];?> <?php echo " ";?><?php echo $row['lastname'];?></td>
-                                <td><?php echo $row['date_i'];?></td>
-                                <td><?php echo $row['time_i'];?></td>
-                                <td><?php echo $row['unit_name'];?></td>
+                                <td><?php echo (isset($row['date_i']) && !empty($row['date_i']) ? $row['time_i'] : 'No data')?></td>
+                                <td><?php echo (isset($row['time_i']) && !empty($row['date_i']) ? $row['time_i'] : 'No data') ?></td>
+                                <td><?php echo (isset($row['unit_name'])) && !empty($row['unit_name']) ? $row['unit_name'] : 'No data' ?></td>
                                 <td>
                                        <a href="pcr_view.php?view=<?php echo $row['id'];?>">
-                                            <button class="item" style="color:green;" data-toggle="tooltip" data-placement="top" title="View Full Details">
+                                            <button class="item mr-2" style="color:green;" data-toggle="tooltip" data-placement="top" title="View Full Details">
                                                 <i class="fa fa-eye"></i>
                                              </button>
-                                        </a> ||
+                                        </a> 
                                         <a href="pcrofficial_edit.php?view=<?php echo $row['id'];?>">
-                                            <button class="item" style="color:blue;"data-toggle="modal"  data-placement="top" id="<?php echo $row['id']; ?>" title="Update Details">
+                                            <button class="item mr-2" style="color:blue;"data-toggle="modal"  data-placement="top" id="<?php echo $row['id']; ?>" title="Update Details">
                                                  <i class="fa fa-edit (alias)"></i>
-                                            </button> </a>||
+                                            </button> </a>
                                              <button class="item del_btn" style="color:red;" data-toggle="modal" data-placement="top" title="Delete" id="<?php echo $row['id']; ?>">
                                                  <i class="zmdi zmdi-delete"></i></button>
                                 </td>
