@@ -25,8 +25,15 @@ if(isset($_GET['id'])){
 			$date_accept  = date('Y-m-d');
 			$time_accept = date('h:i:s');
 			
+			$check = "SELECT quantity FROM items";
+			$result_check = $conn->query($check);
+			$new_quantity = mysqli_fetch_assoc($result_check);
 
-
+			if($new_quantity < $enter_quantity){
+				$_SESSION['not_enough'] = "insufficient items";
+				header("location:logistics_requestitem.php");
+				exit();
+			}
 
 			$query = "INSERT INTO 
 			item_accept_request(`item_id`, `date`, `time`, `item_name`, `item_description`, `quantity`, `unit_measure`, `enter_quantity`, `purpose`, `sender`, `status`,date_accepted,time_accepted,notif) 

@@ -83,22 +83,47 @@ include 'include/db.php';
           }
     ?>		
 <div class="row justify-content-center">
-<div class="col-md-8">
+<div class="col-md-6">
     <div class="card">
         <div class="card-header">
              <strong class="card-title mb-">Profile Card</strong>
         </div>
         <div class="card-body">
             <div class="mx-auto d-block">
-                <img class="rounded-circle mx-auto d-block" src="images/<?php echo $fetch['profile_picture'] ?>" alt="Card image cap">
-                    <h5 class="text-sm-center mt-2 mb-1"><?php echo $name; ?></h5>
+                <img class="rounded-circle mx-auto d-block" src="images/<?php echo $fetch['profile_picture'] ?>" height="250" width="200" alt="Card image cap">
+                    <h5 class="text-sm-center mt-2 mb-1"><?php echo ucfirst($fetch['firstname'])." ".ucfirst($fetch['lastname']) ?></h5>
                      <div class="location text-sm-center">
-                    <i class="fa fa-map-marker"></i> California, United States</div>
+                    <i class="fa fa-map-marker"></i> <?php echo $fetch['address'] ?></div>
             </div>
              <hr>
-             <table>
-                    
-             </table>                  
+             <table class="table table-bordered mb-3">
+               <tbody>
+                    <tr>
+                        <td width="30%" class="bg-light">First Name:</td>
+                        <td width="70%" class="bg-light"><?php echo ucfirst($fetch['firstname']) ?></td>
+                    </tr>
+                    <tr>
+                        <td width="30%" class="bg-light">Last Name:</td>
+                        <td width="70%" class="bg-light"><?php echo ucfirst($fetch['lastname']) ?></td>
+                    </tr>
+                    <tr>
+                        <td width="30%" class="bg-light">Gender:</td>
+                        <td width="70%" class="bg-light"><?php echo $fetch['gender'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Contact:</td>
+                        <td><?php echo $fetch['contact'] ?></td>
+                    </tr>
+                     <tr>
+                        <td>Username:</td>
+                        <td><?php echo $fetch['username'] ?></td>
+                    </tr>
+                    <tr>
+                        <td>Team:</td>
+                        <td><?php echo(isset($fetch['team_unit']) && !empty($fetch['team_unit']) ? $fetch['team_unit'] : 'No team yet') ?></td>
+                    </tr>
+               </tbody>
+            </table>           
         </div>
     </div>
  </div>

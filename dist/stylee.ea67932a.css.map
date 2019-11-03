@@ -1,0 +1,1 @@
+{"version":3,"sources":["stylee.scss"],"names":[],"mappings":"AAAA;EACC;EACA;EACA;EACA;;;AAED;EACC","file":"stylee.ea67932a.css","sourceRoot":"..","sourcesContent":["*{\r\n\tmargin:0px;\r\n\tpadding:0px;\r\n\tbox-sizing:border-box;\r\n\tbackground-color: 'blue',\r\n}\r\n.header{\r\n\tbackground-color: 'blue',\r\n}"]}

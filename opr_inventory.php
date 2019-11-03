@@ -120,7 +120,7 @@
                                             <a href="javascript: void(0)" class="push_notif" id="<?php echo $row1['id']?>"> 
                                                 <p>
                                                    
-                                                    You recieved a <?php echo $row1['quantity'] ?> <?php echo $row1['unit_measure']?> of <?php echo $row1['item_name'] ?> 
+                                                    You recieved a <?php echo $row1['enter_quantity'] ?> <?php echo $row1['unit_measure']?> of <?php echo $row1['item_name'] ?> 
                                                 </p>
                                                 <span class="date"><?php echo $date_ii ?></span>
                                             </a>
@@ -181,8 +181,8 @@
                                         <td style="text-align:center;"><?php echo $code.''.$row['id']?></td>
                                         <td style="text-align:center;"><?php echo isset($row['item_name']) && !empty($row['item_name']) ? $row['item_name'] : 'No Input' ?></td>
                                         <td style="text-align:center;"><?php echo isset($row['item_description']) && !empty($row['item_description']) ? $row['item_description'] : 'No Input' ?></td>
-                                        <td style="text-align:center;"><?php echo $row['quantity'] ?></td>
-                                        <td style="text-align:center;"><?php echo $row['unit_measure'] ?></td>
+                                        <td style="text-align:center;"><?php echo isset($row['quantity']) && !empty($row['quantity']) ? $row['quantity'] : 'No input' ?></td>
+                                        <td style="text-align:center;"><?php echo isset($row['unit_measure']) && !empty($row['unit_measure']) ? $row['unit_measure'] : 'No input' ?></td>
                                     </tr>
                                 <?php }}else{
                                     echo '<td colspan="4">No Item available</td>';

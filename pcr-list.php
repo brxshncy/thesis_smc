@@ -45,8 +45,7 @@
 <div class="main-content">
     <div class="section__content section__content--p30">
         <div class="container-fluid">
-
-                <div class="">
+                
                      <?php
                         if(isset($_SESSION['success_msg'])): ?>
                             <div class="alert alert-success">
@@ -86,78 +85,63 @@
                     ?>
                 <?php endif ?>
             </div>
-                                <table class="table table-hover table-light" id="table_search">
-                                            <thead class="table-primary">
-                                                <th>No.</th>
-                                                <th>From</th>
-                                                <th>Team</th>
-                                                <th>Request</th>
-                                                <th>Action</th>
-                                            </thead>
-                                <tbody>
-                            <?php
-                                    $locator = "SELECT pcr.id AS id, un.unit_name AS team, CONCAT(r.firstname,' ',r.lastname) AS sender FROM pcr 
-                                                LEFT JOIN unit_name un ON un.id = pcr.team 
-                                                LEFT JOIN rescuers r ON r.id = pcr.sender";
-                                    $counter = 0;
-                                    $result = $conn->query($locator);
-                                    $field_count = $result->field_count;
-                                    if(mysqli_num_rows($result)){
+<div class="jumbotron bg-light">
+<div class="table-responsive">   
+    <table class="table table-hover table-light table-bordered">
+        <thead class="table-primary">
+            <tr>
+                <th class="text-center">No.</th>
+                <th class="text-center">From</th>
+                <th class="text-center">Team</th>
+                <th class="text-center">Request</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+           <?php
+            $locator = "SELECT pcr.id AS id, un.unit_name AS team, CONCAT(r.firstname,' ',r.lastname) AS sender FROM pcr 
+                        LEFT JOIN unit_name un ON un.id = pcr.team 
+                        LEFT JOIN rescuers r ON r.id = pcr.sender";
+            $counter = 0;
+            $result = $conn->query($locator);
+            $field_count = $result->field_count;
+            if(mysqli_num_rows($result)){
+            if($field_count>0){  
+            while($row = mysqli_fetch_object($result)){
+            $counter ++;
+            $id = $row->id;
+            $sender = $row->sender;
+            $team = $row->team;                                
+        ?>
+            <tr>
+                <td class="text-center"><?php echo $counter; ?></td>
+                <td class="text-center"><?php echo $sender; ?></td>
+                <td class="text-center"><?php echo(isset($team) && !empty($team) ? $team : 'No Team'  )?></td>
+                <td class="text-center">  
+                    <button type="button" title="View Details" class="item text-success view_info" id="<?php echo $id; ?>">
+                        <i class="fas fa-envelope"></i>
+                    </button> 
+                </td>
+                <td class="text-center">
+                        <a href="pcr_edit.php?view=<?php echo $row->id;?>">
+                            <button type="button" class="item text-info"> <i class="fas fa-edit"></i></button>
+                        </a>
+                        <a href="pcr_delete.php?view=<?php echo $row->id;?>">
+                            <button type="button" class="item text-danger ml-2"> <i class="zmdi zmdi-delete"></i></button>
+                        </a>
+                </td>
+            </tr>
+        <?php } } } ?>
+        </tbody>
+    </table> 
+</div>
+</div>
 
-
-                                    if($field_count>0){  
-                                        while($row = mysqli_fetch_object($result)){
-                                            $counter ++;
-                                            $id = $row->id;
-                                            $sender = $row->sender;
-                                            $team = $row->team;
-                                            
-
-                                ?>
-                                <tr>
-
-                                        <td width="" class=""><?php echo $counter; ?></td>
-                                        <td width="" class=""><?php echo $sender; ?></td>
-                                        <td><?php
-                                                if(empty($team)){
-                                                    echo "Not yet assigned";
-                                                }else{
-                                                    echo $team;
-                                                }
-
-                                             ?>
-                                        </td>
-                                        <td>
-                                            <button type="button" title="View Details" class="item text-success view_info" id="<?php echo $id; ?>">
-                                                 <i class="fas fa-envelope"></i>
-                                            </button> 
-                                        </td>
-                                        <td width="">
-                                            <div class="row">
-                                               <a href="pcr_edit.php?view=<?php echo $row->id;?>"><button type="button" class="item text-info"> <i class="fas fa-edit"></i></button></a>
-                                               <a href="pcr_delete.php?view=<?php echo $row->id;?>"><button type="button" class="item text-danger ml-2"> <i class="zmdi zmdi-delete"></i></button></a>
-                                            </div>
-                                        </td>
-                            </tr>
-                        </tbody>
-                             
-                                <?php
-                                         }
-                                    }
-                                }
-                                    else{
-                                        echo "<tr><td>No pending request</td><tr>";
-                                    }
-                                ?>
-                    </table> 
-
-             
-        </div>  
-    </div>
+</div>
 </div>
 
 
-   <?php include 'footer.php';?>
+<?php include 'footer.php';?>
 
     <!-- Jquery JS-->
     <script src="vendor/jquery-3.2.1.min.js"></script>
@@ -179,12 +163,15 @@
     <script src="vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="vendor/select2/select2.min.js">
     </script>
+      <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
    <script>
     
     $(document).ready(function(){
+        $('table').DataTable();
       $('.view_info').click(function(){
         var id = $(this).attr('id');
             $.ajax({

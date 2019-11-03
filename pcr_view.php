@@ -74,7 +74,7 @@
 								<th colspan = 2><h2 style="color:#fff;" align="center">Patient Personal Information</h2></th>
 							</tr>
 							<tr class="table-active">
-								<td width="30%" class="bg-light">Full Name</th>
+								<td width="30%" class="bg-light">Full Name</td>
 								<td width="70%" class="bg-light"><?php echo $row['firstname'];?> <?php echo $row['middlename'];?><?php echo " ";?> <?php echo $row['lastname'];?></td>
 							</tr>
 							<tr class="table-active">

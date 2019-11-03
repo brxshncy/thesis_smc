@@ -86,6 +86,26 @@ include 'include/db.php';
                      </div>
                 </div>
                 <hr>
+                <?php
+                    if(isset($_SESSION['insufficient'])):?>
+                        <div class="col mt-3">
+                            <div class="alert alert-danger">
+                                <?php echo $_SESSION['insufficient'];
+                                      unset($_SESSION['insufficient']);
+                                ?>
+                            </div>
+                        </div>
+                <?php endif ?>
+                <?php 
+                    if(isset($_SESSION['succes_request'])):?>
+                        <div class="col mt-3">
+                            <div class="alert alert-success">
+                                <?php echo $_SESSION['succes_request']; 
+                                     unset($_SESSION['succes_request']);
+                                ?>
+                            </div>
+                        </div>
+                <?php endif ?>
                 <div class="col-sm-12 table-responsive mt-3">
                         <table id="item-list" class="table table-bordered table-striped">
                             <thead>
@@ -123,6 +143,110 @@ include 'include/db.php';
       </div>
   </div>
 </div>
+<div class="modal fade" id="add_item">
+    <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"> Request Item</h5>
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="include/request_rescuer_item.php" method="POST">
+                        <div class="modal-body">
+                            <div class="row mt-2">
+                                <div class="col col-md-6">
+                                    <div class="form-group">
+                                        <?php
+                                             $username = $_SESSION['confirm_username'];
+                                            $sender = "SELECT * FROM rescuers WHERE username = '$username'";
+                                            $result_sender = $conn->query($sender);
+                                            $fetch_sender = mysqli_fetch_assoc($result_sender);
+                                            $id = $fetch_sender['id'];
+                                        ?>
+                                    <input type="hidden" value="<?php echo $id;?>" name="sender">
+                                    <label class="text-danger">*Select Item</label>
+                                        <select name="item" class="form-control" id="item">
+                                            <option value=""></option>
+                                        <?php 
+                                            $select_item = "SELECT * From items";
+                                           
+                                            
+                                            $result = $conn->query($select_item);
+                                            $data_row = mysqli_num_rows($result);
+
+                                            while($row = mysqli_fetch_assoc($result)){
+                                                ?>
+
+                                            <option value="<?php echo $row['id']?>"><?php echo $row['item_name']; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                                <div class="col col-md-3">
+                                    <div class="form-group">
+                                   
+                                    <?php 
+                                        date_default_timezone_set('Asia/Manila');
+                                        $date = date("F j, Y");
+                                        $time = date("h:i a");
+                                    ?>
+                                    <input type="hidden" name="date" id="date" class="form-control "  value="<?php echo $date; ?>" readonly>
+                                    </div>
+                                </div>
+                                 <div class="col col-md-3">
+                                    <div class="form-group">
+                                  
+                                    <input type="hidden" name="time" id="date" class="form-control "  value="<?php echo $time; ?>" readonly>
+                                    <input type="hidden" name="status" id="status" class="form-control "  value="unread" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                             <div id="show_info" class="mt-4 ml-2">
+                            <hr>
+                                    <div class="form-row mt-4" style="margin-top:20px;">
+                                            <div class="col col-md-4">
+                                                <label class="text-danger">*Item Name</label>
+                                                <input type="text" name="item_name" id="item_name" class="form-control" readonly="">
+                                            </div>
+                                            <div class="col col-md-6 ml-3">
+                                                <label class="text-danger">*Item Description</label>
+                                                <input type="text" name="item_description" id="item_description" class="form-control" readonly="">
+                                            </div>
+                                    </div>
+                                    <div class="form-row mt-2" style="margin-top:20px;">
+                                            <div class="col col-md-4">
+                                                <label class="text-danger">*Quantity</label>
+                                                <input type="text" name="quantity" id="quantity" class="form-control" style="margin-top:-5px;" readonly="">
+                                            </div>
+
+                                            <div class="col col-md-4 ml-3">
+                                                <label class="text-danger">*Unit of Measure</label>
+                                                <input type="text" name="unit_measure" id="unit_measure" class="form-control" style="margin-top:-5px;" readonly="">
+                                            </div>
+                                    </div>
+                                    <hr>
+                                    <div class="form-row mt-2">
+                                        <div class="col col-md-3">
+                                            <label>Enter Quantity</label>
+                                            <input type="text" name="enter_quantity" class="form-control" id="enter_quantity">
+                                        </div>
+                                        <div class="col col-md-9">
+                                            <label>Purpose</label>
+                                            <input type="text" name="purpose" class="form-control" id="purpose">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                       
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" name="submit">Save</button>
+                        </div>
+                        </form>
+        </div>
+    </div>
+</div>
             <?php include 'footer.php';?>
 
     <!-- Jquery JS-->
@@ -153,6 +277,29 @@ include 'include/db.php';
     <script src="js/main.js"></script>
     <script>
         $('table').DataTable();
+        $(document).ready(function(){
+            $('#show_info').hide();
+            $('#item').change(function(){
+                var id = $(this).val();
+                if(!id == '' || !id == 'undefine'){
+                 $.ajax({
+                    url: 'include/opr_itemsinfo.php',
+                    method: 'post',
+                    data:{id:id},
+                    dataType: 'JSON',
+                    success:function(data){
+                        $('#show_info').show();
+                        $('#item_name').val(data.item_name);
+                        $('#item_description').val(data.item_description);
+                        $('#quantity').val(data.quantity);
+                        $('#unit_measure').val(data.unit_measure);
+                    }
+                });
+            }   else{
+                    $('#show_info').hide();
+                }
+            })
+        })
     </script>
 </body>
 

@@ -16,10 +16,6 @@
                                 <i class="fas fa-arrow-circle-right"></i>In-Items
                             </a>
                         </li>
-                        <li><a href="logistics_out_items.php">
-                                <i class="fas fa-arrow-circle-left"></i>Out-Items
-                            </a>
-                        </li>
                         <li><a href="inventory_logs.php">
                                 <i class="fas fa-folder-open"></i>Activity Logs
                             </a>

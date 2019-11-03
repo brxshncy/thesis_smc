@@ -19,7 +19,14 @@ session_start();
                     <div class="alert alert-success">
                         <?php echo $_SESSION['item_accept'];
                               unset($_SESSION['item_accept']);
-
+                        ?>
+                    </div>
+            <?php endif  ?>
+             <?php
+                    if(isset($_SESSION['not_enough'])):?>
+                    <div class="alert alert-danger">
+                        <?php echo $_SESSION['not_enough'];
+                              unset($_SESSION['not_enough']);
                         ?>
                     </div>
             <?php endif  ?>
@@ -36,21 +43,31 @@ session_start();
                       </thead>
                           <tbody>
                               <?php 
-                                  $pending_request = "SELECT *, r.admin_type AS sender, opr.id as opr_id FROM opr_item_request opr LEFT JOIN admin_login r ON opr.sender = r.id";
+                                  $pending_request = "SELECT o.admin_type as admin, CONCAT(r.firstname,' ',r.lastname) as rescuer, i.id as opr_id FROM opr_item_request i 
+                                                    LEFT JOIN admin_login o ON o.id = i.sender 
+                                                    LEFT JOIN rescuers r ON r.id = i.sender";
                                   $result = $conn->query($pending_request);
                                   $pending_row = mysqli_num_rows($result);
                                   $counter = 0;
                                   if($pending_row > 0 ){
                                     while($row = mysqli_fetch_assoc($result)){
                                       $counter++;
-                                      $sender = $row['sender'];
-                                      $sender_f = ucfirst($sender);
-                                      $sender_g = $sender_f." "."Deparment";
+                                      $admin = ucfirst($row['admin'])." Admin";
+                                      $rescuer = ucwords($row['rescuer']);
                                       $id = $row['opr_id'];
                                   ?>
                                   <tr>
                                     <td width="5%" style="text-align:center;"><?php echo $counter?></td>
-                                     <td style="text-align:center;"><?php echo $sender_g?></td>
+                                     <td style="text-align:center;">
+                                     <?php 
+                                        if(isset($rescuer) && !empty($rescuer)){
+                                            echo $rescuer;
+                                        }
+                                        else {
+                                            echo $admin;
+                                        }
+                                     ?>
+                                      </td>
                                      <td style="text-align:center;"><button type="button" class="btn btn-success request"  data-toggle="tooltip" data-placement="top" id="<?php echo $id;?>"><i class="fas fa-envelope mr-3"></i>View Request</button></td>
                                      <td style="text-align:center;" with="30%">
                                       <a href="logistics_accept_request.php?id=<?php echo $id; ?>"><button type="button" class="btn btn-primary btn-sm">Accept</button></a>

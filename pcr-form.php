@@ -29,7 +29,7 @@
 
     <!-- Bootstrap CSS-->
     <link href="vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
     <!-- Vendor CSS-->
     <link href="vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
@@ -761,19 +761,7 @@
     <script>
         $(document).ready(function(){
             $('#btn_personal_info').click(function(){
-                var firstname = $('#firstname').val();
-                var lastname = $('#lastname').val();
-                var mi = $('#mi').val();
-                var age = $('#age').val();
-                var religion = $('#religion').val();
-                var nationality = $('#nationality').val();
-                var address = $('#address').val();
-                var gender = $('#gender').val();
-
-                if(firstname == ''||lastname==''||mi==''||age==''||religion==''||nationality==''||address==''||gender==''){
-                    alert("Please fill all fields!");
-                }
-                else{
+           
                     $('#list_patient').removeClass('active');
                     $('#list_patient').removeClass('href data-toggle');
                     $('#personalinfo_content').removeClass('active');
@@ -783,7 +771,7 @@
                     $('#incident_details').attr('href','incident_details');
                     $('#list_incident').attr('data-toggle','tab');
                     $('#incident_details').addClass('active in');
-                }
+                
 
             });
 

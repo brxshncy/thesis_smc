@@ -1,0 +1,27 @@
+{
+  "name": "thesis",
+  "version": "1.0.0",
+  "description": "My Thesis",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brxshncy/thesis_smc.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brxshncy/thesis_smc/issues"
+  },
+  "homepage": "https://github.com/brxshncy/thesis_smc#readme",
+  "devDependencies": {
+    "sass": "^1.23.3"
+  },
+  "dependencies": {
+    "@dogstudio/highway": "^2.1.3",
+    "gsap": "^2.1.3"
+  }
+}
