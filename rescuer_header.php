@@ -20,7 +20,7 @@ $username = $_SESSION['confirm_username'];
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
-                                            <img src="images/<?php echo $_SESSION['user_profile']; ?>" style="width:100px;" alt="John Doe"/>
+                                            <img src="images/<?php echo $_SESSION['user_profile']; ?>" style="width:100px;" alt=""/>
                                         </div>
                                         <div class="content">
                                             <a class="js-acc-btn" href="#"><?php echo $_SESSION['fullname'];?> </a>

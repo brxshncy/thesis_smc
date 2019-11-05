@@ -28,6 +28,44 @@
     <script>
        $(document).ready(function(){
             $('table').DataTable();
+            $('.view_call').click(function(){
+                var view = $(this).attr('id');
+                $.ajax({
+                    url: 'include/call_view.php',
+                    method: 'post',
+                    data:{view:view},
+                    success:function(data){
+                        $('#call_view').html(data);
+                        $('#call_logs').modal('show');
+                    }
+                })
+            })
+            $('.edit_call').click(function(){
+                var edit = $(this).attr('id');
+                $.ajax({
+                    url: 'include/call_edit.php',
+                    method: 'post',
+                    data:{edit:edit},
+                    success:function(data){
+                        $('#call_edit').html(data);
+                        $('#edit_logs').modal('show');
+                    }
+                })
+            })
+            $('.del_call').click(function(){
+                var del = $(this).attr('id');
+                $('#del_logs').modal('show');
+                    $('#delete').click(function(){
+                        $.ajax({
+                            url: 'include/call_del.php',
+                            method: 'post',
+                            data:{del:del},
+                            success:function(data){
+                              location.reload();
+                            }
+                        })
+                    })
+            })
            
        })
     </script>

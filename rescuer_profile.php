@@ -69,7 +69,7 @@ include 'include/db.php';
                 <!-- MODAL -->
 
 
- <!-- MAIN CONTENT-->
+
 <div class="main-content">
 <div class="section__content section__content--p30">
 <div class="container-fluid">
@@ -90,7 +90,7 @@ include 'include/db.php';
         </div>
         <div class="card-body">
             <div class="mx-auto d-block">
-                <img class="rounded-circle mx-auto d-block" src="images/<?php echo $fetch['profile_picture'] ?>" height="250" width="200" alt="Card image cap">
+                <img class="rounded-circle mx-auto d-block" src="images/<?php echo $fetch['profile_picture'] ?>" height="250" width="200" alt="no profile">
                     <h5 class="text-sm-center mt-2 mb-1"><?php echo ucfirst($fetch['firstname'])." ".ucfirst($fetch['lastname']) ?></h5>
                      <div class="location text-sm-center">
                     <i class="fa fa-map-marker"></i> <?php echo $fetch['address'] ?></div>

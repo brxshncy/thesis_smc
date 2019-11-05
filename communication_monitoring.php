@@ -28,12 +28,20 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'communicat
 		    		<?php endif	?>
 		    		<?php
 		    				if(isset($_SESSION['error'])):?>
-		    					<div class="alert alert-success">
+		    					<div class="alert alert-danger">
 		    						<?php echo $_SESSION['error'];
 		    							unset($_SESSION['error']);
 		    						?>
 		    					</div>
 		    		<?php endif	?>
+            <?php
+                if(isset($_SESSION['update'])):?>
+                  <div class="alert alert-info">
+                    <?php echo $_SESSION['update'];
+                       unset($_SESSION['update']);
+                    ?>
+                  </div>
+            <?php endif ?>
 		    		</div>
 		    	  	<div class="col col-m4-4 mb-4">
 		    			<button type="button" id="logs" class="btn btn-success"  data-toggle="modal" data-target="#add_logs"><i class="fas fa-plus-circle"></i>  Add Logs</button>
@@ -53,7 +61,7 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'communicat
 	                 <?php
                     $call_logs = "SELECT * FROM call_logs";
                     $result = $conn->query($call_logs);
-                    $counter = 0;
+                    $counter = 1;
                     while($row=mysqli_fetch_assoc($result)){?>
                       <tr>
                         <td class="text-center"><?php echo $counter; ?></td>
@@ -61,13 +69,13 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'communicat
                         <td class="text-center"><?php echo $row['reason_call'] ?></td>
                         <td class="text-center"><?php echo $row['number_caller'] ?></td>
                         <td class="text-center">
-                            <button class="item" style="color:green;" data-toggle="tooltip" data-placement="top" title="View Full Details">
+                            <button class="item view_call" style="color:green;" data-toggle="tooltip" data-placement="top" id="<?php echo $row['id'] ?>" title="View Full Details">
                                 <i class="fa fa-eye"></i>
                             </button> ||
-                            <button class="item" style="color:blue;"data-toggle="modal"  data-placement="top" id="<?php echo $row['id']; ?>" title="Update Details">
+                            <button class="item edit_call" style="color:blue;"data-toggle="modal"  data-placement="top" id="<?php echo $row['id']; ?>" title="Update Details">
                                 <i class="fa fa-edit (alias)"></i>
                             </button> ||
-                             <button class="item del_btn" style="color:red;" data-toggle="modal" data-placement="top" title="Delete" id="<?php echo $row['id']; ?>">
+                             <button class="item del_call" style="color:red;" data-toggle="modal" data-placement="top" title="Delete" id="<?php echo $row['id']; ?>">
                                 <i class="zmdi zmdi-delete"></i>
                             </button>
                         </td>
@@ -133,6 +141,66 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'communicat
                         </div>
                 </div>
         </form>
+    </div>
+</div>
+<div class="modal fade" id="call_logs">
+    <div class="modal-dialog modal-lg">
+        <form action="include/call_logs.php" method="post">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Call Details</h5>
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                        <div class="modal-body" id="call_view">
+                                
+                         </div>
+                </div>
+        </form>
+    </div>
+</div>
+<div class="modal fade" id="edit_logs">
+    <div class="modal-dialog modal-lg">
+        <form action="include/call_update.php" method="post">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Call Details</h5>
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                        <div class="modal-body" id="call_edit">
+                                
+                         </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-info" name="update">Update</button>
+                        </div>
+                </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="del_logs">
+    <div class="modal-dialog modal-lg">
+        
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Warning!!!</h5>
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                        <div class="modal-body">
+                                <h4>Are you sure you want to delete this data?
+                         </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger" id="delete" name="del">Delete</button>
+                        </div>
+                </div>
+  
     </div>
 </div>
 <?php include('footer.php'); ?>

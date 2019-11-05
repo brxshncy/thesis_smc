@@ -8,12 +8,8 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li><a href="logistics_index.php">
-                                <i class="fas fa-tasks"></i>Dashboard
-                            </a>
-                        </li>
                          <li><a href="communication_monitoring.php">
-                                <i class="fas fa-arrow-circle-right"></i>Log Book
+                                <i class="fas fa-arrow-circle-right"></i>Call Logs
                             </a>
                         </li>
                     </ul>
