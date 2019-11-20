@@ -20,19 +20,19 @@ $errors = array();
 		$username = mysqli_escape_string($conn,$_POST['username']);
 		$password = mysqli_escape_string($conn,$_POST['password']);
 		$confirm_password = mysqli_escape_string($conn,$_POST['confirm_password']);
+		$team_unit = $_POST['team'];
 		$profile_pic = $_FILES['profile_picture']['name'];
+		$role = $_POST['role'];
 		$target = 'images/' .$profile_pic;
 
 		if(move_uploaded_file($_FILES['profile_picture']['tmp_name'], $target)){
 			echo "success";
 		}
 		
-		
-
-
-
 		//FORM VALIDATION
-
+		if(empty($firstname) || empty($lastname) || empty($address) || empty($gender) || empty($contact) || empty($role)){
+			array_push($errors, "Please fill up all field!");
+		}
 		if(empty($username)){
 			array_push($errors,"Username required!");
 		}
@@ -55,8 +55,8 @@ $errors = array();
 
 		if(count($errors) == 0){
 			$password1 = md5($password);
-			$insert = "INSERT INTO rescuers (firstname,lastname,address,gender,contact,username,password,profile_picture) VALUES ('$firstname','$lastname','$address','$gender','$contact','$username','$password1','$profile_pic')";
-			$query = $conn->query($insert);
+			$insert = "INSERT INTO rescuers (firstname,lastname,address,gender,contact,username,password,team_unit,profile_picture,role) VALUES ('$firstname','$lastname','$address','$gender','$contact','$username','$password1','$team_unit','$profile_pic','$role')";
+			$query = $conn->query($insert) or trigger_error(mysqli_error($conn)." ".$insert);
 			$_SESSION['username'] = $username;
 			$_SESSION['success'] = "You are now registered !";
 			header("location:rescuer_registration.php");

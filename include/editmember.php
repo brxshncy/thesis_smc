@@ -4,12 +4,13 @@ global $conn;
     if(isset($_POST['edit_id'])){
         $id = $_POST['edit_id'];
 
-        $fetch = "SELECT ar.*, CONCAT(r1.firstname,' ',r1.lastname) AS name, r1.username as username, ar.id AS id FROM teams ar LEFT JOIN rescuers r1 ON r1.id = ar.rescuers_id WHERE ar.id = '$id' ";
+        $fetch = "SELECT *, CONCAT(r.firstname,' ',r.lastname) AS name, r.address AS address, r.profile_picture AS profile, r.gender AS gender, r.contact as contact, r.role as role, t.unit_name as team  FROM unit_name t LEFT JOIN rescuers r ON r.team_unit = t.id WHERE t.id = '$id' ";
             $result = mysqli_query($conn,$fetch);
             while($data = mysqli_fetch_object($result)){
                 $assign_rescuer = $data->id;
                 $name = $data->name;
                 $username = $data->username;
+                $team = $data->team;
             }
     }
 ?>
@@ -19,12 +20,12 @@ global $conn;
             <div class="form-group">
                     <label>Team</label>
                         <select name="team_unit" id="team_unit" class="form-control" required="">
-                            <option value="">Select Team</option>
+                            
                             <?php
                                 $select = "SELECT * FROM unit_name";
                                 $result = $conn->query($select);
                                 while($row = mysqli_fetch_assoc($result)){ ?>
-                                    <option value="<?php echo $row['id']; ?>"> <?php echo $row['unit_name'];?> </option>
+                                    <option value="<?php echo $row['id']; ?>"> <?php echo $row['unit_name'] ?> </option>
                             <?php
                                 }
                             ?>

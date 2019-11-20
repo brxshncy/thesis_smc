@@ -97,7 +97,9 @@ session_start();
                                 $id = $_GET['view'];
                        /* $query = "SELECT unit_name.unit_name as unit_name, assign_rescuer.id as id, assign_rescuer.firstname as firstname,assign_rescuer.lastname as lastname, assign_rescuer.gender as gender, assign_rescuer.address as address, assign_rescuer.contact as contact FROM unit_name, assign_rescuer WHERE unit_name.unit_name = assign_rescuer.unit_name AND unit_name.id = '$id' ";   */ 
 
-                        $query = "SELECT ar.*, CONCAT(r1.firstname,' ', r1.lastname) AS name, r1.address AS address, r1.profile_picture AS profile, r1.gender AS gender, r1.contact AS contact, ar.role as role, team.unit_name AS team FROM teams ar LEFT JOIN rescuers r1 ON r1.id = ar.rescuers_id LEFT JOIN unit_name team ON team.id =ar.team_id WHERE ar.team_id = '$id' ";
+                       $query = "SELECT *, CONCAT(r.firstname,' ',r.lastname) as name, r.gender as gender, r.profile_picture as profile, r.address as address, r.contact as contact, r.role as role, t.id as team_id FROM rescuers r LEFT JOIN unit_name t ON r.team_unit = t.id WHERE r.team_unit = '$id'";
+
+                       /* $query = "SELECT ar.*, CONCAT(r1.firstname,' ', r1.lastname) AS name, r1.address AS address, r1.profile_picture AS profile, r1.gender AS gender, r1.contact AS contact, ar.role as role, team.unit_name AS team FROM teams ar LEFT JOIN rescuers r1 ON r1.id = ar.rescuers_id LEFT JOIN unit_name team ON team.id =ar.team_id WHERE ar.team_id = '$id' ";*/
 
 
                         $result = $conn->query($query);
@@ -123,13 +125,12 @@ session_start();
                                                     <p>Contact: <?php echo $row->contact;?></p>
                                                     <p class="">Role: <i class="text-success"><?php echo $row->role; ?></i></p>
                                                     <p>Action: <a></a> <a href=""></a>
-                                                        <button class="item edit_button"  style="color:blue;" data-toggle="modal"  data-placement="top" id="<?php echo $row->id; ?>" title="Edit">
+                                                        <button class="item edit_button"  style="color:blue;" data-toggle="modal"  data-placement="top" id="<?php echo $row->team_id; ?>" title="Edit">
                                                              <i class="fa fa-edit"></i>
-                                                        </button> || <a href="include/delete_member.php?delete=<?php echo $row->id; ?>" style="color:red;" title="Remove Member">  <i class="fa fa-scissors"></i></a></p> 
-
-                                                        <script type="text/javascript">
-                                                          document.getElementById('no-members').style.display = 'none';
-                                                       </script>
+                                                        </button> 
+                                        <script type="text/javascript">
+                                            document.getElementById('no-members').style.display = 'none';
+                                        </script>
                          </div>
                     </div> 
                  </div>

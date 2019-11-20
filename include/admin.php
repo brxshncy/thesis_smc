@@ -1,4 +1,4 @@
-;<?php
+<?php
 session_start();
 include 'db.php';
 $msg ='';
@@ -28,6 +28,9 @@ $msg ='';
 			else if($_SESSION['admin_type']=="logistics"){
 
 				header("location:../logistics_index.php");
+			}
+			else if($_SESSION['admin_type']=="secretary"){
+				echo "secretary";
 			}
 		}
 			else{

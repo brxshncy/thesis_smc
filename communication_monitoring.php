@@ -12,7 +12,7 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'communicat
  <div class="section__content section__content--p30">
   <div class="container-fluid">
 	<div class="card">
-	 <div class="card-header"><b>Call Logs</b></div>
+	 <div class="card-header"><b>Emergency Calls</b></div>
 	  <div class="card-body">
 		 <div class="row">
 		    <div class="col-sm-12 table-responsive mt-4">
@@ -43,8 +43,10 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'communicat
                   </div>
             <?php endif ?>
 		    		</div>
-		    	  	<div class="col col-m4-4 mb-4">
-		    			<button type="button" id="logs" class="btn btn-success"  data-toggle="modal" data-target="#add_logs"><i class="fas fa-plus-circle"></i>  Add Logs</button>
+		    	  	<div class="col col-m6-5 mb-4" style="margin-left:30px;">
+		    			 <button type="button" id="logs" class="btn btn-danger"  data-toggle="modal" data-target="#add_logs">
+                   <i class="fas fa-phone-volume mr-2"></i>  Emergency
+               </button>
 		    		</div>
 		   		 </div>
           		<table id="item_list" class="table table-bordered table-striped">

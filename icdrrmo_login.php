@@ -82,6 +82,7 @@ $msg = '';
                          			<option value="operation">Operation Section Admin</option>
                          			<option value="communication">Communication Section Admin</option>
                          			<option value="logistics">Logistics Section Admin</option>
+                                    <option value="secretary">Operation Secretary</option>
 
                          		</select>
                          </div>

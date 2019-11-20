@@ -63,7 +63,7 @@ include 'rescuer_regdb.php';
                                 </div>
                             </div>
                              <button class="au-btn au-btn--block au-btn--green m-b-20 mt-4" type="submit" name="log-in">Log In</button>
-                             <span class="text-dark">Not yet a member?</span> <a href="rescuer_registration.php" class="mr-4">Sign up</a><a class="text-danger" href="index.html">Back</a>
+                             <a class="text-danger" href="index.html">Back</a>
                              <?php include('error_rescureg.php'); ?>
                             </form>
                 </div>

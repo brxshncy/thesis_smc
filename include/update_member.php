@@ -9,14 +9,13 @@
 		$username = $_POST['username'];
 		$role = $_POST['role'];	
 
-		$update = "UPDATE teams SET 
-					team_id = '$team_id',
+		$update = "UPDATE rescuers SET 
+					team_unit = '$team_id',
 					role = '$role'
 					WHERE id = '$edit_id'"
-
 					;
-
-					$result = mysqli_query($conn,$update);
+					var_dump($role);
+					$result = mysqli_query($conn,$update) or trigger_error(mysqli_error($conn)." ".$update);
 
 		if (!mysqli_query($conn,$update))
   		{
@@ -24,8 +23,8 @@
 	  }
 				else{
 					$qry = "UPDATE rescuers SET team_unit = '$team_id' WHERE username = '$username' ";
-					$result = $conn->query($qry) or trigger_error(mysqli_error($conn)." ".$qry);
-					if($result){
+					$result1 = $conn->query($qry) or trigger_error(mysqli_error($conn)." ".$qry);
+					if($result1){
 							header("location:../pcr-addteam.php");
 							$_SESSION['message'] = "Members of the Team has been Updated";
 							$_SESSION['msg_type'] = "info";

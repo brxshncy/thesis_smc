@@ -15,21 +15,11 @@
                                 Dashboard
                             </a>
                         <li>
-                            <a href="pcr-list.php">
-                                <i class="fas fa-wheelchair"></i>
-                                Patient Care Reports
-                                <?php
-                                        $qry = "SELECT * FROM pcr WHERE status = 'unread' ";
-                                        $result = $conn->query($qry);
-                                        $count_status = mysqli_num_rows($result);
-                                        if($count_status>0){
-                                    ?>
-                                    <span class="badge badge-danger"><?php echo $count_status; ?> </span>
-                                    <?php
-                                         }
-                                    ?>
+                            <li>
+                            <a href="rescuer_registration.php">
+                                <i class="fas fa-user"></i>
+                                Add Rescuers
                             </a>
-                        </li>
                          <li>
                             <a href="pcr-record.php">
                                 <i class="fas fa-files-o"></i>PCR Records

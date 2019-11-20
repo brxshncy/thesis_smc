@@ -213,8 +213,6 @@ require ('include/db.php');
                                             <button class="item mr-2" style="color:blue;"data-toggle="modal"  data-placement="top" id="<?php echo $row['id']; ?>" title="Update Details">
                                                  <i class="fa fa-edit (alias)"></i>
                                             </button> </a>
-                                             <button class="item del_btn" style="color:red;" data-toggle="modal" data-placement="top" title="Delete" id="<?php echo $row['id']; ?>">
-                                                 <i class="zmdi zmdi-delete"></i></button>
                                 </td>
                             </tr>
                         <?php } ?>

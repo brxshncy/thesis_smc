@@ -126,9 +126,6 @@
                         <a href="pcr_edit.php?view=<?php echo $row->id;?>">
                             <button type="button" class="item text-info"> <i class="fas fa-edit"></i></button>
                         </a>
-                        <a href="pcr_delete.php?view=<?php echo $row->id;?>">
-                            <button type="button" class="item text-danger ml-2"> <i class="zmdi zmdi-delete"></i></button>
-                        </a>
                 </td>
             </tr>
         <?php } } } ?>

@@ -99,6 +99,28 @@ include 'rescuer_regdb.php';
                             </div>
                             <div class="form-row mt-4">
                                 <div class="col col-md-6">
+                                   <select style="border-radius:10px;" id="role" name="role" class="form-control">
+                                         <option value="">Choose Role</option>
+                                         <option value="Team Leader">Team Leader</option>
+                                         <option value="Treatment Officer">Treatment Officer</option>
+                                         <option value="Transport Officer">Transport Officer</option>
+                                         <option value="Member">Member</option>
+                                    </select>
+                                </div>
+                                <div class="col col-md-6">
+                                     <select style="border-radius:10px;" id="team" name="team" class="form-control">
+                                        <option value="">Choose Team</option>
+                                        <?php
+                                            $team = "SELECT * FROM unit_name";
+                                            $result = $conn->query($team) OR  trigger_error(mysqli_error($conn)." ".$team);
+                                            while($row = mysqli_fetch_assoc($result)){?>
+                                            <option value="<?php echo $row['id'] ?>"><?php echo $row['unit_name'] ?> </option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row mt-4">
+                                 <div class="col col-md-6">
                                     <input type="file" name="profile_picture" id="profile_picture">
                                 </div>
                             </div>

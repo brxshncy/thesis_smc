@@ -146,12 +146,12 @@
                     <table class="table table-striped w-100 table-light" id="table_search">
                         <thead>
                             <tr class="table-info">
-                             <th>No.</th>
-                             <th>Full Name</th>
-                             <th>Date Incident</th>
-                             <th>Time Incident</th>
-                             <th>Respondents</th>
-                             <th>Action</th>
+                             <th class="text-center">No.</th>
+                             <th class="text-center">Full Name</th>
+                             <th class="text-center">Date Incident</th>
+                             <th class="text-center">Time Incident</th>
+                             <th class="text-center">Respondents</th>
+                             <th class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -165,12 +165,12 @@
                                   $counter++;
                             ?>
                             <tr>
-                                <td class=""><?php echo $counter;?></td>
-                                <td><?php echo $row['firstname'];?><?php echo " "?><?php echo $row['middlename'];?> <?php echo " ";?><?php echo $row['lastname'];?></td>
-                                <td><?php echo (isset($row['date_i']) && !empty($row['date_i']) ? $row['time_i'] : 'No data')?></td>
-                                <td><?php echo (isset($row['time_i']) && !empty($row['date_i']) ? $row['time_i'] : 'No data') ?></td>
-                                <td><?php echo (isset($row['unit_name'])) && !empty($row['unit_name']) ? $row['unit_name'] : 'No data' ?></td>
-                                <td>
+                                <td class="text-center"><?php echo $counter;?></td>
+                                <td class="text-center"><?php echo $row['firstname'];?><?php echo " "?><?php echo $row['middlename'];?> <?php echo " ";?><?php echo $row['lastname'];?></td>
+                                <td class="text-center"><?php echo (isset($row['date_i']) && !empty($row['date_i']) ? $row['time_i'] : 'No data')?></td>
+                                <td class="text-center"><?php echo (isset($row['time_i']) && !empty($row['date_i']) ? $row['time_i'] : 'No data') ?></td>
+                                <td class="text-center"><?php echo (isset($row['unit_name'])) && !empty($row['unit_name']) ? $row['unit_name'] : 'No data' ?></td>
+                                <td class="text-center">
                                        <a href="pcr_view.php?view=<?php echo $row['id'];?>">
                                             <button class="item mr-2" style="color:green;" data-toggle="tooltip" data-placement="top" title="View Full Details">
                                                 <i class="fa fa-eye"></i>
@@ -180,8 +180,6 @@
                                             <button class="item mr-2" style="color:blue;"data-toggle="modal"  data-placement="top" id="<?php echo $row['id']; ?>" title="Update Details">
                                                  <i class="fa fa-edit (alias)"></i>
                                             </button> </a>
-                                             <button class="item del_btn" style="color:red;" data-toggle="modal" data-placement="top" title="Delete" id="<?php echo $row['id']; ?>">
-                                                 <i class="zmdi zmdi-delete"></i></button>
                                 </td>
                             </tr>
                         <?php } ?>
