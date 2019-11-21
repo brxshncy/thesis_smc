@@ -17,7 +17,7 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'communicat
 		 <div class="row">
 		    <div class="col-sm-12 table-responsive mt-4">
 		    	<div class="row">
-		    		<div class="col col-md-10">
+		    	 <div class="col col-md-8">
 		    			<?php
 		    				if(isset($_SESSION['insert'])):?>
 		    					<div class="alert alert-success">
@@ -42,8 +42,8 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'communicat
                     ?>
                   </div>
             <?php endif ?>
-		    		</div>
-		    	  	<div class="col col-m6-5 mb-4" style="margin-left:30px;">
+          </div>
+		    	  	<div class="col col-md-2 mb-4" style="margin-left:110px;">
 		    			 <button type="button" id="logs" class="btn btn-danger"  data-toggle="modal" data-target="#add_logs">
                    <i class="fas fa-phone-volume mr-2"></i>  Emergency
                </button>
@@ -108,13 +108,18 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'communicat
                         </button>
                     </div>
                         <div class="modal-body">
+                                <input type="hidden" value="0" name="notification">
                                 <div class="form-group">
-                                    <label class="text-danger">*Name of Caller</label>
-                                    <input type="text" name="name" id="name" class="form-control">
+                                    <label class="text-danger">*Name of Patient</label>
+                                    <input type="text" name="patient" id="patient" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    <label class="text-danger">*Reason for Calling</label>
-                                    <textarea name="reason_call" id="reason_call" class="form-control"></textarea>
+                                    <label class="text-danger">*Name of Caller</label>
+                                    <input type="text" name="caller" id="caller" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label class="text-danger">*Chief Complaints</label>
+                                    <textarea name="reason_call" id="reason_call" class="form-control" rows="4"></textarea>
                                 </div>
                                 <div class="row form-group">
                                     <div class="col col-md-6">
@@ -126,14 +131,26 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'communicat
                                         <input type="date" name="date_call" id="date_call" class="form-control">
                                     </div>
                                  </div>
-                                 <div class="row form-group">
-                                    <div class="col-md-6">
-                                        <label>Time of Call</label>
-                                        <input type="text" name="time_call" id="time_call" class="form-control">
+                                 <div class="row form-group mt-2">
+                                   <div class="col col-md-6">
+                                    <div class="input-group date" id="call_time" data-target-input="nearest">
+                                      <input type="text" placeholder="Time of Call" class="form-control datetimepicker-input" data-target="#call_time" name="call_time" required="">
+                                      <div class="input-group-append" data-target="#call_time" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                                      </div>
                                     </div>
-                                     <div class="col-md-6">
+                                   </div>
+                                </div>
+                                <div class="row form-group">
+                                   <div class="col-md-12">
                                         <label>Address of Incident</label>
                                         <input type="text" name="address_incident" id="address_incident" class="form-control">
+                                    </div>
+                                </div>
+                                 <div class="row form-group">
+                                   <div class="col-md-12">
+                                        <label>Hospital (transfer)</label>
+                                        <input type="text" name="hospital" id="hospital" class="form-control">
                                     </div>
                                 </div>
                          </div>
