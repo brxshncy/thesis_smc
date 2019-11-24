@@ -17,69 +17,72 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'communicat
 		 <div class="row">
 		    <div class="col-sm-12 table-responsive mt-4">
 		    	<div class="row">
-		    	 <div class="col col-md-8">
-		    			<?php
-		    				if(isset($_SESSION['insert'])):?>
-		    					<div class="alert alert-success">
-		    						<?php echo $_SESSION['insert'];
-		    							unset($_SESSION['insert']);
-		    						?>
-		    					</div>
-		    		<?php endif	?>
-		    		<?php
-		    				if(isset($_SESSION['error'])):?>
-		    					<div class="alert alert-danger">
-		    						<?php echo $_SESSION['error'];
-		    							unset($_SESSION['error']);
-		    						?>
-		    					</div>
-		    		<?php endif	?>
-            <?php
-                if(isset($_SESSION['update'])):?>
-                  <div class="alert alert-info">
-                    <?php echo $_SESSION['update'];
-                       unset($_SESSION['update']);
-                    ?>
-                  </div>
-            <?php endif ?>
-          </div>
-		    	  	<div class="col col-md-2 mb-4" style="margin-left:110px;">
-		    			 <button type="button" id="logs" class="btn btn-danger"  data-toggle="modal" data-target="#add_logs">
-                   <i class="fas fa-phone-volume mr-2"></i>  Emergency
-               </button>
-		    		</div>
+  		    	 <div class="col col-md-10">
+  		    			<?php
+  		    				if(isset($_SESSION['insert'])):?>
+  		    					<div class="alert alert-success">
+  		    						<?php echo $_SESSION['insert'];
+  		    							unset($_SESSION['insert']);
+  		    						?>
+  		    					</div>
+  		    		<?php endif	?>
+  		    		<?php
+  		    				if(isset($_SESSION['error'])):?>
+  		    					<div class="alert alert-danger">
+  		    						<?php echo $_SESSION['error'];
+  		    							unset($_SESSION['error']);
+  		    						?>
+  		    					</div>
+  		    		<?php endif	?>
+              <?php
+                  if(isset($_SESSION['update'])):?>
+                    <div class="alert alert-info">
+                      <?php echo $_SESSION['update'];
+                         unset($_SESSION['update']);
+                      ?>
+                    </div>
+              <?php endif ?>
+            </div>
+  		    	  <div class="col col-md-2 mb-4">
+  		    			 <button type="button" id="logs" class="btn btn-danger pull-right btn-block"  data-toggle="modal" data-target="#add_logs">
+                     <i class="fas fa-phone-volume mr-2"></i>  Emergency
+                 </button>
+  		    		</div>
 		   		 </div>
           		<table id="item_list" class="table table-bordered table-striped">
 	          		<thead>
 	          		  <tr>	
                   <th>No.</th>
+		          		<th class="text-center">Name of Patient</th>
 		          		<th class="text-center">Name of Caller</th>
-		          		<th class="text-center">Reason for Calling</th>
-		          		<th class="text-center">Number of Caller</th>
+		          		<th class="text-center">Chief Complaints</th>
+                  <th class="text-center">Date of Incident</th>
 		          		<th class="text-center">Action</th>
 	          		</tr>
 	          		</thead>
 	                <tbody>
 	                 <?php
-                    $call_logs = "SELECT * FROM call_logs";
+                    $call_logs = "SELECT * FROM emergency_call";
                     $result = $conn->query($call_logs);
                     $counter = 1;
-                    while($row=mysqli_fetch_assoc($result)){?>
+                    while($row=mysqli_fetch_assoc($result)){
+                      $patient = $row['p_fname']." ".$row['p_lname'];
+                      $caller = $row['c_fname']." ".$row['c_lname'];
+                      $date = date("F j, 20y", strtotime($row['date_call']));
+                    ?>
                       <tr>
                         <td class="text-center"><?php echo $counter; ?></td>
-                        <td class="text-center"><?php echo $row['name'] ?></td>
-                        <td class="text-center"><?php echo $row['reason_call'] ?></td>
-                        <td class="text-center"><?php echo $row['number_caller'] ?></td>
+                        <td class="text-center"><?php echo $patient; ?></td>
+                        <td class="text-center"><?php echo  $caller; ?></td>
+                        <td class="text-center"><?php echo $row['reason_call']; ?></td>
+                        <td class="text-center"><?php echo $date; ?></td>
                         <td class="text-center">
                             <button class="item view_call" style="color:green;" data-toggle="tooltip" data-placement="top" id="<?php echo $row['id'] ?>" title="View Full Details">
                                 <i class="fa fa-eye"></i>
-                            </button> ||
-                            <button class="item edit_call" style="color:blue;"data-toggle="modal"  data-placement="top" id="<?php echo $row['id']; ?>" title="Update Details">
+                            </button> 
+                            <button class="item edit_call ml-3" style="color:blue;"data-toggle="modal"  data-placement="top" id="<?php echo $row['id']; ?>" title="Update Details">
                                 <i class="fa fa-edit (alias)"></i>
-                            </button> ||
-                             <button class="item del_call" style="color:red;" data-toggle="modal" data-placement="top" title="Delete" id="<?php echo $row['id']; ?>">
-                                <i class="zmdi zmdi-delete"></i>
-                            </button>
+                            </button> 
                         </td>
                       </tr>
 
@@ -108,29 +111,52 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'communicat
                         </button>
                     </div>
                         <div class="modal-body">
-                                <input type="hidden" value="0" name="notification">
-                                <div class="form-group">
-                                    <label class="text-danger">*Name of Patient</label>
-                                    <input type="text" name="patient" id="patient" class="form-control">
+                                <input type="hidden" value="0" id="notification" name="notification">
+                                <div class="row">
+                                  <div class="col">
+                                    <p class="text-danger">*Patient Info</p>
+                                  </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="text-danger">*Name of Caller</label>
-                                    <input type="text" name="caller" id="caller" class="form-control">
+                                <hr>
+                                  <div class="row form-group">
+                                      <div class="col col-md-6">
+                                       <input type="text" name="p_fname" id="p_fname" class="form-control" placeholder="Patient First Name" >
+                                      </div>
+                                       <div class="col col-md-6">
+                                       <input type="text" name="p_lname" id="p_lname" class="form-control" placeholder="Patient Last Name">
+                                      </div>
+                                  </div>
+                               <div class="row">
+                                <div class="col">
+                                  <p class="text-danger">*Caller Info</p>
                                 </div>
+                               </div>
+                               <hr>
+                               <div class="row form-group">
+                                      <div class="col col-md-6">
+                                       <input type="text" name="c_fname" id="c_fname" class="form-control" placeholder="First Name">
+                                      </div>
+                                       <div class="col col-md-6">
+                                       <input type="text" name="c_lname" id="c_lname" class="form-control" placeholder="Last Name">
+                                      </div>
+                                  </div>
+                              <hr>
                                 <div class="form-group">
                                     <label class="text-danger">*Chief Complaints</label>
                                     <textarea name="reason_call" id="reason_call" class="form-control" rows="4"></textarea>
                                 </div>
+                              <hr>
                                 <div class="row form-group">
                                     <div class="col col-md-6">
                                         <label>*Number of Caller</label>
                                         <input type="number" name="number_caller" id="number_caller" class="form-control">
                                     </div>
                                     <div class="col col-md-6">
-                                        <label>*Date of Call</label>
+                                        <label>*Date of Incident</label>
                                         <input type="date" name="date_call" id="date_call" class="form-control">
                                     </div>
                                  </div>
+                                 <hr>
                                  <div class="row form-group mt-2">
                                    <div class="col col-md-6">
                                     <div class="input-group date" id="call_time" data-target-input="nearest">
@@ -141,6 +167,7 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'communicat
                                     </div>
                                    </div>
                                 </div>
+                                <hr>
                                 <div class="row form-group">
                                    <div class="col-md-12">
                                         <label>Address of Incident</label>
@@ -156,7 +183,7 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'communicat
                          </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" name="submit">Save</button>
+                            <button type="submit" class="btn btn-danger" name="submit" id="notify">Alert Rescuers</button>
                         </div>
                 </div>
         </form>
@@ -198,28 +225,6 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'communicat
                         </div>
                 </div>
         </form>
-    </div>
-</div>
-
-<div class="modal fade" id="del_logs">
-    <div class="modal-dialog modal-lg">
-        
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Warning!!!</h5>
-                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                        <div class="modal-body">
-                                <h4>Are you sure you want to delete this data?
-                         </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-danger" id="delete" name="del">Delete</button>
-                        </div>
-                </div>
-  
     </div>
 </div>
 <?php include('footer.php'); ?>

@@ -38,6 +38,7 @@ include 'include/db.php';
 
     <!-- Bootstrap CSS-->
     <link href="vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>
 
     <!-- Vendor CSS-->
     <link href="vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
@@ -50,6 +51,26 @@ include 'include/db.php';
 
     <!-- Main CSS-->
     <link href="css/theme.css" rel="stylesheet" media="all">
+    <style>
+        #emergency_notif
+        {
+            display: block;
+            position: absolute;
+            bottom: 50px;
+            left: 50px;
+        }
+        .wrapper{
+            display: table-cell;
+            vertical-align:bottom;
+            height:auto;
+            width:200px;
+        }
+        .alert_default{
+            color:#333333;
+            background-color: #f2f2f2;
+            border-color: #cccccc;
+        }
+    </style>
 
 </head>
 
@@ -67,153 +88,61 @@ include 'include/db.php';
 <div class="section__content section__content--p30">
 <div class="container-fluid">
 <?php
-    if(isset($_SESSION['confirm_username'])){
-        $username = $_SESSION['confirm_username'];
-        $info = "SELECT * FROM rescuers WHERE username = '$username' ";
-        $query = $conn->query($info);
-        $fetch = mysqli_fetch_assoc($query);
-    }
+if(isset($_SESSION['confirm_username'])){
+    $username = $_SESSION['confirm_username'];
+    $info = "SELECT * FROM rescuers WHERE username = '$username' ";
+    $query = $conn->query($info);
+    $fetch = mysqli_fetch_assoc($query);
+}
 ?>		
-            <h1>Welcome <?php echo ucfirst($fetch['firstname'])." ".ucfirst($fetch['lastname']) ?></h1>
-             <div class="row m-t-25 mt-4">
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="overview-item overview-item--c1">
-                                    <div class="overview__inner">
-                                        <div class="overview-box clearfix">
-                                            <div class="icon">
-                                                <i class="zmdi zmdi-account-o"></i>
-                                            </div>
-                                            <div class="text">
-                                                <h2>10368</h2>
-                                                <span>members online</span>
-                                            </div>
-                                        </div>
-                                        <div class="overview-chart">
-                                            <canvas id="widgetChart1"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="overview-item overview-item--c2">
-                                    <div class="overview__inner">
-                                        <div class="overview-box clearfix">
-                                            <div class="icon">
-                                                <i class="zmdi zmdi-shopping-cart"></i>
-                                            </div>
-                                            <div class="text">
-                                                <h2>388,688</h2>
-                                                <span>items solid</span>
-                                            </div>
-                                        </div>
-                                        <div class="overview-chart">
-                                            <canvas id="widgetChart2"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="overview-item overview-item--c3">
-                                    <div class="overview__inner">
-                                        <div class="overview-box clearfix">
-                                            <div class="icon">
-                                                <i class="zmdi zmdi-calendar-note"></i>
-                                            </div>
-                                            <div class="text">
-                                                <h2>1,086</h2>
-                                                <span>this week</span>
-                                            </div>
-                                        </div>
-                                        <div class="overview-chart">
-                                            <canvas id="widgetChart3"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="overview-item overview-item--c4">
-                                    <div class="overview__inner">
-                                        <div class="overview-box clearfix">
-                                            <div class="icon">
-                                                <i class="zmdi zmdi-money"></i>
-                                            </div>
-                                            <div class="text">
-                                                <h2>$1,060,386</h2>
-                                                <span>total earnings</span>
-                                            </div>
-                                        </div>
-                                        <div class="overview-chart">
-                                            <canvas id="widgetChart4"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="au-card recent-report">
-                                    <div class="au-card-inner">
-                                        <h3 class="title-2">recent reports</h3>
-                                        <div class="chart-info">
-                                            <div class="chart-info__left">
-                                                <div class="chart-note">
-                                                    <span class="dot dot--blue"></span>
-                                                    <span>products</span>
-                                                </div>
-                                                <div class="chart-note mr-0">
-                                                    <span class="dot dot--green"></span>
-                                                    <span>services</span>
-                                                </div>
-                                            </div>
-                                            <div class="chart-info__right">
-                                                <div class="chart-statis">
-                                                    <span class="index incre">
-                                                        <i class="zmdi zmdi-long-arrow-up"></i>25%</span>
-                                                    <span class="label">products</span>
-                                                </div>
-                                                <div class="chart-statis mr-0">
-                                                    <span class="index decre">
-                                                        <i class="zmdi zmdi-long-arrow-down"></i>10%</span>
-                                                    <span class="label">services</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="recent-report__chart">
-                                            <canvas id="recent-rep-chart"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="au-card chart-percent-card">
-                                    <div class="au-card-inner">
-                                        <h3 class="title-2 tm-b-5">char by %</h3>
-                                        <div class="row no-gutters">
-                                            <div class="col-xl-6">
-                                                <div class="chart-note-wrap">
-                                                    <div class="chart-note mr-0 d-block">
-                                                        <span class="dot dot--blue"></span>
-                                                        <span>products</span>
-                                                    </div>
-                                                    <div class="chart-note mr-0 d-block">
-                                                        <span class="dot dot--red"></span>
-                                                        <span>services</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-6">
-                                                <div class="percent-chart">
-                                                    <canvas id="percent-chart"></canvas>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                     
-                       
-                        
+<h1>Welcome <?php echo ucfirst($fetch['firstname'])." ".ucfirst($fetch['lastname']) ?></h1>
+<audio id="sound">
+<source src="./audio/grad.mp3" type="audio/mpeg">
+</audio>
+<div class="card mt-4">
+    <div class="card-header"><b>Emergency Calls</b></div>
+      <div class="card-body">
+        <div class="row">
+             <div class="col-sm-12 table-responsive mt-4">
+                <table id="item_list" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th class="text-center">No.</th>
+                        <th class="text-center">Patient Name</th>
+                        <th class="text-center">Chief Complaints</th>
+                        <th class="text-center">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="incident_details">
+                        <?php 
+                            $logs = "SELECT * FROM emergency_call ORDER BY id DESC";
+                            $res = $conn->query($logs) or trigger_error(mysqli_error($conn)." ".$logs);
+                            $res_rows = mysqli_num_rows($res);
+                            $counter = 0;
+                            while($row = mysqli_fetch_assoc($res)){
+                                $counter ++;
+                                $patient = $row['p_fname']." ".$row['p_lname'];
+                                
+                        ?>
+                            <tr>
+                                <td class="text-center"><?php echo $counter; ?></td>
+                                <td class="text-center"><?php echo $patient  ?></td>
+                                <td class="text-center"><?php echo $row['reason_call'];  ?></td>
+                                <td class="text-center">
+                                    <button class="item  show_data" style="color:green;" id="<?php echo $row['id']; ?>" data-toggle="tooltip" data-place="top" title="View Full Details">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php }
+                        ?>
+                    </tbody>
+                </table>
+             </div>
+        </div>
+    </div>
+</div>
+
 </div>
 </div>
 </div>
@@ -242,6 +171,53 @@ include 'include/db.php';
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+       $(document).ready(function(){
+        $('table').DataTable();
+            function emergency_notification(){
+                $.ajax({
+                    url:'include/emergency_notif.php',
+                    method:'POST',
+                    success:function(data){
+                        if(data != ''){
+                            console.log(data);
+                                    $('audio').get(0).play();
+                                    Swal.fire({
+                                    'title': 'Warning!!!',
+                                    'text': 'Emergency Alert!',
+                                    'icon': 'warning',
+                                    'backdrop': `
+                                    rgb(255,0,0,0.2)
+                                  `,
+                                    confirmButtonText: 'Tap to Recieve',
+                                    confirmButtonColor: '#DD6B55',
+                                }).then((response)=>{
+                                    if (response.value){
+                                      location.reload();
+                                    }
+                                })
+
+                        }else{
+                            console.log(data);
+                        }
+                    },
+                    error: function(data){
+                        Swal.fire({
+                            'title': 'Error',
+                            'text': 'Unknown error!',
+                            'type' : 'warning'
+                        })
+                    }
+                })
+            }
+            setInterval(function(){
+                emergency_notification();
+            },3000);
+        })
+    </script>
 </body>
 
 </html>

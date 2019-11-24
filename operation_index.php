@@ -120,58 +120,6 @@ require ('include/db.php');
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                             <div class="col-sm-6 col-lg-4">
-                                <div class="overview-item overview-item--c4">
-                                    <div class="overview__inner">
-                                        <div class="overview-box clearfix">
-                                            <div class="icon">
-                                                <a href="opr_inventory.php"><i class="zmdi zmdi-shopping-cart"></i></a>
-                                            </div>
-                                            <div class="text">
-                                            <?php
-                                                $item = "SELECT COUNT(id) as item from items";
-                                                $result3 = $conn->query($item) or trigger_error(mysqli_error($conn)." ".$item);
-                                                $count_item = mysqli_num_rows($result3);
-                                                $row3 = mysqli_fetch_assoc($result3);
-                                                $inventory = $row3['item'];
-                                            ?>
-                                                <h2><?php echo $inventory ?></h2>
-                                                <span>items available in inventory</span>
-                                            </div>
-                                        </div>
-                                        <div class="overview-chart">
-                                            <canvas id="widgetChart4"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                               <div class="col-sm-6 col-lg-4">
-                                <div class="overview-item overview-item--c3">
-                                    <div class="overview__inner">
-                                        <div class="overview-box clearfix">
-                                            <div class="icon">
-                                               <a href="pcr-record.php"> <i class="zmdi zmdi-calendar-note"></i></a>
-                                            </div>
-                                            <div class="text">
-                                                <?php 
-                                                    $pcr = "SELECT COUNT(id) as pcr FROM  pcr";
-                                                    $result1 = $conn->query($pcr) or trigger_error(mysqli_error($conn)." ".$pcr);
-                                                    $count_pcr = mysqli_num_rows($result1);
-                                                    $row1 = mysqli_fetch_assoc($result1);
-                                                    $record = $row1['pcr'];
-                                                ?>
-                                                <h2><?php echo $record ?></h2>
-                                                <span><?php echo 'You have'." ".$record." PCR pending request" . (($count_pcr > 1) ? 's' : '');?></span>
-                                            </div>
-                                        </div>
-                                        <div class="overview-chart">
-                                            <canvas id="widgetChart3"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-            </div>
              <div class="row">
                             <div class="col-lg-12">
                                 <h2 class="title-1 m-b-25">Patient Care Reports</h2>

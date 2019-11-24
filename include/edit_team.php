@@ -12,6 +12,7 @@ if(isset($_POST['edit_team'])){
 			$vehicle_name = $row['vehicle_name'];		
       $time_in = $row['time_in'];
       $time_out = $row['time_out'];
+      
 	}
 }
 ?>
@@ -29,13 +30,13 @@ if(isset($_POST['edit_team'])){
             $qry = "SELECT * FROM vehicle";
             $result = $conn->query($qry) or trigger_error(mysqli_error($conn)." ".($qry));
             while($row = mysqli_fetch_assoc($result)){?>
-            <option value="<?php echo $row['id'];?>"> <?php echo $row['vehicle_name'] ?> </option>
+            <option value ="<?php $row['id'] ?>"><?php echo $row['vehicle_name'] ?></option>
           <?php }?>
       </select>
   </div>
   <div class="form-row mb-2">
     <div class="col col-md-6">
-        <div class="input-group date" id="edit_in">
+        <div class="input-group date" id="edit_in" data-target-input="nearest">
           <input type="text" placeholder="Select Time In" class="form-control datetimepicker-input" value="<?php echo $time_in ?>" data-target="#edit_in" name="edit_in" required="">
           <div class="input-group-append" data-target="#edit_in" data-toggle="datetimepicker">
             <div class="input-group-text"><i class="fa fa-clock-o"></i></div>

@@ -9,7 +9,7 @@
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
                          <li><a href="communication_monitoring.php">
-                                <i class="fas fa-arrow-circle-right"></i>Call Logs
+                                <i class="fas fa-arrow-circle-right"></i>Emergency Calls
                             </a>
                         </li>
                     </ul>

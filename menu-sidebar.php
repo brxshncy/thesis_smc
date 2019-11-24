@@ -14,32 +14,27 @@
                                 <i class="fas fa-tasks"></i>
                                 Dashboard
                             </a>
+                        </li>
                         <li>
-                            <li>
                             <a href="rescuer_registration.php">
                                 <i class="fas fa-user"></i>
                                 Add Rescuers
                             </a>
+                         </li>
+                          <li>
+                            <a href="pcr-addteam.php">
+                                <i class="fas fa-ambulance"></i>Manage Team
+                            </a>
+                        </li>
                          <li>
                             <a href="pcr-record.php">
                                 <i class="fas fa-files-o"></i>PCR Records
                             </a>
                         </li>
-
-                        <li>
-                            <a href="pcr-addteam.php">
-                            <i class="fas fa-ambulance"></i>Manage Team
-                        </a>
-                        </li>
-
                         <li>
                             <a href="operation_attendance.php">
                             <i class="fas fa-clipboard"></i>Rescuer Attendance
                         </a>
-                        </li>
-                         <li>
-                            <a href="opr_inventory.php">
-                                <i class="fas fa-list-ol"></i>Inventory</a>
                         </li>
                        <li>
                             <a href="locator_request.php">
@@ -55,6 +50,12 @@
                                     <?php
                                          }
                                     ?>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="locator_request.php">
+                               <i class="fas fa-chart-bar"></i>
+                                    Statistics Report
                             </a>
                         </li>
                         <li>
