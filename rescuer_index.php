@@ -97,7 +97,7 @@ if(isset($_SESSION['confirm_username'])){
 ?>		
 <h1>Welcome <?php echo ucfirst($fetch['firstname'])." ".ucfirst($fetch['lastname']) ?></h1>
 <audio id="sound">
-<source src="./audio/grad.mp3" type="audio/mpeg">
+<source src="./audio/purge.mp3" type="audio/mpeg">
 </audio>
 <div class="card mt-4">
     <div class="card-header"><b>Emergency Calls</b></div>

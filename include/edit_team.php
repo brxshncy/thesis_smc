@@ -30,7 +30,7 @@ if(isset($_POST['edit_team'])){
             $qry = "SELECT * FROM vehicle";
             $result = $conn->query($qry) or trigger_error(mysqli_error($conn)." ".($qry));
             while($row = mysqli_fetch_assoc($result)){?>
-            <option value ="<?php $row['id'] ?>"><?php echo $row['vehicle_name'] ?></option>
+            <option value ="<?php echo $row['id'] ?>"><?php echo $row['vehicle_name'] ?></option>
           <?php }?>
       </select>
   </div>

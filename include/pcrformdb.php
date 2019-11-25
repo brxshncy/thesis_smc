@@ -1,114 +1,45 @@
-		<?php
-
+<?php
 session_start();
-	// if upload button is clicked
-	if(isset($_POST['upload'])){
+if(isset($_POST['upload'])){
+require "db.php";
 
-		// require database
-			require "db.php";
+//PATIENT PERSONAL INFO
+	$sender = $_POST['sender'];
+	$team = $_POST['team'];
+	$firstname = mysqli_escape_string($conn,$_POST['firstname']);
+	$lastname =  mysqli_escape_string($conn,$_POST['lastname']);
+	$mi =  mysqli_escape_string($conn,$_POST['mi']);
+	$religion =  mysqli_escape_string($conn,$_POST['religion']);
+	$nationality =  mysqli_escape_string($conn,$_POST['nationality']);
+	$age =  mysqli_escape_string($conn,$_POST['age']);
+	$home_address =  mysqli_escape_string($conn,$_POST['home_address']);
+	$incident_address = mysqli_escape_string($conn,$_POST['incident_address']);
+	$med_facility = mysqli_escape_string($conn,$_POST['med_facility']);
+	$date_i  = $_POST['date_i'];
+	$gender =  mysqli_escape_string($conn,$_POST['gender']);
+	$team_leader = $_POST['team_leader'];
+	$transport_officer = $_POST['transport_officer'];
+	$treatment_officer = $_POST['treatment_officer'];
+	$barangay = mysqli_escape_string($conn,$_POST['barangay']);
 
-		// declaring variable
-			//PATIENT PERSONAL INFO
-		$firstname = mysqli_escape_string($conn,$_POST['firstname']);
-		$lastname =  mysqli_escape_string($conn,$_POST['lastname']);
-		$mi =  mysqli_escape_string($conn,$_POST['mi']);
-		$religion =  mysqli_escape_string($conn,$_POST['religion']);
-		$nationality =  mysqli_escape_string($conn,$_POST['nationality']);
-		$age =  mysqli_escape_string($conn,$_POST['age']);
-		$gender =  mysqli_escape_string($conn,$_POST['gender']);
-		$address =  mysqli_escape_string($conn,$_POST['address']);
+	$barangay_tally = "INSERT INTO barangay_responses (barangay_name,date_incident) VALUES ('$barangay','$date_i')";
+	$run_tally = $conn->query($barangay_tally) or trigger_error(mysqli_error($conn)." ".$barangay_tally);
 
-		//INCIDENT INFO
-		$date_i =  mysqli_escape_string($conn,$_POST['date_i']);
-		$time_i =  mysqli_escape_string($conn,$_POST['time_i']);
-		$impression = mysqli_escape_string($conn,$_POST['impression']);
-		$r_p1 = mysqli_escape_string($conn,$_POST['r_p1']);
-		$contact1 = mysqli_escape_string($conn,$_POST['contact1']);
-		$r_p2 = mysqli_escape_string($conn,$_POST['r_p2']);
-		$contact2 = mysqli_escape_string($conn,$_POST['contact2']);
-		$reason = mysqli_escape_string($conn,$_POST['reason']);
-		$nature = mysqli_escape_string($conn,$_POST['nature']);
-		$neuro =mysqli_escape_string($conn,$_POST['neuro']);
-		$call_recieve = mysqli_escape_string($conn,$_POST['call_recieve']);
-		$unit_enroute = mysqli_escape_string($conn,$_POST['unit_enroute']);
-		$arrive_scene =mysqli_escape_string($conn,$_POST['arrive_scene']);
-		$left_scene =mysqli_escape_string($conn,$_POST['left_scene']);
-		$arrive_destination = mysqli_escape_string($conn,$_POST['arrive_destination']);
-		$back_service = mysqli_escape_string($conn,$_POST['back_service']);
-		$airway = mysqli_escape_string($conn,$_POST['airway']);
-		$breathing = mysqli_escape_string($conn,$_POST['breathing']);
-		$pupils = mysqli_escape_string($conn,$_POST['pupils']);
-		$pulse =mysqli_escape_string($conn,$_POST['pulse']);
-		$skin =mysqli_escape_string($conn,$_POST['skin']);
-		$skin_texture = mysqli_escape_string($conn,$_POST['skin_texture']);
-		$crt = mysqli_escape_string($conn,$_POST['crt']);
+	if($run_tally){
+		$insert_pcr = "
+		INSERT INTO pcr_submit
+		(sender,team,firstname,lastname,mi,religion,nationality,age,home_address,incident_address,med_facility,date_i,gender,team_leader,transport_officer,treatment_officer,barangay)
+		VALUES
+		('$sender','$team','$firstname','$lastname','$mi','$religion','$nationality','$age','$home_address','$incident_address','$med_facility','$date_i','$gender','$team_leader','$transport_officer','$treatment_officer','$barangay');
+		";
+		$run_pcr = $conn->query($insert_pcr) or trigger_error(mysqli_error($conn)." ".$insert_pcr);
 
-		//VITAL SIGNS
-		$time_vs= mysqli_escape_string($conn,$_POST['time_vs']);
-		$bp = mysqli_escape_string($conn,$_POST['bp']);
-		$pr = mysqli_escape_string($conn,$_POST['pr']);
-		$rr = mysqli_escape_string($conn,$_POST['rr']);
-		$temp = mysqli_escape_string($conn,$_POST['temp']);
-		$stat = mysqli_escape_string($conn,$_POST['stat']);
-		$eye =mysqli_escape_string($conn,$_POST['eye']);
-		$verbal = mysqli_escape_string($conn,$_POST['verbal']);
-		$motor =mysqli_escape_string($conn,$_POST['motor']);
-		$total =mysqli_escape_string($conn,$_POST['total']);
-
-		//ASSESMENT
-		$symtomps = mysqli_escape_string($conn,$_POST['symtomps']);
-		$allergies =mysqli_escape_string($conn,$_POST['allergies']);
-		$meds = mysqli_escape_string($conn,$_POST['meds']);
-		$past_ill= mysqli_escape_string($conn,$_POST['past_ill']);
-		$oral_intake= mysqli_escape_string($conn,$_POST['oral_intake']);
-		$time_oral= mysqli_escape_string($conn,$_POST['time_oral']);
-		$onset= mysqli_escape_string($conn,$_POST['onset']);
-		$provocation= mysqli_escape_string($conn,$_POST['provocation']);
-		$quality=mysqli_escape_string($conn,$_POST['quality']);
-		$radiation=  mysqli_escape_string($conn,$_POST['radiation']);           
-		$severity= mysqli_escape_string($conn,$_POST['severity']);
-		$timing_i= mysqli_escape_string($conn,$_POST['timing_i']);
-		$events_prior= mysqli_escape_string($conn,$_POST['events_prior']);
-		$trauma = mysqli_escape_string($conn,$_POST['trauma']);
-		$burn = mysqli_escape_string($conn,$_POST['burn']);
-		$treatment = mysqli_escape_string($conn,$_POST['treatment']);
-		$narrative = mysqli_escape_string($conn,$_POST['narrative']);
-
-		//RESCUER INFO
-		$transport_officer = mysqli_escape_string($conn,$_POST['transport_officer']);
-		$treatment_officer =mysqli_escape_string($conn,$_POST['treatment_officer']);
-		$dispatched_unit = mysqli_escape_string($conn,$_POST['dispatched_unit']);
-		$desti_deter = mysqli_escape_string($conn,$_POST['desti_deter']);
-		$response_mode = mysqli_escape_string($conn,$_POST['response_mode']);
-		$transport_mode = mysqli_escape_string($conn,$_POST['transport_mode']);
-		$receiving_facility = mysqli_escape_string($conn,$_POST['receiving_facility']);
-		$receiving_md = mysqli_escape_string($conn,$_POST['receiving_md']);
-		$status = $_POST['status'];
-		$sender = $_POST['sender'];
-		$team = $_POST['team'];	
-
-
-		// SQL INSERT
-		$insert = "INSERT INTO
-		 pcr (firstname,lastname,middlename,religion,nationality,age,gender,address,date_i,time_i,impression,r_p1,contact1,r_p2,contact2,reason,nature,neuro,call_recieve,unit_enroute,arrive_scene,left_scene,arrive_destination,back_service,airway,breathing,pupils,pulse,skin,skin_texture,crt,time_vs,bp,pr,rr,temp,02stat,eye,verbal,motor,total,symtomps,allergies,meds,past_ill,oral_intake,time_oral,onset,provocation,quality,radiation,severity,timing_i,events_prior,trauma,burn,treatment,narrative,transport_officer,treatment_officer,dispatched_unit,desti_deter,response_mode,transport_mode,receiving_facility,receiving_md,status,sender,team) 
-		VALUES('$firstname','$lastname','$mi','$religion','$nationality','$age','$gender','$address','$date_i','$time_i','$impression','$r_p1','$contact1','$r_p2','$contact2','$reason','$nature','$neuro','$call_recieve ','$unit_enroute','$arrive_scene','$left_scene','$arrive_destination','$back_service','$airway','$breathing','$pupils','$pulse','$skin','$skin_texture','$crt','$time_vs','$bp','$pr','$rr','$temp','$stat','$eye','$verbal','$motor','$total','$symtomps','$allergies','$meds','$past_ill','$oral_intake','$time_oral','$onset','$provocation','$quality','$radiation','$severity','$timing_i','$events_prior','$trauma','$burn','$treatment','$narrative','$transport_officer','$treatment_officer','$dispatched_unit','$desti_deter','$response_mode','$transport_mode','$receiving_facility','$receiving_md','$status','$sender','$team')";
-
-
-		//SESSION MESSAGE IF DATA IS INSERTED
-
-		
-				$_SESSION['message'] = "PCR has been sent to admin";
-				$_SESSION['msg_type'] = "success";
-
-
-
-		//CHECK IF QUERY FUNCTION WORKED
-		if(mysqli_query($conn,$insert)){
+		if($run_pcr){
+			$_SESSION['message'] = "Submitted successfully!";
 			header("location:../pcr-form.php");
 		}
-		else{
-			echo "Error:" .$insert. "<br>" .mysqli_error($conn);
-		}	
-
+	}
 }
+
+
 ?>

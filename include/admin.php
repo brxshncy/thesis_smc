@@ -30,7 +30,7 @@ $msg ='';
 				header("location:../logistics_index.php");
 			}
 			else if($_SESSION['admin_type']=="secretary"){
-				echo "secretary";
+				header("location:../operation_secretary.php");
 			}
 		}
 			else{
