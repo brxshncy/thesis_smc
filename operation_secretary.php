@@ -18,7 +18,7 @@ require ('include/db.php');
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>Rescuer Homepage</title>
+    <title>Secretary Dashboard</title>
 
     <!-- Fontfaces CSS-->
     <link href="css/font-face.css" rel="stylesheet" media="all">
@@ -93,7 +93,7 @@ require ('include/db.php');
                             <button class="item ml-2 barangay_tally" title="Barangay Response Tally" id="<?php echo $row['id'] ?>">
                                 <i class="fas fa-clipboard text-info"></i>
                             </button>
-                            <button class="item ml-2" title="Incident Tally">
+                            <button class="item ml-2 incident_tally" title="Incident Tally" id="<?php echo $row['id'] ?>">
                                <i class="fas fa-laptop text-danger"></i>
                             </button>
                         </td>
@@ -122,6 +122,28 @@ require ('include/db.php');
                               
 
                 </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="incident_content" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Incident Tally</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <form id="incident_points">
+                <div class="modal-body" id= "incident_tally" >
+                      
+                            
+                </div>
+                 <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                     <button type="submit" class="btn btn-success" name="submit" id="save">Save</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -179,8 +201,68 @@ require ('include/db.php');
                     }
                 })
             })
+            $('.incident_tally').click(function(){
+                var incident_id = $(this).attr('id');
+                console.log(incident_id);
+                $.ajax({
+                    url: 'include/incident_tally.php',
+                    method:'post',
+                    data:{incident_id:incident_id},
+                    success:function(data){
+                        $('#incident_tally').html(data);
+                        $('#incident_content').modal('show');
+                    },
+                    error:function(data){
+                        Swal.fire({
+                            'title':'Error',
+                            'text':'Something went wrong!',
+                            'icon': 'error'
+                        })
+                    }
+                })
+            })
+            $('#save').click(function(e){
+                
+                    e.preventDefault();
+                    let incident = $('#incident').val();
+                    let pcr = $('#pcr').val()
+                   
+                   if(incident && pcr ){
+                        $.ajax({
+                            url:'include/incident_points.php',
+                            method:'post',
+                            data:{
+                                incident:incident,
+                                pcr:pcr
+                            },
+                            success:function(data){
+                                Swal.fire({
+                                    'title':'Saved',
+                                    'text':'Submitted successfully!',
+                                    'icon':'success'
+                                })
 
+                            },
+                            error:function(data){
+                                Swal.fire({
+                                    'title':'Error',
+                                    'text':'Something went wrong',
+                                    'icon':'error'
+                                })
+                            }
+                        })
+                   }
+                   else{
+                    Swal.fire({
+                        'title':'Warning!',
+                        'text':'Please fill up the fields!',
+                        'icon':'warning'
+                    })
+                   }
+
+               
        })
+})
     </script>
 </body>
 

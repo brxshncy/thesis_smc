@@ -120,10 +120,10 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'communicat
                                 <hr>
                                   <div class="row form-group">
                                       <div class="col col-md-6">
-                                       <input type="text" name="p_fname" id="p_fname" class="form-control" placeholder="Patient First Name" >
+                                       <input type="text" name="p_fname" id="p_fname" class="form-control" placeholder="Patient First Name" required>
                                       </div>
                                        <div class="col col-md-6">
-                                       <input type="text" name="p_lname" id="p_lname" class="form-control" placeholder="Patient Last Name">
+                                       <input type="text" name="p_lname" id="p_lname" class="form-control" placeholder="Patient Last Name" required>
                                       </div>
                                   </div>
                                <div class="row">
@@ -134,26 +134,26 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'communicat
                                <hr>
                                <div class="row form-group">
                                       <div class="col col-md-6">
-                                       <input type="text" name="c_fname" id="c_fname" class="form-control" placeholder="First Name">
+                                       <input type="text" name="c_fname" id="c_fname" class="form-control" placeholder="First Name" required>
                                       </div>
                                        <div class="col col-md-6">
-                                       <input type="text" name="c_lname" id="c_lname" class="form-control" placeholder="Last Name">
+                                       <input type="text" name="c_lname" id="c_lname" class="form-control" placeholder="Last Name" required>
                                       </div>
                                   </div>
                               <hr>
                                 <div class="form-group">
                                     <label class="text-danger">*Chief Complaints</label>
-                                    <textarea name="reason_call" id="reason_call" class="form-control" rows="4"></textarea>
+                                    <textarea name="reason_call" id="reason_call" class="form-control" rows="4" required></textarea>
                                 </div>
                               <hr>
                                 <div class="row form-group">
                                     <div class="col col-md-6">
                                         <label>*Number of Caller</label>
-                                        <input type="number" name="number_caller" id="number_caller" class="form-control">
+                                        <input type="number" name="number_caller" id="number_caller" class="form-control" required>
                                     </div>
                                     <div class="col col-md-6">
                                         <label>*Date of Incident</label>
-                                        <input type="date" name="date_call" id="date_call" class="form-control">
+                                        <input type="date" name="date_call" id="date_call" class="form-control" required>
                                     </div>
                                  </div>
                                  <hr>
@@ -171,13 +171,13 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'communicat
                                 <div class="row form-group">
                                    <div class="col-md-12">
                                         <label>Address of Incident</label>
-                                        <input type="text" name="address_incident" id="address_incident" class="form-control">
+                                        <input type="text" name="address_incident" id="address_incident" class="form-control" required>
                                     </div>
                                 </div>
                                  <div class="row form-group">
                                    <div class="col-md-12">
                                         <label>Hospital (transfer)</label>
-                                        <input type="text" name="hospital" id="hospital" class="form-control">
+                                        <input type="text" name="hospital" id="hospital" class="form-control" required>
                                     </div>
                                 </div>
                          </div>

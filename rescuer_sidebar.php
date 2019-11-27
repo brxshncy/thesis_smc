@@ -47,21 +47,6 @@ $username = $_SESSION['confirm_username'];
                         </a>
                         </li>
                         <li>
-                           <a href="">
-                                <i class="fa fa-bell"></i>
-                                Notification
-                                <?php 
-                                include 'include/db.php'; 
-                                $query = "SELECT * FROM locatorslip_record WHERE username = '$username' AND status= 'unread' ";
-                                $result = $conn->query($query);
-                                $count_status = mysqli_num_rows($result);
-                                if($count_status > 0){
-                            ?>
-                                 <span class="badge badge-danger"><?php echo $count_status; ?></span>
-                            <?php } ?> 
-                        </a>
-                        </li>
-                        <li>
                            <a href="rescuer_logout.php">
                            <i class="fas fa-sign-out-alt"></i></i>Log Out
                         </a>

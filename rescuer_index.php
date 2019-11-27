@@ -146,6 +146,21 @@ if(isset($_SESSION['confirm_username'])){
 </div>
 </div>
 </div>
+<div class="modal fade" id="call_modal" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="scrollmodalLabel">Emergency Details </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                         </button>
+                     </div>
+        <div class="modal-body" id="call_details">
+                                       
+         </div>
+     </div>
+  </div>
+</div>
 <?php include 'footer.php';?>
 
     <!-- Jquery JS-->
@@ -216,6 +231,26 @@ if(isset($_SESSION['confirm_username'])){
             setInterval(function(){
                 emergency_notification();
             },3000);
+            $('.show_data').click(function(){
+                let call_id = $(this).attr('id');
+                console.log(call_id);
+                $.ajax({
+                    url: 'include/emergency_details.php',
+                    method:'POST',
+                    data:{call_id:call_id},
+                    success:function(data){
+                        $('#call_details').html(data);
+                        $('#call_modal').modal('show');
+                    },
+                    error: function(data){
+                        Swal.fire({
+                            'title':'Error',
+                            'text': 'Unknown error occur',
+                            'icon': 'error'
+                        })
+                    }
+                })
+            })
         })
     </script>
 </body>

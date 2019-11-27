@@ -42,6 +42,7 @@
 
     <!-- Main CSS-->
     <link href="css/theme.css" rel="stylesheet" media="all">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 
 </head>
 
@@ -83,9 +84,6 @@
                     </div>
                 </div>
                          <?php endif ?>
-
-    <!--================================================================================================================-->
-
 <form action="include/pcrformdb.php" method="POST">
     <?php
                 if(isset($_SESSION['confirm_username'])){
@@ -99,214 +97,168 @@
             ?>     
             <input type="hidden" name="sender" value="<?php echo $id;?>">
             <input type="hidden" name="team" value="<?php echo $fetch['team_unit']; ?>">
-            
+<div class="col">
+    <div class="card">
+        <div class="card-header bg-light">
+            <h3 align="center" class="p-4">Pre Hospital Patient Care Form</h3>
+        </div>
+            <div class="card-body">
+ <?php 
 
-           
-    <div class="col">
-        <div class="card">
-            <div class="card-header bg-light">
-                <h3 align="center" class="p-4">Pre Hospital Patient Care Form</h3>
-            </div>
-                 <div class="card-body">
-
-         <!--================================================================================================================-->
-
-                    <ul class="nav nav-tabs nav-pills nav-fill">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#" style="border:1px solid #ccc" id="list_patient">
-                                Patient's Personal Info
-                            </a>    
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link inactive_tab1" href="#" style="border:1px solid #ccc" id="list_incident">
-                                Incident Info
-                            </a>    
-                        </li>
-                         <li class="nav-item">
-                            <a class="nav-link inactive_tab1" href="#" style="border:1px solid #ccc" id="list_vs">
-                                 Vital Sign
-                            </a>    
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link inactive_tab1 "  href="#" style="border:1px solid #ccc" id="list_assesment">
-                                 Assesment
-                            </a>    
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link inactive_tab1" href="#" style="border:1px solid #ccc" id="list_rescuer">
-                                 Team Information
-                            </a>    
-                        </li>
-                    </ul>
-
-     <!--====================================Patient's Personal Info=================================================-->
+    include ('pcr-form-btn.php');
+ ?>
+<!--PATIENT INFO-->
 <div class="tab-content" style="margin-top:16px;">
-    <div class="tab-pane active" id="personalinfo_content">
-        <div class="panel panel-default">
-            <div class="panel-heading">Patient's Personal Info</div>
-
-            <div class="panel-body">
-                <input type="hidden" class="form-control" name="status" id="status" value="unread" readonly>
-                <div class="form-row">
-                    <div class="form-group col-md-5">
-                        <label>First Name</label>
-                        <input type="text" class="form-control" name= "firstname" id="firstname" required="">
-                    </div>
-                    <div class="form-group col-md-5 ">
-                        <label for="inputPassword4">Last Name</label>
-                        <input type="text" class="form-control" name= "lastname" id="lastname" required="">
-                    </div>
-                    <div class="form-group col-md-2 ">
-                        <label>Middle Initial</label>
-                        <input type="text" class="form-control" name= "mi" id="mi" required="">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-1">
-                        <label>Age</label>
-                        <input type="text" class="form-control" name= "age" id="age" >
-                    </div>
-                    <div class="form-group col-md-4 ml-2">
-                        <label>Religion</label>
-                        <input type="text" class="form-control" name= "religion" id="religion"  >
-                    </div>
-                    <div class="form-group col-md-5">
-                        <label>Nationality</label>
-                        <input type="text" class="form-control" name= "nationality" id="nationality" >
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label>Home Address</label>
-                        <input type="text" class="form-control" name="home_address" id="home_address">
-                    </div>
-                </div>
-                <hr>
-                 <div class="row form-group">
-                    <div class="col">
-                        <label class=" form-control-label" for="poi" required>Place of Incidence (Please Select)</label>
-                        <input type="radio" class="ml-2 mr-2" name="poi" id="scene" value="Scene">Scene
-                        <input type="radio" class="ml-2 mr-2" name="poi" id="med" value="Medical Facility">Medical Facility
-                    </div>
-                    <div class="col form-inline">
-                        <label for="date_i">Date of Incident</label>
-                        <input type="date" name="date_i" id="date_i" class="form-control col-md-6 ml-3" required>
-                    </div>
-                </div>
-                <div class="form-row mt-4" id="scene_field">
-                        <div class="form-group col-md-3">
-                            <label>Barangay</label>
-                            <select name="barangay" id="barangay" class="form-control form-control-lg" style="height:38px;">
-                                <option value="">Select Barangay</option>
-                                <?php 
-                                    $barangay = "SELECT * FROM barangay";
-                                    $run_query = $conn->query($barangay) or trigger_error(mysqli_error($conn)." ".$barangay);
-                                    while($row = mysqli_fetch_assoc($run_query)){ ?>
-                                        <option value = "<?php echo $row['id'] ?>"><?php echo $row['baranggay_name'] ?></option>
-
-                                 <?php  }
-                                ?>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-9">
-                            <label>(Purok Street Name, City)</label>
-                            <input type="text" class="form-control" name= "incident_address" id="incident_address" >
-                        </div>
-                </div>
-                <div class="form-row mt-4" id="med_field">
-                    <div class="form-group col-md-8">
-                        <label>Medical Facility Name</label>
-                        <input type="text" name="med_facility" class="form-control" id="med_facility">
-                    </div>
-                </div>
-                <hr>
-                <div class="row form-group">
-                    <div class="col">
-                        <label class=" form-control-label" for="gender">Gender</label>
-                        <input type="radio" class="ml-2 mr-2" name="gender" id="gender" value="Male">Male
-                        <input type="radio" class="ml-2 mr-2" name="gender" id="gender" value="Female">Female
-                    </div>          
-                </div>
-                <hr>
-                 <div class="row">
-                    <div class="col">
-                        <h3>Team Information</h3>
-                    </div>
-                </div>
-                <?php 
-                            $team = "
-                            SELECT t.unit_name AS team, CONCAT(r.firstname,' ',r.lastname) AS team_leader
-                            FROM rescuers r LEFT JOIN unit_name t ON r.team_unit = t.id 
-                            WHERE r.team_unit = '$team_id' AND role = 'Team Leader'";
-                            $qry_team = $conn->query($team) or trigger_error(mysqli_error($conn)." ".$team);
-                            $res = mysqli_fetch_assoc($qry_team);
-
-                            $transport_officer = "SELECT  CONCAT(r.firstname,' ',r.lastname) AS transport_officer
-                            FROM rescuers r LEFT JOIN unit_name t ON r.team_unit = t.id 
-                            WHERE r.team_unit = '$team_id' AND role = 'Transport Officer'";
-                            $qry_transport = $conn->query($transport_officer) or trigger_error($conn." ".$transport_officer);
-                            $res1 = mysqli_fetch_assoc($qry_transport);
-
-                            $treatment_officer = "SELECT  CONCAT(r.firstname,' ',r.lastname) AS treatment_officer
-                            FROM rescuers r LEFT JOIN unit_name t ON r.team_unit = t.id 
-                            WHERE r.team_unit = '$team_id' AND role = 'Treatment Officer'";
-                            $qry_treatment = $conn->query($treatment_officer) or trigger_error($conn." ".$treatment_officer);
-                            $res2 = mysqli_fetch_assoc($qry_treatment);
-
-                            $members = "SELECT COUNT(role) as member
-                            FROM rescuers r LEFT JOIN unit_name t ON r.team_unit = t.id 
-                            WHERE  r.team_unit = '$team_id' AND role = 'Member'";
-                            $qry_members = $conn->query($members) or trigger_error($conn." ".$members);
-                            $res3 = mysqli_fetch_assoc($qry_members);
-                ?>
-                <div class="row form-group mt-4">
-                    <div class="form-group col-md-3">
-                        <label>Team Name</label>
-                        <input type="text"  id="team" class="form-control text-center" value="<?php echo $res['team'] ?>" readonly>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label>Team Leader</label>
-                        <input type="text" name="team_leader" id="team_leader" 
-                        value="<?php echo (isset($res['team_leader']) && !empty($res['team_leader'])) ? $res['team_leader'] : 'Not yet assigned' ?>" class="form-control text-center" readonly>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label>Transport Officer</label>
-                        <input type="text" name="transport_officer" id="transport_officer" 
-                        value="<?php echo (isset($res1['transport_officer']) && !empty($res1['transport_officer'])) ? $res1['transport_officer'] : 'Not yet assigned' ?>" class="form-control text-center" readonly>
-                    </div>
-                     <div class="form-group col-md-3">
-                        <label>Treatment Officer</label>
-                        <input type="text" name="treatment_officer" id="treatment_officer" 
-                        value="<?php echo (isset($res2['treatment_officer']) && !empty($res2['treatment_officer'])) ? $res2['treatment_officer'] : 'Not yet assigned' ?>" class="form-control text-center" readonly>
-                    </div>
-                </div>
-                <div class="row form-group mt-2">
-                    <div class="form-group col-md-2">
-                        <label>Members</label>
-                        <input type="text" 
-                        value="<?php echo (isset($res3['member']) && !empty($res3['member'])) ? $res3['member'] : 'No members yet' ?>" class="form-control text-center" readonly>
-                    </div>
-                </div>
-                    <div align="center">
-                        <button type="button" name="btn_personal_info" id="btn_personal_info" class="btn btn-info btn">
-                            Next
-                        </button>
-                        <input type="submit" name="upload" class="btn btn-success">
-                    </div>
-            </div>
-            
+<div class="tab-pane active" id="personalinfo_content">
+<div class="panel panel-default">
+    <div class="panel-heading">Patient's Personal Info</div>
+    <div class="panel-body">
+        <?php
+            include('pcr-form-patient.php');
+        ?>
+    <div class="row">
+        <div class="col">
+            <h3>Team Information</h3>
         </div>
     </div>
-     <!--====================================End Patient's Personal Info=================================================-->
+
+<!--TEAM INFO-->
+<?php
+    include('pcr-form-teaminfo.php');
+?>
+<!--TEAM INFO-->
+
+<!--PATIENT INFO-->
+<div align="center">
+    <button type="button" name="btn_personal_info" id="btn_personal_info" class="btn btn-info btn">
+        Next
+    </button>
+</div>
+</div>       
+</div>
+</div>
+
+<!--PATIENT INFO-->
 
 
 
 
-     <!--====================================END OF CONTENTS=================================================-->
+<!--Incident Details -->
+<div class="tab-pane fade" id="incident_details">
+<div class="panel panel-default">
+<div class="panel-heading">Incident Info</div>
+    <?php
+        include('pcr-form-incident.php');
+    ?>
+</div>
+</div>
+<!--Incident Details -->
+
+
+
+
+<!--VS Details -->
+<div class="tab-pane fade" id="vsinfo_content">
+<div class="panel panel-default">
+<div class="panel-heading">Vital Signs Info</div>
+    <?php 
+        include('pcr-form-vs.php');
+    ?>
  </div>
 </div>
+<!--VS Details -->
+
+
+
+
+<!--Assesment Details -->
+<div class="tab-pane fade" id="assesment_content">
+<div class="panel panel-default">
+<div class="panel-heading">Assesment</div>
+<?php
+    include('pcr-form-assesment.php');
+?>
+</div>
+</div>
+<!--Assesment Details -->
+ <!--====================================Rescuer Info=================================================-->
+<div class=" tab-pane fade" id="rescuer_content">
+    <div class="panel panel-default">
+        <div class="panel-heading">Team Rescuer Information</div>
+
+            <div class="panel-body">
+                <div class="row form-group">
+                                   
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-4">
+                                        <label>Destination Determination</label>
+                                        <select name="desti_deter" class="form-control-lg form-control">
+                                            <option value=""></option>
+                                            <option value="Closest Facility">Closest Facility</option>
+                                            <option value="Patient's Choice">Patient's Choice</option>
+                                            <option value="Family's Choice">Family's Choice</option>
+                                            <option value="Medical Direction">Medical Direction</option>
+                                            <option value="Law Enforcement Choice">Law Enforcement Choice</option>
+                                            <option value="Protocol">Protocol</option>
+                                        </select>
+                                    </div>
+                                    <div class="col col-md-4">
+                                        <label>Responsode mode</label>
+                                        <select name="response_mode" class="form-control-lg form-control">
+                                            <option value=""></option>
+                                            <option value="No Lights and Siren">No Lights and Siren</option>
+                                            <option value="Lights Only">Lights Only</option>
+                                            <option value="Lights and Siren">Lights and Siren</option>
+                                        </select>
+                                    </div>
+                                    <div class="col col-md-4">
+                                        <label>Transport Mode</label>
+                                        <select name="transport_mode" class="form-control-lg form-control">
+                                            <option value=""></option>
+                                            <option value="No Lights and Siren">No Lights and Siren</option>
+                                            <option value="Lights Only">Lights Only"</option>
+                                            <option value="Lights and Siren">Lights and Siren</option>
+                                            <option value="Upgraded to Light and Siren">Upgraded to Light and Siren</option>
+                                        </select>
+                                </div>
+                            </div>
+                                <br>
+                                <h4>Endorsement</h4>
+                                <hr>
+                                <div class="form">
+                                    <div class="col">
+                                        <label>Receiving Facility</label>
+                                        <input type="text" class="form-control" name="receiving_facility" id="receiving_facility">
+                                    </div>
+                                    <div class="col">
+                                        <label>Receiving MD/RN/Relative</label>
+                                        <input type="text" class="form-control" name="receiving_md" id="receiving_md">
+                                    </div>
+                                </div>
+                                <br>
+                <div align="center">
+                        <button type="button" name="btn_personal_info" id="btn_prev_rescuer" class="btn btn-secondary btn">
+                                    Previous
+                        </button>
+                        <button type="submit" name="upload" id="upload" class="btn btn-success btn">
+                                    Save
+                        </button>
+                </div> 
+            </div>
+
+
         </div>
     </div>
+
+        
+
+
+
+</div>
+</div>
+</div>
+</div>
 </form>
     <!--================================================================================================================-->
           </div><!-- end of container-fluid -->
@@ -336,6 +288,8 @@
     <script src="vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="vendor/select2/select2.min.js">
     </script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
@@ -354,6 +308,8 @@
                 $('#scene_field').hide();
                 $('#med_field').show();
             })
+
+            
 
             $('#btn_personal_info').click(function(){
                     $('#list_patient').removeClass('active');

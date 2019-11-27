@@ -10,7 +10,7 @@
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
                          <li>
-                            <a href="#">
+                            <a href="operation_secretary.php">
                                 <i class="fas fa-files-o"></i>PCR Records
                             </a>
                         </li>
@@ -19,10 +19,10 @@
                                 <i class="fas fa-chart-bar"></i>Statistics Reports</a>
                             <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                                 <li>
-                                    <a href="#">Barangay Responses</a>
+                                    <a href="brgy_stats.php">Barangay Responses</a>
                                 </li>
                                 <li>
-                                    <a href="#">Incident Reports</a>
+                                    <a href="incident_stats.php">Incident Reports</a>
                                 </li>
                             </ul>
                         </li>
