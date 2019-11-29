@@ -49,18 +49,16 @@ if(isset($_POST['view'])){
             <label>*Number of Caller</label>
             <input type="number" name="number_caller" id="number_caller" value="<?php echo $row['number_caller'] ?>" class="form-control" disabled>
         </div>
+    </div>
+    <hr>
+    <div class="row form-group">
         <div class="col col-md-6">
             <label>*Date of Call</label>
-            <input type="date" name="date_call" id="date_call" value="<?php echo $row['date_call'] ?>" class="form-control" disabled>
+            <input type="text" name="date_call" id="date_call" value="<?php echo $row['date_call'] ?>" class="form-control" disabled>
         </div>
-    </div>
-    <div class="row form-group mt-2">
         <div class="col col-md-6">
-            <div class="input-group date" id="call_time" data-target-input="nearest">
-                <input type="text" placeholder="Time of Call" class="form-control datetimepicker-input" value="<?php echo $row['call_time'] ?>" data-target="#call_time" name="call_time" disabled>
-                <dv class="input-group-append" data-target="#call_time" data-toggle="datetimepicker">
-                   <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
-                </div>
+            <label>Time of Call</label>
+            <input type="text" placeholder="Time of Call" class="form-control" value="<?php echo $row['call_time'] ?>" name="call_time" disabled>
         </div>
     </div>
     <hr>

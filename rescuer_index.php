@@ -158,6 +158,10 @@ if(isset($_SESSION['confirm_username'])){
         <div class="modal-body" id="call_details">
                                        
          </div>
+          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            
+                        </div>
      </div>
   </div>
 </div>

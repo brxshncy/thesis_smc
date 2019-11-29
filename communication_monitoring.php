@@ -151,22 +151,23 @@ if(!isset($_SESSION['username_admin']) || $_SESSION['admin_type'] != 'communicat
                                         <label>*Number of Caller</label>
                                         <input type="number" name="number_caller" id="number_caller" class="form-control" required>
                                     </div>
-                                    <div class="col col-md-6">
-                                        <label>*Date of Incident</label>
-                                        <input type="date" name="date_call" id="date_call" class="form-control" required>
-                                    </div>
+                                        <?php
+                                          date_default_timezone_set('Asia/Manila');
+                                          $date_incident = date("F j, Y");
+                                          $time_call = date("g : i A");
+                                        ?>
                                  </div>
                                  <hr>
                                  <div class="row form-group mt-2">
                                    <div class="col col-md-6">
-                                    <div class="input-group date" id="call_time" data-target-input="nearest">
-                                      <input type="text" placeholder="Time of Call" class="form-control datetimepicker-input" data-target="#call_time" name="call_time" required="">
-                                      <div class="input-group-append" data-target="#call_time" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
-                                      </div>
+                                      <label>Time of Incident</label>
+                                      <input type="text" placeholder="Time of Call" class="form-control" id="call_time" value="<?php echo $time_call ?>" data-target="#call_time" name="call_time" readonly>
                                     </div>
-                                   </div>
-                                </div>
+                                    <div class="col col-md-6">
+                                      <label>Date of Incident</label>
+                                       <input type="text" name="date_call" id="date_call" class="form-control" value="<?php echo $date_incident ?>" readonly>
+                                    </div>
+                                 </div>
                                 <hr>
                                 <div class="row form-group">
                                    <div class="col-md-12">

@@ -30,9 +30,56 @@ if(isset($_POST['call_id'])){
 		</div>
 	</div>
 </div>
+<hr>
 <div class="row">
+	<div class="col">
+		<div class="form-row">
+			<label>Chief Complaints</label>
+			<textarea class="form-control" rows="3" readonly=""><?php echo $reason; ?></textarea>
+		</div>
 	</div>
-
+</div>
+<hr>
+<div class="row">
+	<div class="col col-md-6">
+		<div class="form-row">
+			<label>Number of caller</label>
+			<input type="text" value="<?php echo $num_call ?>" class="form-control"  readonly>
+		</div>
+	</div>
+</div>
+<hr>
+<div class="row">
+	<div class="col col-md-6">
+		<div class="form-row">
+			<label>Date of Incident</label>
+			<input type="text" value="<?php echo $date_call ?>" class="form-control"  readonly>
+		</div>
+	</div>
+	<div class="col col-md-6">
+		<div class="form-row">
+			<label>Time of Incident</label>
+			<input type="text" value="<?php echo $call_time ?>" class="form-control"  readonly>
+		</div>
+	</div>
+</div>
+<hr>
+<div class="row">
+	<div class="col">
+		<div class="form-row">
+			<label>Address</label>
+			<input type="text" value="<?php echo $address ?>" class="form-control"  readonly>
+		</div>
+	</div>
+</div>
+<div class="row mt-2">
+	<div class="col">
+		<div class="form-row">
+			<label>Hospital</label>
+			<input type="text" value="<?php echo $hospital ?>" class="form-control"  readonly>
+		</div>
+	</div>
+</div>
 <?php }
 }
 

@@ -37,19 +37,10 @@
 
 <body class="animsition">
     <div class="page-wrapper">
-        <?php include 'header-mobile.php'; ?>
-        
-        
-   
-        <?php include 'menu-sidebar.php';?>
-     
-
-     
+         <?php include ('secretary/scr_header.mobile.php'); ?>
+    <?php include ('secretary/scr_sidebar.php');?>
+    <?php include ('secretary/scr_header.php'); ?>
         <div class="page-container">
-      
-
-      
-        <?php include 'header-php.php' ?>
 
      <!-- MAIN CONTENT-->
 <div class="main-content" id="main-content">
@@ -62,12 +53,11 @@
 				<table class="table table-bordered">
 					<tbody>
 						<?php
-							if(isset($_GET['view'])){
-								$id = $_GET['view'];
-								$query = "SELECT * FROM pcr_official WHERE id = '$id' ";
+							if(isset($_GET['id'])){
+								$id = $_GET['id'];
+								$query = "SELECT *, brngy.baranggay_name AS barangay, un.unit_name AS team FROM pcr_submit LEFT JOIN unit_name un ON pcr_submit.team = un.id LEFT JOIN barangay brngy ON brngy.id = pcr_submit.barangay WHERE pcr_submit.id = '$id' ";
 								$view = mysqli_query($conn, $query);
 								while($row = mysqli_fetch_array($view)){
-
 	
 						?>
 							<tr class="table-info">
@@ -75,11 +65,11 @@
 							</tr>
 							<tr class="table-active">
 								<td width="30%" class="bg-light">Full Name</td>
-								<td width="70%" class="bg-light"><?php echo $row['firstname'];?> <?php echo $row['middlename'];?><?php echo " ";?> <?php echo $row['lastname'];?></td>
+								<td width="70%" class="bg-light"><?php echo $row['firstname'];?> <?php echo $row['mi'];?><?php echo " ";?> <?php echo $row['lastname'];?></td>
 							</tr>
 							<tr class="table-active">
-								<td width="30%" class="bg-light">Address</td>
-								<td width="70%" class="bg-light"><?php echo $row['address']; ?></td>
+								<td width="30%" class="bg-light">Home Address</td>
+								<td width="70%" class="bg-light"><?php echo $row['home_address']; ?></td>
 							</tr>
 							<tr class="table-active">
 								<td width="30%" class="bg-light">Age</td>
@@ -90,11 +80,11 @@
 								<td width="70%" class="bg-light"> <?php echo $row['gender']; ?></td>
 							</tr>
 							<tr class="table-active">
-								<td width="30%" class="bg-light"">Religion</td>
+								<td width="30%" class="bg-light">Religion</td>
 								<td width="70%" class="bg-light"><?php echo $row['religion']; ?></td>
 							</tr>
 							<tr class="table-active">
-								<td width="30%" class="bg-light"">Nationality</td>
+								<td width="30%" class="bg-light">Nationality</td>
 								<td width="70%" class="bg-light"><?php echo $row['nationality']; ?></td>
 							</tr>
 							<tr class="table-info">								
@@ -105,8 +95,19 @@
 								<td width="70%" class="bg-light"><?php echo $row['date_i']; ?></td>
 							</tr>
 							<tr class="table-active">
+								<td width="30%" class="bg-light">Barangay Involve</td>
+								<td width="70%" class="bg-light"><?php echo $row['barangay'];?></td>
+							</tr>
+							<tr class="table-active">
+								<td width="30%" class="bg-light">Incident Address</td>
+								<td width="70%" class="bg-light"><?php echo $row['incident_address']; ?></td>
+							</tr>
+							<tr class="table-active">
 								<td width="30%" class="bg-light">Incident Time</td>
-								<td width="70%" class="bg-light"><?php echo $row['time_i']; ?></td>
+								<?php
+									$time = date("H: i A",strtotime($row['time_i']))
+								?>
+								<td width="70%" class="bg-light"><?php echo $time; ?></td>
 							</tr>
 							<tr class="table-active">
 								<td clwidth="30%" class="bg-light">General Impression</td>
@@ -114,7 +115,7 @@
 							</tr>
 							<tr class="table-active">
 								<td width="30%" class="bg-light">Reason for Calling/Chief Complaints</td>
-								<td width="70%" class="bg-light"><?php echo $row['reason']; ?></td>
+								<td width="70%" class="bg-light"><?php echo $row['complaints']; ?></td>
 							</tr>
 							<tr class="table-active">
 								<td width="30%" class="bg-light">Caller Relation to Patient</td>
@@ -123,14 +124,6 @@
 							<tr class="table-active">
 								<td width="30%" class="bg-light">Contact Number</td>
 								<td width="70%" class="bg-light"><?php echo $row['contact1']; ?></td>
-							</tr>
-							<tr class="table-active">
-								<td width="30%" class="bg-light">Caller Relation to Patient</td>
-								<td width="70%" class="bg-light"><?php echo $row['r_p2']; ?></td>
-							</tr>
-							<tr class="table-active">
-								<td width="30%" class="bg-light">Contact Number</td>
-								<td width="70%" class="bg-light"><?php echo $row['contact2']; ?></td>
 							</tr>
 							<tr class="table-active">
 								<td width="30%" class="bg-light">Nature of Incident</td>
@@ -214,7 +207,7 @@
 							</tr>
 							<tr class="table-active">
 								<td width="30%" class="bg-light">02 Stat</td>
-								<td width="70%" class="bg-light"><?php echo $row['02stat']; ?></td>
+								<td width="70%" class="bg-light"><?php echo $row['stat']; ?></td>
 							</tr>
 							<tr class="table-active">
 								<td width="30%" class="bg-light">Eye</td>
@@ -305,7 +298,7 @@
 								<td width="70%" class="bg-light"><?php echo $row['narrative']; ?></td>
 							</tr>
 							<tr class="table-info">
-								<th colspan = 2><h2 style="color:#fff;" align="center">Rescuer Information</h2></th>
+								<th colspan = 2><h2 style="color:#fff;" align="center">Team Information</h2></th>
 								
 							</tr>
 							<tr class="table-active">
@@ -318,7 +311,7 @@
 							</tr>
 							<tr class="table-active">
 								<td width="30%" class="bg-light">Dispatched Unit</td>
-								<td width="70%" class="bg-light"><?php echo $row['dispatched_unit']; ?></td>
+								<td width="70%" class="bg-light"><?php echo $row['team']; ?></td>
 							</tr>
 							<tr class="table-active">
 								<td width="30%" class="bg-light">DESTINATION DETERMINATION</td>
@@ -334,20 +327,14 @@
 							</tr>
 							<tr class="table-active">
 								<td width="30%" class="bg-light">Receiving Facility</td>
-								<td width="70%" class="bg-light"><?php echo $row['receiving_facility']; ?></td>
-							</tr>
-							<tr class="table-active">
-								<td width="30%" class="bg-light">Receiving MD/RN/Relative</td>
-								<td width="70%" class="bg-light"><?php echo $row['receiving_md']; ?></td>
+								<td width="70%" class="bg-light"><?php echo $row['med_facility']; ?></td>
 							</tr>
 							<tr>
 								<td colspan="2" class="bg-light" align="center">
 									<button type="button"  class="btn btn-success" id="print">
                                            		<i class="fa fa-print"></i>&nbsp; Print 
                                     </button>
-                                   <a href="pcrofficial_edit.php?view=<?php echo $row['id'];?>">  <button type="button"  class="btn btn-info">
-                                           		<i class="fa fa-edit (alias)"></i>&nbsp; Edit
-                                    </button></a>
+                                   
                                 </td>
                           
                                

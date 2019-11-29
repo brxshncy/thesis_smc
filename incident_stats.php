@@ -128,7 +128,27 @@ $(document).ready(function(){
                     var ctx = $('#myChart');
                     var barGraph = new Chart(ctx,{
                         type:'bar',
-                        data:chart
+                        data:chart,
+                        options: {
+                            scaleShowValues:true,
+                            scales:{
+                                xAxes:[{
+                                    ticks:{
+                                        autoSkip: false,
+                                        beginAtZero: true,
+                                          min: 0
+                                    }
+                                }],
+                                yAxes:[{
+                                    ticks:{
+                                        beginAtZero: true,
+                                        min: 0,
+                                        stepSize: 1
+                                    }
+                                }]
+
+                            }
+                        }
                
         })
 })

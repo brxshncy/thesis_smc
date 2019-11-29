@@ -133,15 +133,13 @@
     <button type="button" name="btn_personal_info" id="btn_personal_info" class="btn btn-info btn">
         Next
     </button>
+     <input type="submit" name="upload" class="btn btn-success">
 </div>
 </div>       
 </div>
 </div>
 
 <!--PATIENT INFO-->
-
-
-
 
 <!--Incident Details -->
 <div class="tab-pane fade" id="incident_details">
@@ -153,8 +151,6 @@
 </div>
 </div>
 <!--Incident Details -->
-
-
 
 
 <!--VS Details -->
@@ -180,81 +176,7 @@
 ?>
 </div>
 </div>
-<!--Assesment Details -->
- <!--====================================Rescuer Info=================================================-->
-<div class=" tab-pane fade" id="rescuer_content">
-    <div class="panel panel-default">
-        <div class="panel-heading">Team Rescuer Information</div>
-
-            <div class="panel-body">
-                <div class="row form-group">
-                                   
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col col-md-4">
-                                        <label>Destination Determination</label>
-                                        <select name="desti_deter" class="form-control-lg form-control">
-                                            <option value=""></option>
-                                            <option value="Closest Facility">Closest Facility</option>
-                                            <option value="Patient's Choice">Patient's Choice</option>
-                                            <option value="Family's Choice">Family's Choice</option>
-                                            <option value="Medical Direction">Medical Direction</option>
-                                            <option value="Law Enforcement Choice">Law Enforcement Choice</option>
-                                            <option value="Protocol">Protocol</option>
-                                        </select>
-                                    </div>
-                                    <div class="col col-md-4">
-                                        <label>Responsode mode</label>
-                                        <select name="response_mode" class="form-control-lg form-control">
-                                            <option value=""></option>
-                                            <option value="No Lights and Siren">No Lights and Siren</option>
-                                            <option value="Lights Only">Lights Only</option>
-                                            <option value="Lights and Siren">Lights and Siren</option>
-                                        </select>
-                                    </div>
-                                    <div class="col col-md-4">
-                                        <label>Transport Mode</label>
-                                        <select name="transport_mode" class="form-control-lg form-control">
-                                            <option value=""></option>
-                                            <option value="No Lights and Siren">No Lights and Siren</option>
-                                            <option value="Lights Only">Lights Only"</option>
-                                            <option value="Lights and Siren">Lights and Siren</option>
-                                            <option value="Upgraded to Light and Siren">Upgraded to Light and Siren</option>
-                                        </select>
-                                </div>
-                            </div>
-                                <br>
-                                <h4>Endorsement</h4>
-                                <hr>
-                                <div class="form">
-                                    <div class="col">
-                                        <label>Receiving Facility</label>
-                                        <input type="text" class="form-control" name="receiving_facility" id="receiving_facility">
-                                    </div>
-                                    <div class="col">
-                                        <label>Receiving MD/RN/Relative</label>
-                                        <input type="text" class="form-control" name="receiving_md" id="receiving_md">
-                                    </div>
-                                </div>
-                                <br>
-                <div align="center">
-                        <button type="button" name="btn_personal_info" id="btn_prev_rescuer" class="btn btn-secondary btn">
-                                    Previous
-                        </button>
-                        <button type="submit" name="upload" id="upload" class="btn btn-success btn">
-                                    Save
-                        </button>
-                </div> 
-            </div>
-
-
-        </div>
-    </div>
-
-        
-
-
-
+<!--Assesment Details -->      
 </div>
 </div>
 </div>

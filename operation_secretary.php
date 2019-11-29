@@ -73,7 +73,7 @@ require ('include/db.php');
                     <?php 
                         $pcr = "SELECT pcr.id AS id,  CONCAT(r.firstname,' ',r.lastname) as sender, un.unit_name as team FROM pcr_submit pcr 
                         LEFT JOIN rescuers r ON pcr.sender = r.id 
-                        LEFT JOIN unit_name un ON un.id = pcr.team";
+                        LEFT JOIN unit_name un ON un.id = pcr.team ORDER BY id desc";
                         $run_pcr = $conn->query($pcr) or trigger_error(mysqli_fetch_assoc($conn)." ".$pcr);
                         $counter = 1;
                         while($row = mysqli_fetch_assoc($run_pcr)){
@@ -81,8 +81,10 @@ require ('include/db.php');
                     <tr>
                         <td class='text-center'><?php echo $counter; ?></td>
                         <td class='text-center'>
-                            <button class="item" title="View PCR">
+                           <a href="pcr_view.php?id=<?php echo $row['id'] ?>"> <button class="item" title="View PCR">
                                 <i class="fas fa-envelope text-success"></i>
+                            </button>
+                        </a>
                         </td>
                         <td class="text-center"><?php echo $row['sender'] ?></td>
                         <td class='text-center'><?php echo $row['team'] ?></td>

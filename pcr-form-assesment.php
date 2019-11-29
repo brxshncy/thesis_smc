@@ -120,8 +120,6 @@
                     <button type="button" name="btn_personal_info" id="btn_prev_assesment" class="btn btn-secondary btn">
                             Previous
                     </button>
-                    <button type="button" name="btn_personal_info" id="btn_nxt_assesment" class="btn btn-info btn">
-                            Next
-                    </button>
+                    <input type="submit" name="upload" class="btn btn-success">
                 </div> 
             </div>

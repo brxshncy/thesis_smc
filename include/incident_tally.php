@@ -4,10 +4,12 @@ require('db.php');
 if(isset($_POST['incident_id'])){
 	$id = $_POST['incident_id'];
 
-	$incident = "SELECT * FROM pcr_submit WHERE id ='$id'";
+	$incident = "SELECT *, brgy.baranggay_name as barangay FROM pcr_submit pcr LEFT JOIN barangay brgy ON pcr.barangay = brgy.id WHERE pcr.id ='$id' ";
 	$run = $conn->query($incident) or trigger_error(mysqli_error($conn)." ".$incident);
 	while($row = mysqli_fetch_assoc($run)){ 
 		$name = $row['firstname']." ".$row['mi']." ".$row['lastname'];
+		$barangay = $row['barangay'];
+		$incident_address = $row['incident_address'];
 	?>
 
 
@@ -49,11 +51,54 @@ if(isset($_POST['incident_id'])){
 			<input type="text" value="<?php echo $name ?>" id="name" class="form-control" readonly>
 		</div>
 	</div>
+</div>
+<div class="row mt-3">
 	<div class="col">
 		<div class="form-group">
 			<label>Date of Incident</label>
 			<input type="text" value="<?php echo $row['date_i'] ?>" class="form-control" readonly>
 		</div>
+	</div>
+	<div class="col">
+		<div class="form-group">
+			<label>Time of Incident</label>
+			<?php
+				$time = date("H : i a",strtotime($row['time_i']))
+			?>
+			<input type="text" value="<?php echo $time ?>" class="form-control" readonly>
+		</div>
+	</div>
+</div>
+<div class="row mt-2">
+	<div class="col">
+		<div class="form-group">
+			<label>Chief Complaints</label>
+			<textarea class="form-control" rows="3" readonly><?php echo $row['complaints'] ?></textarea>
+		</div>
+	</div>
+</div>
+<div class="row mt-2">
+	<div class="col">
+		<div class="form-group">
+			<label>Barangay Involve</label>
+			<input type="text" value="<?php echo (isset($barangay) && !empty($barangay) ? $barangay : 'No barangay involve') ?>" class="form-control" readonly>
+		</div>
+	</div>
+</div>
+<div class="row mt-2">
+	<div class="col">
+		<div class="form-group">
+			<label>Full Address of  Incident</label>
+			<input type="text" value="<?php echo (isset($incident_address) && !empty($incident_address) ? $incident_address : 'No data') ?>" class="form-control" readonly>
+		</div>
+	</div>
+</div>
+<div class="row mt-2">
+	<div class="col">
+		<div class="form-group">
+			<label>Medical Facility</label>
+			<input type="text" value="<?php echo (isset($med) && !empty($med) ? $med : 'No Medical Facility Involve') ?>" class="form-control" readonly>
+	</div>
 	</div>
 </div>
 

@@ -19,9 +19,4 @@
                                  Assesment
                             </a>    
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link inactive_tab1" href="#" style="border:1px solid #ccc" id="list_rescuer">
-                                 Team Information
-                            </a>    
-                        </li>
                     </ul>
