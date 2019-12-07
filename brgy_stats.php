@@ -58,19 +58,38 @@ if (session_status() == PHP_SESSION_NONE) {
     <div class="jumbotron" style="background-color: #fff;">
         <?php 
         require('include/db.php');
-        $brgy = "SELECT brgy.baranggay_name as brgy, COUNT(brgy.baranggay_name) as tally  FROM barangay_responses brgy_res LEFT JOIN barangay brgy ON brgy.id = brgy_res.barangay_name GROUP BY brgy.baranggay_name";
+        // $brgy = "SELECT brgy.baranggay_name as brgy, COUNT(brgy.baranggay_name) as tally  FROM barangay_responses brgy_res LEFT JOIN barangay brgy ON brgy.id = brgy_res.barangay_name GROUP BY brgy.baranggay_name";
+        // $run = $conn->query($brgy) or trigger_error(mysqli_error($conn)." ".$brgy);
+
+        $brgy = "SELECT * from barangay";
         $run = $conn->query($brgy) or trigger_error(mysqli_error($conn)." ".$brgy);
+
         $data = array();
        
        while($row = mysqli_fetch_assoc($run)){
-           $brgy_name[] = $row['brgy'];
-           $tally[] = $row['tally'];
+            $barangay_id = $row['id'];
+            $barangay_name = $row['baranggay_name'];
+
+            $res = "SELECT COUNT('baranggay_name') as tally from barangay_responses where barangay_name='$barangay_id'";
+            $r = $conn->query($res) or trigger_error(mysqli_error($conn)." ".$res);
+            $row_res = mysqli_fetch_assoc($r);
+
+
+           $brgy_name[] = $barangay_name;
+
+           if(count($row_res) > 0) {
+             $tally[] = $row_res['tally'];
+           }
+           else {
+             $tally[] = 0;
+           }
+          
            
       }
      
       
     ?>
-      <canvas id="myChart" width="200" ></canvas>
+      <canvas id="myChart" width="100%" height="70" ></canvas>
     </div>
 </div>
 </div>
